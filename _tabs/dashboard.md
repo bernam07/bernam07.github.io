@@ -62,59 +62,88 @@ title: Dashboard
 </div>
 
 ## 📈 Stock Market Positions
+> Dados atualizados em tempo real via Finnhub API.
 > Estratégia: Long-term hold & Dividends.
 
-<div id="stock-table-container"></div>
+<div class="table-responsive">
+  <table style="width:100%; border-collapse: collapse; font-family: monospace;">
+    <thead>
+      <tr style="border-bottom: 2px solid #555; text-align: left;">
+        <th style="padding: 10px;">Ticker</th>
+        <th style="padding: 10px;">Avg Buy</th>
+        <th style="padding: 10px;">Live Price</th>
+        <th style="padding: 10px; text-align: right;">P/L ($)</th>
+        <th style="padding: 10px; text-align: right;">P/L (%)</th>
+      </tr>
+    </thead>
+    <tbody id="stock-rows">
+      <tr><td colspan="5">Loading market data...</td></tr>
+    </tbody>
+  </table>
+</div>
 
 <script>
-  // --- CONFIGURAÇÃO: Coloca aqui os teus dados ---
-  const portfolio = [
-    { ticker: "NVDA", company: "NVIDIA", avgPrice: 450.00, currentPrice: 800.00 },
-    { ticker: "TSLA", company: "Tesla", avgPrice: 200.00, currentPrice: 180.00 },
-    { ticker: "MSFT", company: "Microsoft", avgPrice: 300.00, currentPrice: 405.00 },
-    { ticker: "PLTR", company: "Palantir", avgPrice: 15.50, currentPrice: 24.00 }
+  const FINNHUB_API_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
+  
+  const myStocks = [
+    { ticker: 'NVDA', avgPrice: 450.00, shares: 10 },
+    { ticker: 'TSLA', avgPrice: 200.00, shares: 5 },
+    { ticker: 'MSFT', avgPrice: 300.00, shares: 8 },
+    { ticker: 'PLTR', avgPrice: 15.50, shares: 100 }
   ];
 
-  // --- LÓGICA (Não precisas de mexer) ---
-  function renderStocks() {
-    let html = `
-      <table style="width:100%; border-collapse: collapse;">
-        <thead>
-          <tr style="border-bottom: 2px solid #444;">
-            <th style="text-align:left; padding:8px;">Ticker</th>
-            <th style="text-align:left; padding:8px;">Avg Buy</th>
-            <th style="text-align:left; padding:8px;">Current</th>
-            <th style="text-align:right; padding:8px;">P/L (%)</th>
+  // --- LÓGICA DE FETCH E RENDER ---
+  async function fetchStockData() {
+    const tableBody = document.getElementById('stock-rows');
+    tableBody.innerHTML = ''; // Limpar loading
+
+    // Vamos iterar sobre cada stock e buscar o preço
+    for (const stock of myStocks) {
+      try {
+        // Fetch à API da Finnhub (Quote endpoint)
+        const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${FINNHUB_API_KEY}`);
+        const data = await response.json();
+        
+        // 'c' é o Current Price na resposta da Finnhub
+        const currentPrice = data.c; 
+
+        if (!currentPrice) throw new Error("Sem dados");
+
+        // Cálculos
+        const plPerShare = currentPrice - stock.avgPrice;
+        const totalPL = plPerShare * stock.shares;
+        const plPercent = ((plPerShare / stock.avgPrice) * 100).toFixed(2);
+        
+        // Estilização (Verde/Vermelho)
+        const colorClass = plPercent >= 0 ? 'color: #00ff00;' : 'color: #ff4d4d;';
+        const sign = plPercent >= 0 ? '+' : '';
+
+        // Construir a linha HTML
+        const row = `
+          <tr style="border-bottom: 1px solid #333;">
+            <td style="padding: 10px;"><strong>${stock.ticker}</strong></td>
+            <td style="padding: 10px;">$${stock.avgPrice.toFixed(2)}</td>
+            <td style="padding: 10px;">$${currentPrice.toFixed(2)}</td>
+            <td style="padding: 10px; text-align: right; ${colorClass}">
+               ${sign}$${totalPL.toFixed(0)}
+            </td>
+            <td style="padding: 10px; text-align: right; ${colorClass}">
+               ${sign}${plPercent}%
+            </td>
           </tr>
-        </thead>
-        <tbody>`;
+        `;
+        
+        tableBody.innerHTML += row;
 
-    portfolio.forEach(stock => {
-      // Calcular Percentagem
-      const plValue = stock.currentPrice - stock.avgPrice;
-      const plPercent = ((plValue / stock.avgPrice) * 100).toFixed(2);
-      
-      // Definir cor (Verde ou Vermelho)
-      const colorClass = plPercent >= 0 ? 'price-live' : 'price-red';
-      const sign = plPercent >= 0 ? '+' : '';
-
-      html += `
-        <tr style="border-bottom: 1px solid #333;">
-          <td style="padding:8px;"><strong>${stock.ticker}</strong><br><small style="opacity:0.7">${stock.company}</small></td>
-          <td style="padding:8px;">$${stock.avgPrice.toFixed(2)}</td>
-          <td style="padding:8px;">$${stock.currentPrice.toFixed(2)}</td>
-          <td style="text-align:right; padding:8px;" class="${colorClass}">
-            ${sign}${plPercent}%
-          </td>
-        </tr>`;
-    });
-
-    html += `</tbody></table>`;
-    document.getElementById('stock-table-container').innerHTML = html;
+      } catch (error) {
+        console.error(`Erro ao carregar ${stock.ticker}`, error);
+        tableBody.innerHTML += `<tr><td colspan="5">Erro ao carregar ${stock.ticker}</td></tr>`;
+      }
+    }
   }
 
-  // Correr a função
-  renderStocks();
+  // Arrancar a função
+  fetchStockData();
 </script>
 
 ---
