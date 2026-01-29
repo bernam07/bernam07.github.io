@@ -142,6 +142,11 @@ pwa:
     deny_paths:
       # - "/example"  # URLs match `<SITE_URL>/example/*` will not be cached by the PWA
 
+# Content Security Policy (CSP)
+# Desligado para permitir scripts externos (Finnhub/CoinGecko) e estilos inline
+csp:
+  enabled: false
+
 paginate: 10
 
 # The base URL of your site
