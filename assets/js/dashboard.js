@@ -1,10 +1,10 @@
 // assets/js/dashboard.js
 
-// --- CONFIGURAÇÃO DE CHAVES ---
+// CONFIGURAÇÃO
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
 const POKEMON_KEY = 'b32cdab4-e8c3-42b5-b0ab-fc0944d6e70b';
 
-// --- STOCKS (Avg Price em EUROS) ---
+// --- STOCKS ---
 const myStocks = [
   { ticker: 'VUSA.L', avgPrice: 100.9381, shares: 15.288 }, 
   { ticker: 'NVDA', avgPrice: 115.84, shares: 5.206 },
@@ -17,20 +17,41 @@ const myStocks = [
   { ticker: 'ORCL', avgPrice: 166.78, shares: 2.419 }
 ];
 
-// --- CRYPTO (Avg Price em EUROS) ---
+// --- CRYPTO ---
 const myCrypto = [
   { id: 'ondo-finance', symbol: 'ONDO', avgPrice: 0.799, holdings: 1278.461 },
   { id: 'avalanche-2', symbol: 'AVAX', avgPrice: 11.76, holdings: 7.237 },
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 }
 ];
 
-// --- POKEMON CARDS ---
-// IDs oficiais
+// --- POKEMON CARDS (AS TUAS TOP 5) ---
+// Usamos IDs ingleses para a imagem, mas mostramos os teus dados reais.
 const myCards = [
-  { id: 'base1-4', name: 'Charizard (Base Set)' }, 
-  { id: 'xy1-1', name: 'Venusaur EX' },
-  { id: 'xy1-2', name: 'M Venusaur EX' },
-  { id: 'xy2-13', name: 'Charizard EX' }
+  { 
+    id: 'svp-85', // Van Gogh Promo
+    name: 'Pikachu with Grey Felt Hat', 
+    grade: 'PSA 9' 
+  },
+  { 
+    id: 'sv4pt5-232', // Shiny Mew ex (Art do Paldean Fates igual ao Shiny Treasure)
+    name: 'Mew ex (JP sv4a)', 
+    grade: 'PSA 10' 
+  },
+  { 
+    id: 'sm12-241', // Pikachu c/ Red (Art do Cosmic Eclipse igual ao Dream League)
+    name: 'Pikachu (JP sm11b)', 
+    grade: 'CCC 9' 
+  },
+  { 
+    id: 'gym2-7', // Placeholder: Giovanni's Nidoking (Gym Challenge)
+    name: "Team Rocket's Nidoking", 
+    grade: 'Ungraded' // Destined Rivals #233 não está na API ainda
+  },
+  { 
+    id: 'swsh12pt5-gg35', // Leafeon VSTAR (Art do Crown Zenith igual ao VSTAR Univ)
+    name: 'Leafeon VSTAR (JP s12a)', 
+    grade: 'PSA 10' 
+  }
 ];
 
 // --- 1. TAXAS DE CÂMBIO ---
@@ -46,7 +67,7 @@ async function getExchangeRates() {
   return rates;
 }
 
-// --- 2. YAHOO PROXY (Stocks) ---
+// --- 2. YAHOO PROXY ---
 async function fetchYahooPrice(ticker) {
   try {
     const yahooUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d`;
@@ -55,15 +76,11 @@ async function fetchYahooPrice(ticker) {
     const wrapper = await response.json();
     if (!wrapper.contents) throw new Error("Proxy vazio");
     const data = JSON.parse(wrapper.contents);
-    
     if (!data.chart?.result) throw new Error("Yahoo sem dados");
+    
     const meta = data.chart.result[0].meta;
     let price = meta.regularMarketPrice;
-    
-    // Ajuste GBp (pence) -> GBP (pounds)
-    if (meta.currency === 'GBp' || (ticker.includes('.L') && price > 2000)) { 
-        price = price / 100; 
-    }
+    if (meta.currency === 'GBp' || (ticker.includes('.L') && price > 2000)) price = price / 100;
     return price;
   } catch (error) { return null; }
 }
@@ -81,7 +98,7 @@ async function fetchCrypto() {
         const plPercent = ((currentPrice - coin.avgPrice) / coin.avgPrice) * 100;
         const colorClass = plPercent >= 0 ? 'text-green' : 'text-red';
         const sign = plPercent >= 0 ? '+' : '';
-        priceEl.innerHTML = `€${currentPrice.toFixed(2)} <span class="${colorClass}" style="font-size: 0.8em; margin-left: 5px;">(${sign}${plPercent.toFixed(1)}%)</span>`;
+        priceEl.innerHTML = `€${currentPrice.toFixed(2)} <span class="${colorClass}" style="font-size: 0.8em;">(${sign}${plPercent.toFixed(1)}%)</span>`;
       }
     });
   } catch (error) { console.error("Erro Crypto", error); }
@@ -128,7 +145,7 @@ async function fetchStocks(rates) {
   }
 }
 
-// --- 5. FETCH POKEMON ---
+// --- 5. FETCH POKEMON (COM GRADES) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if(!container) return;
@@ -136,7 +153,6 @@ async function fetchPokemon(rates) {
 
   for (const card of myCards) {
     try {
-      // Usamos a API Key no header para evitar rate limits
       const response = await fetch(`https://api.pokemontcg.io/v2/cards/${card.id}`, {
         headers: { 'X-Api-Key': POKEMON_KEY }
       });
@@ -145,29 +161,34 @@ async function fetchPokemon(rates) {
 
       const imageUrl = cardData.images.small;
       
-      // Lógica de preços do TCGPlayer
+      // Preço Raw (não graded) para referência
       let priceUsd = 0;
-      if (cardData.tcgplayer && cardData.tcgplayer.prices) {
-        const prices = cardData.tcgplayer.prices;
-        // Tenta encontrar o preço de mercado na ordem de raridade
-        if (prices.holofoil) priceUsd = prices.holofoil.market || prices.holofoil.mid;
-        else if (prices.unlimitedHolofoil) priceUsd = prices.unlimitedHolofoil.market;
-        else if (prices.reverseHolofoil) priceUsd = prices.reverseHolofoil.market;
-        else if (prices.normal) priceUsd = prices.normal.market;
+      if (cardData.tcgplayer?.prices) {
+         const prices = cardData.tcgplayer.prices;
+         if (prices.holofoil) priceUsd = prices.holofoil.market;
+         else if (prices.normal) priceUsd = prices.normal.market;
+         else if (prices.reverseHolofoil) priceUsd = prices.reverseHolofoil.market;
       }
-
       const priceEur = priceUsd * rates.usdToEur;
-      // Se não houver preço, mostra "N/A"
-      const displayPrice = priceEur > 0 ? `€${priceEur.toFixed(2)}` : 'N/A';
+      const displayPrice = priceEur > 0 ? `Raw: €${priceEur.toFixed(0)}` : '';
+
+      // Define a cor da Badge baseada na Grade
+      let badgeColor = '#555'; // Default (Ungraded)
+      if (card.grade.includes('10')) badgeColor = '#d4af37'; // Ouro para 10
+      else if (card.grade.includes('9')) badgeColor = '#c0c0c0'; // Prata para 9
 
       const cardHtml = `
-        <div class="poke-card">
+        <div class="poke-card" style="position: relative; display: inline-block;">
+          <div style="position: absolute; top: -10px; right: -10px; background: ${badgeColor}; color: white; padding: 4px 8px; border-radius: 12px; font-weight: bold; font-size: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.5); z-index: 10;">
+            ${card.grade}
+          </div>
+          
           <a href="${cardData.tcgplayer?.url || '#'}" target="_blank">
-            <img src="${imageUrl}" alt="${card.name}" title="${card.name}">
+            <img src="${imageUrl}" alt="${card.name}" title="${card.name}" style="border-radius: 10px; width: 100%;">
           </a>
           <center>
-            <small style="opacity: 0.8;">${cardData.name}</small><br>
-            <strong style="color: #00ff00;">${displayPrice}</strong>
+            <small style="opacity: 0.9; font-weight: bold; margin-top: 5px; display: block;">${card.name}</small>
+            <small style="opacity: 0.6; font-size: 0.75rem;">${displayPrice}</small>
           </center>
         </div>
       `;
@@ -182,8 +203,6 @@ async function fetchPokemon(rates) {
 // --- ARRANQUE GERAL ---
 document.addEventListener('DOMContentLoaded', async () => {
   const rates = await getExchangeRates();
-  console.log("Rates loaded:", rates);
-  
   fetchCrypto();
   fetchStocks(rates);
   fetchPokemon(rates);
