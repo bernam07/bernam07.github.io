@@ -2,7 +2,7 @@
 
 // CONFIGURAÇÃO
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
-const POKEMON_KEY = 'b32cdab4-e8c3-42b5-b0ab-fc0944d6e70b';
+// Nota: Removemos a POKEMON_KEY do uso direto para evitar erros de CORS (bloqueio de segurança do browser)
 
 // --- STOCKS ---
 const myStocks = [
@@ -25,7 +25,6 @@ const myCrypto = [
 ];
 
 // --- POKEMON CARDS ---
-// IDs verificados na API pokemontcg.io
 const myCards = [
   { id: 'svp-85', name: 'Pikachu Grey Felt Hat', grade: 'PSA 9' },
   { id: 'sv4pt5-232', name: 'Mew ex (JP sv4a)', grade: 'PSA 10' },
@@ -39,11 +38,12 @@ async function getExchangeRates() {
   let rates = { usdToEur: 0.95, gbpToEur: 1.19 };
   try {
     const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether,british-pound-sterling&vs_currencies=eur');
-    if (!response.ok) throw new Error("CoinGecko Error");
-    const data = await response.json();
-    if (data.tether?.eur) rates.usdToEur = data.tether.eur;
-    if (data['british-pound-sterling']?.eur) rates.gbpToEur = data['british-pound-sterling'].eur;
-  } catch (error) { console.warn("Fallback Câmbio", error); }
+    if (response.ok) {
+      const data = await response.json();
+      if (data.tether?.eur) rates.usdToEur = data.tether.eur;
+      if (data['british-pound-sterling']?.eur) rates.gbpToEur = data['british-pound-sterling'].eur;
+    }
+  } catch (error) { console.warn("Fallback Câmbio ativo."); }
   return rates;
 }
 
@@ -51,16 +51,19 @@ async function getExchangeRates() {
 async function fetchYahooPrice(ticker) {
   try {
     const yahooUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d`;
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(yahooUrl)}&timestamp=${new Date().getTime()}`;
+    // Adicionamos um parametro aleatorio para evitar cache do Service Worker
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(yahooUrl)}&rand=${Math.random()}`;
+    
     const response = await fetch(proxyUrl);
     const wrapper = await response.json();
-    if (!wrapper.contents) throw new Error("Proxy vazio");
+    if (!wrapper.contents) return null;
+    
     const data = JSON.parse(wrapper.contents);
+    const meta = data.chart?.result?.[0]?.meta;
     
-    if (!data.chart?.result) throw new Error("Yahoo sem dados");
-    const meta = data.chart.result[0].meta;
+    if (!meta) return null;
+
     let price = meta.regularMarketPrice;
-    
     if (meta.currency === 'GBp' || (ticker.includes('.L') && price > 2000)) { 
         price = price / 100; 
     }
@@ -128,30 +131,22 @@ async function fetchCrypto() {
   } catch (error) { console.error("Erro Crypto", error); }
 }
 
-// --- 5. FETCH POKEMON (COM DEBUG) ---
+// --- 5. FETCH POKEMON (SEM HEADER DE API KEY) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
-  // SE ISTO FALHAR, É PORQUE O HTML ESTÁ MAL
-  if(!container) {
-    console.error("ERRO: Não encontrei a div 'poke-container' no HTML!");
-    return;
-  }
-  
-  console.log("A iniciar carregamento de cartas...");
+  if(!container) return;
   container.innerHTML = ''; 
 
   for (const card of myCards) {
     try {
-      console.log(`A carregar carta: ${card.id}`);
-      const response = await fetch(`https://api.pokemontcg.io/v2/cards/${card.id}`, {
-        headers: { 'X-Api-Key': POKEMON_KEY }
-      });
+      // IMPORTANTE: Removemos o header 'X-Api-Key' para evitar erro CORS.
+      // A API funciona sem chave para uso baixo.
+      const response = await fetch(`https://api.pokemontcg.io/v2/cards/${card.id}`);
       
-      if (!response.ok) throw new Error(`Erro API: ${response.status}`);
+      if (!response.ok) throw new Error(`Status ${response.status}`);
       
       const data = await response.json();
       const cardData = data.data;
-
       const imageUrl = cardData.images.small;
       
       let priceUsd = 0;
@@ -185,14 +180,18 @@ async function fetchPokemon(rates) {
       container.innerHTML += cardHtml;
 
     } catch (error) {
-      console.error(`Erro ao carregar Pokemon ${card.id}:`, error);
-      container.innerHTML += `<p style="color:red; font-size:0.7rem;">Erro ${card.name}</p>`;
+      console.error(`Erro Carta ${card.id}:`, error);
     }
   }
 }
 
-// --- ARRANQUE GERAL ---
+// --- ARRANQUE ---
+// Usamos uma flag para garantir que só corre uma vez
+let dashboardLoaded = false;
 document.addEventListener('DOMContentLoaded', async () => {
+  if (dashboardLoaded) return;
+  dashboardLoaded = true;
+
   const rates = await getExchangeRates();
   fetchCrypto();
   fetchStocks(rates);
