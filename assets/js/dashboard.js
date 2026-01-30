@@ -5,7 +5,7 @@ const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
 
 // Ações (Avg Price em EUROS)
 const myStocks = [
-  // VUSA.L vai ser tratado de forma especial via Yahoo Finance
+  // VUSA.L tratado via Yahoo + Proxy Alternativo
   { ticker: 'VUSA.L', avgPrice: 100.9381, shares: 15.288 }, 
   { ticker: 'NVDA', avgPrice: 115.84, shares: 5.206 },
   { ticker: 'PLTR', avgPrice: 35.84, shares: 6.389 },
@@ -24,50 +24,65 @@ const myCrypto = [
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 }
 ];
 
-// --- 1. OBTER TAXAS DE CÂMBIO ---
+// --- 1. TAXAS DE CÂMBIO (BLINDADA) ---
 async function getExchangeRates() {
+  // Valores de fallback (segurança) caso a API falhe
+  let rates = { usdToEur: 0.95, gbpToEur: 1.19 };
+
   try {
-    // Vamos buscar a taxa USD/EUR e GBP/EUR
-    // Usamos Tether como USD proxy e GBP direta
     const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether,british-pound-sterling&vs_currencies=eur');
+    
+    if (!response.ok) throw new Error("CoinGecko Error");
+    
     const data = await response.json();
-    return {
-      usdToEur: data.tether.eur, 
-      gbpToEur: data['british-pound-sterling'].eur
-    };
+
+    // Verificação defensiva: só atualiza se os dados existirem
+    if (data.tether && data.tether.eur) {
+      rates.usdToEur = data.tether.eur;
+    }
+    if (data['british-pound-sterling'] && data['british-pound-sterling'].eur) {
+      rates.gbpToEur = data['british-pound-sterling'].eur;
+    }
+
   } catch (error) {
-    console.error("Erro câmbio (usando fallbacks):", error);
-    return { usdToEur: 0.92, gbpToEur: 1.19 };
+    console.warn("Aviso: Falha no câmbio online. Usando valores fixos.", error);
+    // Não fazemos 'throw', apenas retornamos os valores fixos para o site não parar
   }
+  
+  return rates;
 }
 
-// --- 2. FUNÇÃO ESPECIAL PARA YAHOO FINANCE (Para o VUSA) ---
+// --- 2. YAHOO FINANCE (NOVO PROXY: AllOrigins) ---
 async function fetchYahooPrice(ticker) {
   try {
-    // Usamos um proxy (corsproxy.io) para o GitHub Pages conseguir ler dados do Yahoo
-    const proxyUrl = 'https://corsproxy.io/?';
+    // Adicionamos timestamp para evitar cache
     const yahooUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d`;
+    // Usamos allorigins.win que retorna JSON dentro de 'contents'
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(yahooUrl)}&timestamp=${new Date().getTime()}`;
     
-    const response = await fetch(proxyUrl + encodeURIComponent(yahooUrl));
-    const data = await response.json();
+    const response = await fetch(proxyUrl);
+    const wrapper = await response.json();
     
-    // O Yahoo devolve o preço no meta data do gráfico
-    let price = data.chart.result[0].meta.regularMarketPrice;
-    const currency = data.chart.result[0].meta.currency;
+    // O allorigins devolve os dados numa string dentro de .contents
+    if (!wrapper.contents) throw new Error("Proxy vazio");
+    
+    const data = JSON.parse(wrapper.contents);
+    
+    if (!data.chart || !data.chart.result) throw new Error("Yahoo sem dados");
 
-    // O VUSA.L em Londres muitas vezes vem em "Pence" (GBp) em vez de Pounds (GBP)
-    // Se o preço for > 500 (ex: 9500), assumimos que são centimos e dividimos por 100
-    if (currency === 'GBP' && price > 2000) { 
+    const meta = data.chart.result[0].meta;
+    let price = meta.regularMarketPrice;
+    const currency = meta.currency;
+
+    // Correção Pence (GBp) -> Pounds (GBP)
+    // Se a moeda for GBp OU se o preço for absurdamente alto (> 2000), divide por 100
+    if (currency === 'GBp' || (ticker.includes('.L') && price > 2000)) { 
         price = price / 100; 
-    }
-    // Se vier explicitamente como GBp (pence)
-    if (currency === 'GBp') {
-        price = price / 100;
     }
 
     return price;
   } catch (error) {
-    console.error(`Erro Yahoo para ${ticker}:`, error);
+    console.error(`Erro Yahoo (${ticker}):`, error);
     return null;
   }
 }
@@ -93,49 +108,44 @@ async function fetchCrypto() {
   } catch (error) { console.error("Erro Crypto:", error); }
 }
 
-// --- 4. STOCKS (LÓGICA HÍBRIDA) ---
+// --- 4. STOCKS ---
 async function fetchStocks() {
   const tableBody = document.getElementById('stock-rows');
   if(!tableBody) return;
   tableBody.innerHTML = ''; 
 
   const rates = await getExchangeRates();
-  console.log("Taxas: USD->EUR:", rates.usdToEur, "GBP->EUR:", rates.gbpToEur);
+  console.log("Taxas aplicadas:", rates);
 
   for (const stock of myStocks) {
     let currentPrice = null;
-    let usedSource = 'Finnhub';
 
     try {
       // --- DECISÃO DA FONTE ---
       
-      // CASO ESPECIAL: VUSA.L (Vai ao Yahoo via Proxy)
+      // CASO ESPECIAL: VUSA.L (Yahoo + AllOrigins)
       if (stock.ticker === 'VUSA.L') {
-        usedSource = 'Yahoo';
         const rawPrice = await fetchYahooPrice(stock.ticker);
         if (rawPrice) {
-          // Yahoo devolve em Libras, convertemos para Euros
-          currentPrice = rawPrice * rates.gbpToEur;
+          currentPrice = rawPrice * rates.gbpToEur; // GBP -> EUR
         }
       } 
-      // RESTO: Stocks Americanas (Vai à Finnhub)
+      // RESTO: Stocks Americanas (Finnhub)
       else {
         const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${FINNHUB_KEY}`);
         const data = await res.json();
         
-        // Se a Finnhub der erro 403 ou devolver 0
-        if (data.error || !data.c) {
-           throw new Error(data.error || "Sem dados");
+        if (data.c) {
+          currentPrice = data.c * rates.usdToEur; // USD -> EUR
         }
-        
-        // Converter USD para EUR
-        currentPrice = data.c * rates.usdToEur;
       }
 
-      // --- CÁLCULOS E RENDER ---
+      // --- RENDER ---
       
       if (!currentPrice) {
-         tableBody.innerHTML += `<tr><td colspan="4" style="color: orange">Erro ${stock.ticker} (Fonte: ${usedSource})</td></tr>`;
+         // Se falhar tudo, mostra linha de erro mas continua o loop
+         const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
+         tableBody.innerHTML += `<tr><td colspan="4" style="color: orange; font-size:0.8rem;">⚠️ ${cleanTicker}: Erro API</td></tr>`;
          continue;
       }
 
@@ -158,8 +168,7 @@ async function fetchStocks() {
       tableBody.innerHTML += row;
 
     } catch (err) { 
-      console.error(`Erro ${stock.ticker}:`, err);
-      tableBody.innerHTML += `<tr><td colspan="4" style="color: red; font-size: 0.8em;">${stock.ticker}: Acesso Negado (API)</td></tr>`;
+      console.error(`Erro fatal no loop ${stock.ticker}:`, err);
     }
   }
 }
