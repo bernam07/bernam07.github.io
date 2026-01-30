@@ -1,11 +1,11 @@
 // assets/js/dashboard.js
 
-// CONFIGURAÇÃO
+// --- CONFIGURAÇÃO DE CHAVES ---
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
+const POKEMON_KEY = 'b32cdab4-e8c3-42b5-b0ab-fc0944d6e70b';
 
-// Ações (Avg Price em EUROS)
+// --- STOCKS (Avg Price em EUROS) ---
 const myStocks = [
-  // VUSA.L tratado via Yahoo + Proxy Alternativo
   { ticker: 'VUSA.L', avgPrice: 100.9381, shares: 15.288 }, 
   { ticker: 'NVDA', avgPrice: 115.84, shares: 5.206 },
   { ticker: 'PLTR', avgPrice: 35.84, shares: 6.389 },
@@ -17,83 +17,63 @@ const myStocks = [
   { ticker: 'ORCL', avgPrice: 166.78, shares: 2.419 }
 ];
 
-// Crypto (Avg Price em EUROS)
+// --- CRYPTO (Avg Price em EUROS) ---
 const myCrypto = [
   { id: 'ondo-finance', symbol: 'ONDO', avgPrice: 0.799, holdings: 1278.461 },
   { id: 'avalanche-2', symbol: 'AVAX', avgPrice: 11.76, holdings: 7.237 },
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 }
 ];
 
-// --- 1. TAXAS DE CÂMBIO (BLINDADA) ---
-async function getExchangeRates() {
-  // Valores de fallback (segurança) caso a API falhe
-  let rates = { usdToEur: 0.95, gbpToEur: 1.19 };
+// --- POKEMON CARDS ---
+// IDs oficiais
+const myCards = [
+  { id: 'base1-4', name: 'Charizard (Base Set)' }, 
+  { id: 'xy1-1', name: 'Venusaur EX' },
+  { id: 'xy1-2', name: 'M Venusaur EX' },
+  { id: 'xy2-13', name: 'Charizard EX' }
+];
 
+// --- 1. TAXAS DE CÂMBIO ---
+async function getExchangeRates() {
+  let rates = { usdToEur: 0.95, gbpToEur: 1.19 };
   try {
     const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether,british-pound-sterling&vs_currencies=eur');
-    
     if (!response.ok) throw new Error("CoinGecko Error");
-    
     const data = await response.json();
-
-    // Verificação defensiva: só atualiza se os dados existirem
-    if (data.tether && data.tether.eur) {
-      rates.usdToEur = data.tether.eur;
-    }
-    if (data['british-pound-sterling'] && data['british-pound-sterling'].eur) {
-      rates.gbpToEur = data['british-pound-sterling'].eur;
-    }
-
-  } catch (error) {
-    console.warn("Aviso: Falha no câmbio online. Usando valores fixos.", error);
-    // Não fazemos 'throw', apenas retornamos os valores fixos para o site não parar
-  }
-  
+    if (data.tether?.eur) rates.usdToEur = data.tether.eur;
+    if (data['british-pound-sterling']?.eur) rates.gbpToEur = data['british-pound-sterling'].eur;
+  } catch (error) { console.warn("Fallback Câmbio", error); }
   return rates;
 }
 
-// --- 2. YAHOO FINANCE (NOVO PROXY: AllOrigins) ---
+// --- 2. YAHOO PROXY (Stocks) ---
 async function fetchYahooPrice(ticker) {
   try {
-    // Adicionamos timestamp para evitar cache
     const yahooUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?interval=1d`;
-    // Usamos allorigins.win que retorna JSON dentro de 'contents'
     const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(yahooUrl)}&timestamp=${new Date().getTime()}`;
-    
     const response = await fetch(proxyUrl);
     const wrapper = await response.json();
-    
-    // O allorigins devolve os dados numa string dentro de .contents
     if (!wrapper.contents) throw new Error("Proxy vazio");
-    
     const data = JSON.parse(wrapper.contents);
     
-    if (!data.chart || !data.chart.result) throw new Error("Yahoo sem dados");
-
+    if (!data.chart?.result) throw new Error("Yahoo sem dados");
     const meta = data.chart.result[0].meta;
     let price = meta.regularMarketPrice;
-    const currency = meta.currency;
-
-    // Correção Pence (GBp) -> Pounds (GBP)
-    // Se a moeda for GBp OU se o preço for absurdamente alto (> 2000), divide por 100
-    if (currency === 'GBp' || (ticker.includes('.L') && price > 2000)) { 
+    
+    // Ajuste GBp (pence) -> GBP (pounds)
+    if (meta.currency === 'GBp' || (ticker.includes('.L') && price > 2000)) { 
         price = price / 100; 
     }
-
     return price;
-  } catch (error) {
-    console.error(`Erro Yahoo (${ticker}):`, error);
-    return null;
-  }
+  } catch (error) { return null; }
 }
 
-// --- 3. CRYPTO ---
+// --- 3. FETCH CRYPTO ---
 async function fetchCrypto() {
   try {
     const ids = myCrypto.map(c => c.id).join(',');
     const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=eur`);
     const data = await response.json();
-    
     myCrypto.forEach(coin => {
       const priceEl = document.getElementById(`price-${coin.symbol.toLowerCase()}`);
       if (priceEl && data[coin.id]) {
@@ -101,49 +81,31 @@ async function fetchCrypto() {
         const plPercent = ((currentPrice - coin.avgPrice) / coin.avgPrice) * 100;
         const colorClass = plPercent >= 0 ? 'text-green' : 'text-red';
         const sign = plPercent >= 0 ? '+' : '';
-
         priceEl.innerHTML = `€${currentPrice.toFixed(2)} <span class="${colorClass}" style="font-size: 0.8em; margin-left: 5px;">(${sign}${plPercent.toFixed(1)}%)</span>`;
       }
     });
-  } catch (error) { console.error("Erro Crypto:", error); }
+  } catch (error) { console.error("Erro Crypto", error); }
 }
 
-// --- 4. STOCKS ---
-async function fetchStocks() {
+// --- 4. FETCH STOCKS ---
+async function fetchStocks(rates) {
   const tableBody = document.getElementById('stock-rows');
   if(!tableBody) return;
   tableBody.innerHTML = ''; 
 
-  const rates = await getExchangeRates();
-  console.log("Taxas aplicadas:", rates);
-
   for (const stock of myStocks) {
     let currentPrice = null;
-
     try {
-      // --- DECISÃO DA FONTE ---
-      
-      // CASO ESPECIAL: VUSA.L (Yahoo + AllOrigins)
       if (stock.ticker === 'VUSA.L') {
         const rawPrice = await fetchYahooPrice(stock.ticker);
-        if (rawPrice) {
-          currentPrice = rawPrice * rates.gbpToEur; // GBP -> EUR
-        }
-      } 
-      // RESTO: Stocks Americanas (Finnhub)
-      else {
+        if (rawPrice) currentPrice = rawPrice * rates.gbpToEur;
+      } else {
         const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${FINNHUB_KEY}`);
         const data = await res.json();
-        
-        if (data.c) {
-          currentPrice = data.c * rates.usdToEur; // USD -> EUR
-        }
+        if (data.c) currentPrice = data.c * rates.usdToEur;
       }
 
-      // --- RENDER ---
-      
       if (!currentPrice) {
-         // Se falhar tudo, mostra linha de erro mas continua o loop
          const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
          tableBody.innerHTML += `<tr><td colspan="4" style="color: orange; font-size:0.8rem;">⚠️ ${cleanTicker}: Erro API</td></tr>`;
          continue;
@@ -152,7 +114,6 @@ async function fetchStocks() {
       const plPercent = ((currentPrice - stock.avgPrice) / stock.avgPrice) * 100;
       const colorClass = plPercent >= 0 ? 'text-green' : 'text-red';
       const sign = plPercent >= 0 ? '+' : '';
-      
       const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
 
       const row = `
@@ -160,20 +121,70 @@ async function fetchStocks() {
           <td><strong>${cleanTicker}</strong></td>
           <td>€${stock.avgPrice.toFixed(2)}</td>
           <td>€${currentPrice.toFixed(2)}</td>
-          <td class="${colorClass}" style="text-align:right; font-weight:bold;">
-             ${sign}${plPercent.toFixed(1)}%
-          </td>
+          <td class="${colorClass}" style="text-align:right; font-weight:bold;">${sign}${plPercent.toFixed(1)}%</td>
         </tr>`;
-        
       tableBody.innerHTML += row;
+    } catch (err) { console.error(`Erro ${stock.ticker}`, err); }
+  }
+}
 
-    } catch (err) { 
-      console.error(`Erro fatal no loop ${stock.ticker}:`, err);
+// --- 5. FETCH POKEMON ---
+async function fetchPokemon(rates) {
+  const container = document.getElementById('poke-container');
+  if(!container) return;
+  container.innerHTML = ''; 
+
+  for (const card of myCards) {
+    try {
+      // Usamos a API Key no header para evitar rate limits
+      const response = await fetch(`https://api.pokemontcg.io/v2/cards/${card.id}`, {
+        headers: { 'X-Api-Key': POKEMON_KEY }
+      });
+      const data = await response.json();
+      const cardData = data.data;
+
+      const imageUrl = cardData.images.small;
+      
+      // Lógica de preços do TCGPlayer
+      let priceUsd = 0;
+      if (cardData.tcgplayer && cardData.tcgplayer.prices) {
+        const prices = cardData.tcgplayer.prices;
+        // Tenta encontrar o preço de mercado na ordem de raridade
+        if (prices.holofoil) priceUsd = prices.holofoil.market || prices.holofoil.mid;
+        else if (prices.unlimitedHolofoil) priceUsd = prices.unlimitedHolofoil.market;
+        else if (prices.reverseHolofoil) priceUsd = prices.reverseHolofoil.market;
+        else if (prices.normal) priceUsd = prices.normal.market;
+      }
+
+      const priceEur = priceUsd * rates.usdToEur;
+      // Se não houver preço, mostra "N/A"
+      const displayPrice = priceEur > 0 ? `€${priceEur.toFixed(2)}` : 'N/A';
+
+      const cardHtml = `
+        <div class="poke-card">
+          <a href="${cardData.tcgplayer?.url || '#'}" target="_blank">
+            <img src="${imageUrl}" alt="${card.name}" title="${card.name}">
+          </a>
+          <center>
+            <small style="opacity: 0.8;">${cardData.name}</small><br>
+            <strong style="color: #00ff00;">${displayPrice}</strong>
+          </center>
+        </div>
+      `;
+      container.innerHTML += cardHtml;
+
+    } catch (error) {
+      console.error(`Erro Pokemon ${card.id}`, error);
     }
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+// --- ARRANQUE GERAL ---
+document.addEventListener('DOMContentLoaded', async () => {
+  const rates = await getExchangeRates();
+  console.log("Rates loaded:", rates);
+  
   fetchCrypto();
-  fetchStocks();
+  fetchStocks(rates);
+  fetchPokemon(rates);
 });
