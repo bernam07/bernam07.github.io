@@ -46,21 +46,21 @@ title: Dashboard
 <div class="dashboard-grid">
   <div class="asset-card">
     <h3>ONDO Finance</h3>
-    <p>Holdings: 1200 ONDO</p>
-    <p>Avg Buy: $0.75</p>
-    <p>Live Price: <span id="price-ondo">Loading...</span></p>
+    <p>Holdings: 1.278</p>
+    <p>Avg Buy: €0.799</p>
+    <p>Live: <span id="price-ondo">Loading...</span></p>
   </div>
   <div class="asset-card">
     <h3>Avalanche (AVAX)</h3>
-    <p>Holdings: 10 AVAX</p>
-    <p>Avg Buy: $35.00</p>
-    <p>Live Price: <span id="price-avax">Loading...</span></p>
+    <p>Holdings: 7.23</p>
+    <p>Avg Buy: €11.76</p>
+    <p>Live: <span id="price-avax">Loading...</span></p>
   </div>
   <div class="asset-card">
     <h3>Cardano (ADA)</h3>
-    <p>Holdings: 500 ADA</p>
-    <p>Avg Buy: $0.45</p>
-    <p>Live Price: <span id="price-ada">Loading...</span></p>
+    <p>Holdings: 148</p>
+    <p>Avg Buy: €0.337</p>
+    <p>Live: <span id="price-ada">Loading...</span></p>
   </div>
 </div>
 
@@ -70,14 +70,13 @@ title: Dashboard
     <thead>
       <tr>
         <th>Ticker</th>
-        <th>Avg Buy</th>
-        <th>Live Price</th>
-        <th style="text-align: right;">P/L ($)</th>
+        <th>Avg Buy (€)</th>
+        <th>Live (€)</th>
         <th style="text-align: right;">P/L (%)</th>
       </tr>
     </thead>
     <tbody id="stock-rows">
-      <tr><td colspan="5">A contactar mercados...</td></tr>
+      <tr><td colspan="4">A atualizar preços e câmbio...</td></tr>
     </tbody>
   </table>
 </div>
