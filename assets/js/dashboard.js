@@ -24,34 +24,14 @@ const myCrypto = [
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 }
 ];
 
-// --- POKEMON CARDS (AS TUAS TOP 5) ---
-// Usamos IDs ingleses para a imagem, mas mostramos os teus dados reais.
+// --- POKEMON CARDS ---
+// IDs verificados na API pokemontcg.io
 const myCards = [
-  { 
-    id: 'svp-85', // Van Gogh Promo
-    name: 'Pikachu with Grey Felt Hat', 
-    grade: 'PSA 9' 
-  },
-  { 
-    id: 'sv4pt5-232', // Shiny Mew ex (Art do Paldean Fates igual ao Shiny Treasure)
-    name: 'Mew ex (JP sv4a)', 
-    grade: 'PSA 10' 
-  },
-  { 
-    id: 'sm12-241', // Pikachu c/ Red (Art do Cosmic Eclipse igual ao Dream League)
-    name: 'Pikachu (JP sm11b)', 
-    grade: 'CCC 9' 
-  },
-  { 
-    id: 'gym2-7', // Placeholder: Giovanni's Nidoking (Gym Challenge)
-    name: "Team Rocket's Nidoking", 
-    grade: 'Ungraded' // Destined Rivals #233 não está na API ainda
-  },
-  { 
-    id: 'swsh12pt5-gg35', // Leafeon VSTAR (Art do Crown Zenith igual ao VSTAR Univ)
-    name: 'Leafeon VSTAR (JP s12a)', 
-    grade: 'PSA 10' 
-  }
+  { id: 'svp-85', name: 'Pikachu Grey Felt Hat', grade: 'PSA 9' },
+  { id: 'sv4pt5-232', name: 'Mew ex (JP sv4a)', grade: 'PSA 10' },
+  { id: 'sm12-241', name: 'Pikachu (JP sm11b)', grade: 'CCC 9' },
+  { id: 'gym2-7', name: "Team Rocket's Nidoking", grade: 'Ungraded' },
+  { id: 'swsh12pt5-gg35', name: 'Leafeon VSTAR', grade: 'PSA 10' }
 ];
 
 // --- 1. TAXAS DE CÂMBIO ---
@@ -76,35 +56,19 @@ async function fetchYahooPrice(ticker) {
     const wrapper = await response.json();
     if (!wrapper.contents) throw new Error("Proxy vazio");
     const data = JSON.parse(wrapper.contents);
-    if (!data.chart?.result) throw new Error("Yahoo sem dados");
     
+    if (!data.chart?.result) throw new Error("Yahoo sem dados");
     const meta = data.chart.result[0].meta;
     let price = meta.regularMarketPrice;
-    if (meta.currency === 'GBp' || (ticker.includes('.L') && price > 2000)) price = price / 100;
+    
+    if (meta.currency === 'GBp' || (ticker.includes('.L') && price > 2000)) { 
+        price = price / 100; 
+    }
     return price;
   } catch (error) { return null; }
 }
 
-// --- 3. FETCH CRYPTO ---
-async function fetchCrypto() {
-  try {
-    const ids = myCrypto.map(c => c.id).join(',');
-    const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=eur`);
-    const data = await response.json();
-    myCrypto.forEach(coin => {
-      const priceEl = document.getElementById(`price-${coin.symbol.toLowerCase()}`);
-      if (priceEl && data[coin.id]) {
-        const currentPrice = data[coin.id].eur;
-        const plPercent = ((currentPrice - coin.avgPrice) / coin.avgPrice) * 100;
-        const colorClass = plPercent >= 0 ? 'text-green' : 'text-red';
-        const sign = plPercent >= 0 ? '+' : '';
-        priceEl.innerHTML = `€${currentPrice.toFixed(2)} <span class="${colorClass}" style="font-size: 0.8em;">(${sign}${plPercent.toFixed(1)}%)</span>`;
-      }
-    });
-  } catch (error) { console.error("Erro Crypto", error); }
-}
-
-// --- 4. FETCH STOCKS ---
+// --- 3. FETCH STOCKS ---
 async function fetchStocks(rates) {
   const tableBody = document.getElementById('stock-rows');
   if(!tableBody) return;
@@ -145,23 +109,51 @@ async function fetchStocks(rates) {
   }
 }
 
-// --- 5. FETCH POKEMON (COM GRADES) ---
+// --- 4. FETCH CRYPTO ---
+async function fetchCrypto() {
+  try {
+    const ids = myCrypto.map(c => c.id).join(',');
+    const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=eur`);
+    const data = await response.json();
+    myCrypto.forEach(coin => {
+      const priceEl = document.getElementById(`price-${coin.symbol.toLowerCase()}`);
+      if (priceEl && data[coin.id]) {
+        const currentPrice = data[coin.id].eur;
+        const plPercent = ((currentPrice - coin.avgPrice) / coin.avgPrice) * 100;
+        const colorClass = plPercent >= 0 ? 'text-green' : 'text-red';
+        const sign = plPercent >= 0 ? '+' : '';
+        priceEl.innerHTML = `€${currentPrice.toFixed(2)} <span class="${colorClass}" style="font-size: 0.8em; margin-left: 5px;">(${sign}${plPercent.toFixed(1)}%)</span>`;
+      }
+    });
+  } catch (error) { console.error("Erro Crypto", error); }
+}
+
+// --- 5. FETCH POKEMON (COM DEBUG) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
-  if(!container) return;
+  // SE ISTO FALHAR, É PORQUE O HTML ESTÁ MAL
+  if(!container) {
+    console.error("ERRO: Não encontrei a div 'poke-container' no HTML!");
+    return;
+  }
+  
+  console.log("A iniciar carregamento de cartas...");
   container.innerHTML = ''; 
 
   for (const card of myCards) {
     try {
+      console.log(`A carregar carta: ${card.id}`);
       const response = await fetch(`https://api.pokemontcg.io/v2/cards/${card.id}`, {
         headers: { 'X-Api-Key': POKEMON_KEY }
       });
+      
+      if (!response.ok) throw new Error(`Erro API: ${response.status}`);
+      
       const data = await response.json();
       const cardData = data.data;
 
       const imageUrl = cardData.images.small;
       
-      // Preço Raw (não graded) para referência
       let priceUsd = 0;
       if (cardData.tcgplayer?.prices) {
          const prices = cardData.tcgplayer.prices;
@@ -172,17 +164,15 @@ async function fetchPokemon(rates) {
       const priceEur = priceUsd * rates.usdToEur;
       const displayPrice = priceEur > 0 ? `Raw: €${priceEur.toFixed(0)}` : '';
 
-      // Define a cor da Badge baseada na Grade
-      let badgeColor = '#555'; // Default (Ungraded)
-      if (card.grade.includes('10')) badgeColor = '#d4af37'; // Ouro para 10
-      else if (card.grade.includes('9')) badgeColor = '#c0c0c0'; // Prata para 9
+      let badgeColor = '#555'; 
+      if (card.grade.includes('10')) badgeColor = '#d4af37'; 
+      else if (card.grade.includes('9')) badgeColor = '#c0c0c0'; 
 
       const cardHtml = `
         <div class="poke-card" style="position: relative; display: inline-block;">
           <div style="position: absolute; top: -10px; right: -10px; background: ${badgeColor}; color: white; padding: 4px 8px; border-radius: 12px; font-weight: bold; font-size: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.5); z-index: 10;">
             ${card.grade}
           </div>
-          
           <a href="${cardData.tcgplayer?.url || '#'}" target="_blank">
             <img src="${imageUrl}" alt="${card.name}" title="${card.name}" style="border-radius: 10px; width: 100%;">
           </a>
@@ -195,7 +185,8 @@ async function fetchPokemon(rates) {
       container.innerHTML += cardHtml;
 
     } catch (error) {
-      console.error(`Erro Pokemon ${card.id}`, error);
+      console.error(`Erro ao carregar Pokemon ${card.id}:`, error);
+      container.innerHTML += `<p style="color:red; font-size:0.7rem;">Erro ${card.name}</p>`;
     }
   }
 }
