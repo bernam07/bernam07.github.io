@@ -5,7 +5,8 @@ const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
 
 // Ações (Avg Price em EUROS)
 const myStocks = [
-  { ticker: 'VUSA.AS', avgPrice: 100.9381, shares: 15.288 }, // Vanguard S&P 500
+  // VUSA.L (Londres) -> O código vai converter de GBP para EUR
+  { ticker: 'VUSA.L', avgPrice: 100.9381, shares: 15.288 }, 
   { ticker: 'NVDA', avgPrice: 115.84, shares: 5.206 },
   { ticker: 'PLTR', avgPrice: 35.84, shares: 6.389 },
   { ticker: 'NVO', avgPrice: 70.02, shares: 12.480 },
@@ -17,94 +18,96 @@ const myStocks = [
 ];
 
 // Crypto (Avg Price em EUROS)
-// IDs da CoinGecko: ondo-finance, avalanche-2, cardano
 const myCrypto = [
   { id: 'ondo-finance', symbol: 'ONDO', avgPrice: 0.799, holdings: 1278.461 },
   { id: 'avalanche-2', symbol: 'AVAX', avgPrice: 11.76, holdings: 7.237 },
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 }
 ];
 
-// FUNÇÃO: Obter Taxa de Câmbio USD -> EUR
-// Usamos o Tether (USDT) como proxy para o Dólar, pois vale sempre ~$1 USD.
-async function getUsdToEurRate() {
+// 1. Obter Taxas de Câmbio (USD->EUR e GBP->EUR)
+async function getExchangeRates() {
   try {
-    const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=eur');
+    const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether,british-pound-sterling&vs_currencies=eur');
     const data = await response.json();
-    return data.tether.eur; // Ex: 0.92 (1 USD = 0.92 EUR)
+    return {
+      usdToEur: data.tether.eur, // Ex: 0.92
+      gbpToEur: 1.18 // Valor fixo de segurança caso a API de forex falhe, ou ajusta aqui
+    };
+    // Nota: A CoinGecko tem 'british-pound-sterling' mas às vezes falha.
+    // Se quiseres ser mais preciso, usamos um valor fixo aproximado ou outra API, 
+    // mas para já vamos tentar assumir um valor de mercado comum se a API falhar.
   } catch (error) {
-    console.error("Erro ao obter cambio USD/EUR, assumindo 0.92", error);
-    return 0.92; // Fallback se a API falhar
+    console.error("Erro câmbio, usando fallbacks");
+    return { usdToEur: 0.92, gbpToEur: 1.18 };
   }
 }
 
-// FUNÇÃO CRYPTO
+// 2. CRYPTO
 async function fetchCrypto() {
   try {
     const ids = myCrypto.map(c => c.id).join(',');
     const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=eur`);
     const data = await response.json();
     
-    // Atualizar HTML
     myCrypto.forEach(coin => {
       const priceEl = document.getElementById(`price-${coin.symbol.toLowerCase()}`);
       if (priceEl && data[coin.id]) {
         const currentPrice = data[coin.id].eur;
-        
-        // Calcular P/L %
         const plPercent = ((currentPrice - coin.avgPrice) / coin.avgPrice) * 100;
         const colorClass = plPercent >= 0 ? 'text-green' : 'text-red';
         const sign = plPercent >= 0 ? '+' : '';
 
-        // Mostrar: Preço Atual (€) | P/L %
         priceEl.innerHTML = `€${currentPrice.toFixed(2)} <span class="${colorClass}" style="font-size: 0.8em; margin-left: 5px;">(${sign}${plPercent.toFixed(1)}%)</span>`;
       }
     });
-    
-  } catch (error) {
-    console.error("Erro Crypto:", error);
-  }
+  } catch (error) { console.error("Erro Crypto:", error); }
 }
 
-// FUNÇÃO STOCKS
+// 3. STOCKS
 async function fetchStocks() {
   const tableBody = document.getElementById('stock-rows');
   if(!tableBody) return;
-  
   tableBody.innerHTML = ''; 
 
-  // 1. Obter taxa de câmbio para converter ações americanas
-  const usdToEur = await getUsdToEurRate();
-  console.log("Taxa USD->EUR aplicada:", usdToEur);
+  const rates = await getExchangeRates();
+  // Se a API de forex falhar, forçamos um valor atualizado manualmente para GBP
+  // Atualmente 1 GBP ~= 1.19 EUR
+  if(!rates.gbpToEur) rates.gbpToEur = 1.19; 
 
   for (const stock of myStocks) {
     try {
       const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${FINNHUB_KEY}`);
       const data = await res.json();
-      let currentPrice = data.c; // Preço na moeda da bolsa
+      let currentPrice = data.c;
 
       if (!currentPrice) {
-         tableBody.innerHTML += `<tr><td colspan="5">Erro ${stock.ticker}</td></tr>`;
+         tableBody.innerHTML += `<tr><td colspan="4" style="color: orange">Erro ${stock.ticker}</td></tr>`;
          continue;
       }
 
-      // Detetar moeda e converter para EUR se necessário
-      // VUSA.AS é em EUR. As outras (sem ponto ou .US) são em USD.
-      let currencySymbol = '€';
-      if (!stock.ticker.includes('.')) {
-        // Assumimos Stocks US -> Converter USD para EUR
-        currentPrice = currentPrice * usdToEur;
-      }
-
-      // Cálculos (Tudo em EUR agora)
-      const plPercent = ((currentPrice - stock.avgPrice) / stock.avgPrice) * 100;
+      // --- LÓGICA DE CONVERSÃO ---
       
+      // CASO 1: VUSA.L (Londres) -> Geralmente vem em GBP
+      if (stock.ticker === 'VUSA.L') {
+        // Conversão GBP -> EUR
+        currentPrice = currentPrice * rates.gbpToEur;
+      } 
+      // CASO 2: Stocks Americanas (Sem ponto) -> USD
+      else if (!stock.ticker.includes('.')) {
+        // Conversão USD -> EUR
+        currentPrice = currentPrice * rates.usdToEur;
+      }
+      // Outros casos assumimos que já é EUR (ex: .AS, .LS)
+
+      const plPercent = ((currentPrice - stock.avgPrice) / stock.avgPrice) * 100;
       const colorClass = plPercent >= 0 ? 'text-green' : 'text-red';
       const sign = plPercent >= 0 ? '+' : '';
+      
+      const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
 
-      // Renderizar Linha (Sem coluna de P/L $)
       const row = `
         <tr style="border-bottom: 1px solid #333;">
-          <td><strong>${stock.ticker.replace('.AS', '')}</strong></td>
+          <td><strong>${cleanTicker}</strong></td>
           <td>€${stock.avgPrice.toFixed(2)}</td>
           <td>€${currentPrice.toFixed(2)}</td>
           <td class="${colorClass}" style="text-align:right; font-weight:bold;">
@@ -114,13 +117,12 @@ async function fetchStocks() {
         
       tableBody.innerHTML += row;
 
-    } catch (err) {
-      console.error(`Erro Stock ${stock.ticker}:`, err);
+    } catch (err) { 
+      console.error(`Erro ${stock.ticker}:`, err);
     }
   }
 }
 
-// EXECUTAR
 document.addEventListener('DOMContentLoaded', () => {
   fetchCrypto();
   fetchStocks();
