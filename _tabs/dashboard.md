@@ -89,11 +89,10 @@ title: Dashboard
 | **Knife** | Butterfly Fade | FN | 2.500€ |
 
 ## 🃏 Pokemon Collection
-> Dados de mercado via TCGPlayer.
+> A minha coleção pessoal (Top 5).
 
 <div class="poke-grid" id="poke-container">
-  <p>A carregar coleção...</p>
+  <p style="color: yellow;">A carregar cartas via API...</p>
 </div>
 
-<script src="/assets/js/dashboard.js"></script>
 <script src="/assets/js/dashboard.js"></script>
