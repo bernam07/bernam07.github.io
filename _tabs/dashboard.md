@@ -89,15 +89,11 @@ title: Dashboard
 | **Knife** | Butterfly Fade | FN | 2.500€ |
 
 ## 🃏 Pokemon Collection
-<div class="poke-grid">
-  <div class="poke-card">
-    <img src="https://images.pokemontcg.io/base1/4_hires.png" alt="Charizard">
-    <center><small>Charizard Base Set</small></center>
-  </div>
-  <div class="poke-card">
-    <img src="https://images.pokemontcg.io/pl2/103_hires.png" alt="Pikachu">
-    <center><small>Pikachu Lv.X</small></center>
-  </div>
+> Dados de mercado via TCGPlayer.
+
+<div class="poke-grid" id="poke-container">
+  <p>A carregar coleção...</p>
 </div>
 
+<script src="/assets/js/dashboard.js"></script>
 <script src="/assets/js/dashboard.js"></script>
