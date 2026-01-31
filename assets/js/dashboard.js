@@ -1,9 +1,9 @@
 // assets/js/dashboard.js
 
-// CONFIGURATION
+// CONFIGURAÇÃO
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
 
-// --- STOCKS ---
+// 1. STOCKS
 const myStocks = [
   { ticker: 'VUSA.L', avgPrice: 100.9381, shares: 15.288 }, 
   { ticker: 'NVDA', avgPrice: 115.84, shares: 5.206 },
@@ -16,14 +16,14 @@ const myStocks = [
   { ticker: 'ORCL', avgPrice: 166.78, shares: 2.419 }
 ];
 
-// --- CRYPTO ---
+// 2. CRYPTO
 const myCrypto = [
   { id: 'ondo-finance', symbol: 'ONDO', avgPrice: 0.799, holdings: 1278.461 },
   { id: 'avalanche-2', symbol: 'AVAX', avgPrice: 11.76, holdings: 7.237 },
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 }
 ];
 
-// --- POKEMON CARDS ---
+// 3. POKEMON CARDS
 const myCards = [
   { id: 'svp-85', name: 'Pikachu Grey Felt Hat', grade: 'PSA 9' },
   { id: 'sv4pt5-232', name: 'Mew ex (JP sv4a)', grade: 'PSA 10' },
@@ -32,41 +32,22 @@ const myCards = [
   { id: 'swsh12pt5-gg35', name: 'Leafeon VSTAR', grade: 'PSA 10' }
 ];
 
-// --- NEW PROXY FUNCTION (CodeTabs) ---
-async function fetchViaProxy(targetUrl) {
-  try {
-    // CodeTabs is more robust for JSON data than AllOrigins
-    const proxyUrl = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`;
-    
-    const response = await fetch(proxyUrl);
-    
-    if (!response.ok) throw new Error(`Proxy Error: ${response.status}`);
-    
-    // CodeTabs returns the JSON directly
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(`Proxy Failed for ${targetUrl}:`, error);
-    return null;
-  }
-}
+// --- FUNÇÕES AUXILIARES ---
 
-// --- 1. EXCHANGE RATES ---
 async function getExchangeRates() {
   let rates = { usdToEur: 0.95, gbpToEur: 1.19 };
   try {
-    const url = `https://api.coingecko.com/api/v3/simple/price?ids=tether,british-pound-sterling&vs_currencies=eur&t=${Date.now()}`;
-    const response = await fetch(url);
+    const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=tether,british-pound-sterling&vs_currencies=eur&t=${Date.now()}`);
     if (response.ok) {
       const data = await response.json();
       if (data.tether?.eur) rates.usdToEur = data.tether.eur;
       if (data['british-pound-sterling']?.eur) rates.gbpToEur = data['british-pound-sterling'].eur;
     }
-  } catch (e) { console.warn("Fallback Exchange Rates"); }
+  } catch (e) { console.warn("Fallback Câmbio"); }
   return rates;
 }
 
-// --- 2. STOCKS ---
+// --- LÓGICA STOCKS (Yahoo Proxy + Finnhub) ---
 async function fetchStocks(rates) {
   const tableBody = document.getElementById('stock-rows');
   if(!tableBody) return;
@@ -75,29 +56,36 @@ async function fetchStocks(rates) {
   for (const stock of myStocks) {
     let currentPrice = null;
     try {
-      // VUSA.L via Proxy (CodeTabs + Yahoo)
+      // VUSA.L: Usa Proxy CodeTabs para ler Yahoo Finance
       if (stock.ticker === 'VUSA.L') {
-        const yahooUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
-        const data = await fetchViaProxy(yahooUrl);
+        const targetUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
+        // Adicionamos um numero random para evitar cache do browser
+        const proxyUrl = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}&rand=${Math.random()}`;
         
-        if (data && data.chart && data.chart.result) {
-          const meta = data.chart.result[0].meta;
-          let price = meta.regularMarketPrice;
-          if (meta.currency === 'GBp' || price > 2000) price = price / 100;
-          currentPrice = price * rates.gbpToEur;
-        }
+        try {
+          const res = await fetch(proxyUrl);
+          if (res.ok) {
+            const data = await res.json();
+            const meta = data.chart?.result?.[0]?.meta;
+            if (meta) {
+              let price = meta.regularMarketPrice;
+              if (meta.currency === 'GBp' || price > 2000) price = price / 100;
+              currentPrice = price * rates.gbpToEur;
+            }
+          }
+        } catch (e) { console.warn("VUSA Proxy falhou (Rate Limit?)"); }
       } 
-      // US Stocks via Finnhub (Direct)
+      // OUTRAS: Finnhub API Direta
       else {
-        // Random token to prevent caching
-        const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${FINNHUB_KEY}&rand=${Math.random()}`);
+        const res = await fetch(`https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${FINNHUB_KEY}`);
         const data = await res.json();
         if (data.c) currentPrice = data.c * rates.usdToEur;
       }
 
       if (!currentPrice) {
+         // Se falhar (ex: proxy em baixo), mostra erro mas não crasha
          const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
-         tableBody.innerHTML += `<tr><td colspan="4" style="color: orange; font-size:0.8rem;">⚠️ ${cleanTicker}: API Error</td></tr>`;
+         tableBody.innerHTML += `<tr><td colspan="4" style="color: orange; font-size:0.8rem;">⚠️ ${cleanTicker}: N/A</td></tr>`;
          continue;
       }
 
@@ -114,11 +102,11 @@ async function fetchStocks(rates) {
           <td class="${colorClass}" style="text-align:right; font-weight:bold;">${sign}${plPercent.toFixed(1)}%</td>
         </tr>`;
       tableBody.innerHTML += row;
-    } catch (err) { console.error(`Error ${stock.ticker}`, err); }
+    } catch (err) { console.error(`Erro ${stock.ticker}`, err); }
   }
 }
 
-// --- 3. CRYPTO ---
+// --- LÓGICA CRYPTO ---
 async function fetchCrypto() {
   try {
     const ids = myCrypto.map(c => c.id).join(',');
@@ -134,10 +122,10 @@ async function fetchCrypto() {
         priceEl.innerHTML = `€${currentPrice.toFixed(2)} <span class="${colorClass}" style="font-size: 0.8em; margin-left: 5px;">(${sign}${plPercent.toFixed(1)}%)</span>`;
       }
     });
-  } catch (error) { console.error("Error Crypto", error); }
+  } catch (error) { console.error("Erro Crypto", error); }
 }
 
-// --- 4. POKEMON (VIA CODETABS PROXY) ---
+// --- LÓGICA POKEMON (DIRETA, SEM PROXY) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if(!container) return;
@@ -145,14 +133,13 @@ async function fetchPokemon(rates) {
 
   for (const card of myCards) {
     try {
-      // Force Proxy on Pokemon API to bypass CORS
-      const targetUrl = `https://api.pokemontcg.io/v2/cards/${card.id}`;
-      const data = await fetchViaProxy(targetUrl);
+      // Fazemos pedido DIRETO. Sem Proxy, Sem API Key (para evitar CORS preflight)
+      // A API pública permite isto para volumes baixos.
+      const response = await fetch(`https://api.pokemontcg.io/v2/cards/${card.id}`);
       
-      if (!data || !data.data) {
-        throw new Error("No Data (Proxy)");
-      }
-
+      if (!response.ok) throw new Error(`Status ${response.status}`);
+      
+      const data = await response.json();
       const cardData = data.data;
       const imageUrl = cardData.images.small;
       
@@ -187,20 +174,22 @@ async function fetchPokemon(rates) {
       container.innerHTML += cardHtml;
 
     } catch (error) {
-      console.error(`Error Pokemon ${card.id}:`, error);
-      container.innerHTML += `<div style="display:inline-block; border:1px solid red; padding:10px;">Error: ${card.name}</div>`;
+      console.error(`Erro Pokemon ${card.id}:`, error);
+      // Se der erro, tentamos mostrar pelo menos o nome
+      container.innerHTML += `<div class="poke-card" style="border:1px dashed #555; display:flex; align-items:center; justify-content:center;"><small>Erro: ${card.name}</small></div>`;
     }
   }
 }
 
-// --- STARTUP ---
+// --- ARRANQUE ---
 let dashboardLoaded = false;
 document.addEventListener('DOMContentLoaded', async () => {
   if (dashboardLoaded) return;
   dashboardLoaded = true;
 
   const rates = await getExchangeRates();
-  fetchCrypto();
+  // Ordem de carregamento não importa, mas a chamada sim
   fetchStocks(rates);
+  fetchCrypto();
   fetchPokemon(rates);
 });
