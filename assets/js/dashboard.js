@@ -2,11 +2,11 @@
 
 // CONFIGURAÇÃO
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
+const POKEMON_KEY = 'b32cdab4-e8c3-42b5-b0ab-fc0944d6e70b'; // A tua chave
 const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos
 
 // --- 1. STOCKS ---
 const myStocks = [
-  // FallbackPrice: Valor de segurança caso o Proxy falhe
   {
     ticker: 'VUSA.L',
     avgPrice: 100.9381,
@@ -33,7 +33,7 @@ const myCrypto = [
 // --- 3. POKEMON CARDS ---
 const myCards = [
   {
-    name: 'Pikachu Grey Felt Hat',
+    name: 'Pikachu with Grey Felt Hat',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/svp/85_hires.png',
     searchId: 'svp-85',
@@ -57,7 +57,7 @@ const myCards = [
     grade: 'Ungraded',
     manualImg:
       'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SV10/SV10_EN_233.png',
-    searchId: null,
+    searchId: null, // Carta nova, sem preço na API ainda
   },
   {
     name: 'Leafeon VSTAR (JP s12a)',
@@ -104,26 +104,14 @@ function setCachedData(key, data) {
   );
 }
 
-// --- FUNÇÃO DE PROXY (AllOrigins) ---
-// Resolve CORS e bloqueios de Yahoo/Pokemon
-async function fetchViaAllOrigins(targetUrl) {
+// --- PROXY ROBUSTO (CorsProxy.io) ---
+// Mais estável para Yahoo Finance
+async function fetchViaProxy(targetUrl) {
   try {
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(
-      targetUrl
-    )}&rand=${Math.random()}`; // Random evita cache do browser
+    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
     const response = await fetch(proxyUrl);
     if (!response.ok) throw new Error('Proxy Error');
-
-    const data = await response.json();
-    // AllOrigins devolve o conteúdo dentro de "contents" como string ou json
-    if (!data.contents) return null;
-
-    // Tenta fazer parse se for string, ou devolve direto se ja for objeto
-    try {
-      return JSON.parse(data.contents);
-    } catch (e) {
-      return data.contents;
-    }
+    return await response.json();
   } catch (error) {
     console.warn(`Proxy falhou para ${targetUrl}`);
     return null;
@@ -147,7 +135,9 @@ async function getExchangeRates() {
         rates.gbpToEur = data['british-pound-sterling'].eur;
       setCachedData('rates', rates);
     }
-  } catch (e) {}
+  } catch (e) {
+    console.warn('Erro câmbio, usando fallback');
+  }
   return rates;
 }
 
@@ -167,9 +157,9 @@ async function fetchStocks(rates) {
     } else {
       try {
         if (stock.ticker === 'VUSA.L') {
-          // Yahoo via AllOrigins Proxy
+          // Yahoo via CorsProxy
           const url = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
-          const data = await fetchViaAllOrigins(url);
+          const data = await fetchViaProxy(url);
 
           if (data?.chart?.result?.[0]?.meta) {
             let p = data.chart.result[0].meta.regularMarketPrice;
@@ -189,35 +179,35 @@ async function fetchStocks(rates) {
             setCachedData(cacheKey, currentPrice);
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        console.warn(e);
+      }
     }
 
-    // Fallback se tudo falhar
+    // Fallback
     if (!currentPrice && stock.fallbackPrice)
       currentPrice = stock.fallbackPrice;
 
     // Render
     const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
-
-    if (!currentPrice) {
-      tableBody.innerHTML += `<tr><td><strong>${cleanTicker}</strong></td><td>€${stock.avgPrice.toFixed(
-        2
-      )}</td><td style="color:orange">Loading...</td><td>-</td></tr>`;
-      continue;
-    }
-
-    const plPercent = ((currentPrice - stock.avgPrice) / stock.avgPrice) * 100;
-    const colorClass = plPercent >= 0 ? 'text-green' : 'text-red';
-    const sign = plPercent >= 0 ? '+' : '';
+    const priceDisplay = currentPrice ? `€${currentPrice.toFixed(2)}` : 'N/A';
+    const plCell = currentPrice
+      ? (() => {
+          const pl = ((currentPrice - stock.avgPrice) / stock.avgPrice) * 100;
+          const color = pl >= 0 ? 'text-green' : 'text-red';
+          const sign = pl >= 0 ? '+' : '';
+          return `<td class="${color}" style="text-align:right; font-weight:bold;">${sign}${pl.toFixed(
+            1
+          )}%</td>`;
+        })()
+      : `<td style="text-align:right">-</td>`;
 
     const row = `
       <tr style="border-bottom: 1px solid #333;">
         <td><strong>${cleanTicker}</strong></td>
         <td>€${stock.avgPrice.toFixed(2)}</td>
-        <td>€${currentPrice.toFixed(2)}</td>
-        <td class="${colorClass}" style="text-align:right; font-weight:bold;">${sign}${plPercent.toFixed(
-      1
-    )}%</td>
+        <td>${priceDisplay}</td>
+        ${plCell}
       </tr>`;
     tableBody.innerHTML += row;
   }
@@ -238,7 +228,9 @@ async function fetchCrypto() {
         prices = await response.json();
         setCachedData(cacheKey, prices);
       }
-    } catch (e) {}
+    } catch (e) {
+      console.warn('Erro Crypto API');
+    }
   }
 
   myCrypto.forEach((coin) => {
@@ -259,7 +251,7 @@ async function fetchCrypto() {
   });
 }
 
-// --- 4. POKEMON (Via Proxy para saltar CORS) ---
+// --- 4. POKEMON (COM API KEY) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
@@ -267,7 +259,6 @@ async function fetchPokemon(rates) {
 
   for (const card of myCards) {
     let cardPrice = null;
-    let priceDisplay = 'N/A';
 
     if (card.searchId) {
       const cacheKey = `card_${card.searchId}`;
@@ -275,30 +266,38 @@ async function fetchPokemon(rates) {
 
       if (!cardPrice) {
         try {
-          // USAMOS PROXY AQUI TAMBEM! Isto resolve o erro CORS que tinhas.
+          // PEDIDO DIRETO COM API KEY NOS HEADERS
           const url = `https://api.pokemontcg.io/v2/cards/${card.searchId}`;
-          const data = await fetchViaAllOrigins(url); // Fetch via Proxy
+          const response = await fetch(url, {
+            headers: { 'X-Api-Key': POKEMON_KEY },
+          });
 
-          if (data?.data?.tcgplayer?.prices) {
-            const prices = data.data.tcgplayer.prices;
-            let usd =
-              prices.holofoil?.market ||
-              prices.normal?.market ||
-              prices.reverseHolofoil?.market ||
-              0;
-            if (usd > 0) {
-              cardPrice = usd * rates.usdToEur;
-              setCachedData(cacheKey, cardPrice);
+          if (response.ok) {
+            const data = await response.json();
+            if (data?.data?.tcgplayer?.prices) {
+              const prices = data.data.tcgplayer.prices;
+              // Tenta preços por ordem de prioridade
+              let usd =
+                prices.holofoil?.market ||
+                prices.normal?.market ||
+                prices.reverseHolofoil?.market ||
+                0;
+
+              if (usd > 0) {
+                cardPrice = usd * rates.usdToEur;
+                setCachedData(cacheKey, cardPrice);
+              }
             }
           }
         } catch (e) {
-          console.log(`Erro price ${card.name}`);
+          console.log(`Erro ao obter preço para ${card.name}:`, e);
         }
       }
     }
 
-    if (cardPrice) priceDisplay = `Est: €${cardPrice.toFixed(0)}`;
+    const displayPrice = cardPrice ? `Est: €${cardPrice.toFixed(0)}` : 'N/A';
 
+    // Cores da Badge
     let badgeColor = '#555';
     if (card.grade.includes('10') || card.grade.includes('9.5'))
       badgeColor = '#d4af37';
@@ -314,7 +313,7 @@ async function fetchPokemon(rates) {
         </a>
         <center>
           <small style="opacity: 0.9; font-weight: bold; margin-top: 5px; display: block; min-height: 40px;">${card.name}</small>
-          <small style="opacity: 0.6; font-size: 0.75rem;">${priceDisplay}</small>
+          <small style="opacity: 0.6; font-size: 0.75rem;">${displayPrice}</small>
         </center>
       </div>
     `;
