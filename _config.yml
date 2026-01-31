@@ -147,7 +147,7 @@ csp:
   enabled: true
   policy:
     default-src: "'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net"
-    connect-src: "'self' https://finnhub.io https://api.coingecko.com https://api.pokemontcg.io https://api.allorigins.win https://corsproxy.io https://query1.finance.yahoo.com"
+    connect-src: "'self' https://finnhub.io https://api.coingecko.com https://api.pokemontcg.io https://api.allorigins.win https://api.codetabs.com https://corsproxy.io https://query1.finance.yahoo.com"
     img-src: "'self' data: https://github.com https://images.pokemontcg.io https://storage.googleapis.com https://tcgplayer-cdn.tcgplayer.com https://assets.pokemon.com https://den-cards.pokellector.com https://img.shields.io https://readme-typing-svg.herokuapp.com https://github-readme-stats.vercel.app https://spotify-github-profile.kittinanx.com"
     script-src: "'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net"
     style-src: "'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net"
