@@ -22,7 +22,7 @@ description: >-
   Developer na Deloitte. Entusiasta de investimentos,
   carros e colecionar skins de CS2.
 
-url: 'https://bernam07.github.io'
+url: "https://bernam07.github.io"
 
 github:
   username: bernam07
@@ -35,7 +35,7 @@ social:
   email: example@domain.com # change to your email address
   links:
     - https://x.com/BernaM07
-    - https://github.com/bernam07 
+    - https://github.com/bernam07
     # - https://www.facebook.com/username
     - https://www.linkedin.com/in/bernardomfm
 
@@ -93,7 +93,7 @@ theme_mode: dark
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar:
+avatar: https://github.com/bernam07.png
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
@@ -143,7 +143,6 @@ pwa:
       # - "/example"  # URLs match `<SITE_URL>/example/*` will not be cached by the PWA
 
 # Content Security Policy (CSP)
-# Desligado para permitir scripts externos (Finnhub/CoinGecko) e estilos inline
 csp:
   enabled: true
   policy:
@@ -153,7 +152,7 @@ csp:
     script-src: "'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net"
     style-src: "'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net"
 
-paginate: 10
+paginate: false
 
 # The base URL of your site
 baseurl: ""
