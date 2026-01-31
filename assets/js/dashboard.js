@@ -2,7 +2,8 @@
 
 // CONFIGURAÇÃO
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
-const POKEMON_KEY = 'b32cdab4-e8c3-42b5-b0ab-fc0944d6e70b'; // A tua KEY
+const PPT_KEY =
+  'pokeprice_free_4c2909800fdb7087bc8b1ea9d0f35dc9f98ecb8a5b41a13c';
 const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos
 
 // --- 1. STOCKS ---
@@ -11,7 +12,7 @@ const myStocks = [
     ticker: 'VUSA.L',
     avgPrice: 100.9381,
     shares: 15.288,
-    fallbackPrice: 105.2,
+    fallbackPrice: 105.1,
   },
   { ticker: 'NVDA', avgPrice: 115.84, shares: 5.206 },
   { ticker: 'PLTR', avgPrice: 35.84, shares: 6.389 },
@@ -23,7 +24,7 @@ const myStocks = [
   { ticker: 'ORCL', avgPrice: 166.78, shares: 2.419 },
 ];
 
-// --- 2. CRYPTO ---
+// --- 2. CRYPTO (MANTIDO IGUAL - FUNCIONAL) ---
 const myCrypto = [
   { id: 'ondo-finance', symbol: 'ONDO', avgPrice: 0.799, holdings: 1278.461 },
   { id: 'avalanche-2', symbol: 'AVAX', avgPrice: 11.76, holdings: 7.237 },
@@ -31,60 +32,70 @@ const myCrypto = [
 ];
 
 // --- 3. POKEMON CARDS ---
+// query: Nome + Número para a pesquisa ser exata
+// lang: 'english' ou 'japanese'
 const myCards = [
   {
     name: 'Pikachu with Grey Felt Hat',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/svp/85_hires.png',
-    searchId: 'svp-85',
+    query: 'Pikachu with Grey Felt Hat',
+    lang: 'english',
   },
   {
     name: 'Mew ex (JP sv4a)',
     grade: 'PSA 10',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg',
-    searchId: 'sv4pt5-232',
+    query: 'Mew ex 347',
+    lang: 'japanese',
   },
   {
-    name: 'Pikachu (JP sm11b)',
+    name: 'Pikachu (JP Dream League)',
     grade: 'CCC 9',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/574914_in_1000x1000.jpg',
-    searchId: 'sm12-241',
+    query: 'Pikachu 054',
+    lang: 'japanese', // Dream League CHR #054
   },
   {
-    name: "Team Rocket's Nidoking EX",
+    name: "Team Rocket's Nidoking",
     grade: 'Ungraded',
     manualImg:
       'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SV10/SV10_EN_233.png',
-    searchId: null,
+    query: 'Nidoking 233',
+    lang: 'english',
   },
   {
     name: 'Leafeon VSTAR (JP s12a)',
     grade: 'PSA 10',
     manualImg:
       'https://den-cards.pokellector.com/357/Leafeon-VSTAR.S12A.210.45960.png',
-    searchId: 'swsh12pt5-gg35',
+    query: 'Leafeon VSTAR 210',
+    lang: 'japanese',
   },
   {
-    name: 'Charizard V (JP s12a)',
+    name: 'Charizard V (JP SAR)',
     grade: 'CGC 9.5',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/cqvwd3dhpbt4giji/1600.jpg',
-    searchId: 'swsh12pt5-18',
+    query: 'Charizard V 211',
+    lang: 'japanese',
   },
   {
-    name: 'Iono',
+    name: 'Iono (SIR)',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
-    searchId: 'sv4pt5-237',
+    query: 'Iono 237',
+    lang: 'english',
   },
   {
-    name: "N's Zoroark EX (JP sv9)",
+    name: "N's Zoroark EX",
     grade: 'Ungraded',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/615003_in_600x600.jpg',
-    searchId: null,
+    query: 'Zoroark 102',
+    lang: 'japanese', // BW Era costuma ser 102 ou similar
   },
 ];
 
@@ -104,14 +115,14 @@ function setCachedData(key, data) {
   );
 }
 
-// --- PROXY RAW ---
+// --- PROXY RAW (PARA VUSA) ---
 async function fetchViaRawProxy(targetUrl) {
   try {
     const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
       targetUrl
     )}`;
     const response = await fetch(proxyUrl);
-    if (!response.ok) throw new Error('Proxy Error');
+    if (!response.ok) throw new Error(`Proxy Error`);
     return await response.json();
   } catch (error) {
     return null;
@@ -155,6 +166,7 @@ async function fetchStocks(rates) {
     } else {
       try {
         if (stock.ticker === 'VUSA.L') {
+          // Yahoo via RAW Proxy
           const url = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
           const data = await fetchViaRawProxy(url);
 
@@ -184,7 +196,9 @@ async function fetchStocks(rates) {
 
     // Render
     const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
-    const priceDisplay = currentPrice ? `€${currentPrice.toFixed(2)}` : 'N/A';
+    const priceDisplay = currentPrice
+      ? `€${currentPrice.toFixed(2)}`
+      : '<span style="color:orange">N/A</span>';
 
     let plCell = '<td style="text-align:right">-</td>';
     if (currentPrice) {
@@ -243,7 +257,7 @@ async function fetchCrypto() {
   });
 }
 
-// --- 4. POKEMON ---
+// --- 4. POKEMON (Via PokemonPriceTracker API v2) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
@@ -251,36 +265,58 @@ async function fetchPokemon(rates) {
 
   for (const card of myCards) {
     let cardPrice = null;
+    const cacheKey = `ppt_${card.query.replace(/\s/g, '')}`;
+    cardPrice = getCachedData(cacheKey);
 
-    if (card.searchId) {
-      const cacheKey = `card_${card.searchId}`;
-      cardPrice = getCachedData(cacheKey);
+    if (!cardPrice) {
+      try {
+        const encodedQuery = encodeURIComponent(card.query);
+        const lang = card.lang || 'english';
+        // Endpoint V2 com includeEbay=true
+        const url = `https://www.pokemonpricetracker.com/api/v2/cards?search=${encodedQuery}&language=${lang}&includeEbay=true`;
 
-      if (!cardPrice) {
-        try {
-          const url = `https://api.pokemontcg.io/v2/cards/${card.searchId}`;
-          const response = await fetch(url, {
-            headers: { 'X-Api-Key': POKEMON_KEY },
-          });
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${PPT_KEY}`,
+          },
+        });
 
-          if (response.ok) {
-            const data = await response.json();
-            if (data?.data?.tcgplayer?.prices) {
-              const prices = data.data.tcgplayer.prices;
-              let usd =
-                prices.holofoil?.market ||
-                prices.normal?.market ||
-                prices.reverseHolofoil?.market ||
-                0;
-              if (usd > 0) {
-                cardPrice = usd * rates.usdToEur;
-                setCachedData(cacheKey, cardPrice);
-              }
+        if (response.ok) {
+          const data = await response.json(); // A resposta costuma ser uma lista [card1, card2]
+
+          // Pegamos o primeiro resultado da pesquisa
+          if (Array.isArray(data) && data.length > 0) {
+            const bestMatch = data[0];
+            let usd = 0;
+
+            // Tenta encontrar o preço da Grade específica
+            if (
+              card.grade !== 'Ungraded' &&
+              bestMatch.ebay &&
+              bestMatch.ebay.graded
+            ) {
+              // Normaliza a grade para o formato da chave (ex: "PSA 9" -> "psa9")
+              const gradeKey = card.grade.toLowerCase().replace(/ /g, '');
+              const gradeObj = bestMatch.ebay.graded[gradeKey];
+
+              // Tenta "average" (média) ou "price" (último preço)
+              if (gradeObj) usd = gradeObj.average || gradeObj.price;
+            }
+
+            // Fallback: Se não encontrou grade ou é Ungraded, usa preço normal
+            if (!usd || usd === 0) {
+              usd = bestMatch.price || bestMatch.tcgPlayer?.price || 0;
+            }
+
+            if (usd > 0) {
+              cardPrice = usd * rates.usdToEur;
+              setCachedData(cacheKey, cardPrice);
             }
           }
-        } catch (e) {
-          console.log(`Erro ${card.name}`);
         }
+      } catch (e) {
+        console.log(`Erro API PPT ${card.name}`, e);
       }
     }
 
