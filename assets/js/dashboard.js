@@ -42,35 +42,35 @@ const myCards = [
     grade: 'PSA 10',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg',
-    searchId: 'sv4pt5-232',
+    searchId: 'sv4pt5-232', // Paldean Fates (Inglês)
   },
   {
     name: 'Pikachu (JP sm11b)',
     grade: 'CCC 9',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/574914_in_1000x1000.jpg',
-    searchId: 'sm12-241',
+    searchId: 'sm12-241', // Cosmic Eclipse
   },
   {
     name: "Team Rocket's Nidoking EX",
     grade: 'Ungraded',
     manualImg:
       'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SV10/SV10_EN_233.png',
-    searchId: null,
+    searchId: null, // Sem ID inglês ainda
   },
   {
     name: 'Leafeon VSTAR (JP s12a)',
     grade: 'PSA 10',
     manualImg:
       'https://den-cards.pokellector.com/357/Leafeon-VSTAR.S12A.210.45960.png',
-    searchId: 'swsh12pt5-gg35',
+    searchId: 'swsh12pt5-gg35', // Crown Zenith
   },
   {
     name: 'Charizard V (JP s12a)',
     grade: 'CGC 9.5',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/cqvwd3dhpbt4giji/1600.jpg',
-    searchId: 'swsh12pt5-18',
+    searchId: 'swsh12pt5-18', // Crown Zenith
   },
   {
     name: 'Iono',
@@ -83,7 +83,7 @@ const myCards = [
     grade: 'Ungraded',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/615003_in_600x600.jpg',
-    searchId: null,
+    searchId: null, // Sem ID inglês compatível
   },
 ];
 
@@ -103,8 +103,7 @@ function setCachedData(key, data) {
   );
 }
 
-// --- PROXY "RAW" (O QUE ARRANJOU O VUSA) ---
-// Usa allorigins em modo RAW para ignorar CORS e receber JSON limpo
+// --- PROXY RAW (FUNCIONAL PARA VUSA E AGORA POKEMON) ---
 async function fetchViaRawProxy(targetUrl) {
   try {
     const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
@@ -137,7 +136,7 @@ async function getExchangeRates() {
       setCachedData('rates', rates);
     }
   } catch (e) {
-    console.warn('Erro rates, usando fallback');
+    console.warn('Erro rates');
   }
   return rates;
 }
@@ -158,7 +157,7 @@ async function fetchStocks(rates) {
     } else {
       try {
         if (stock.ticker === 'VUSA.L') {
-          // Yahoo via RAW Proxy (O que funcionou!)
+          // Yahoo via RAW Proxy
           const url = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
           const data = await fetchViaRawProxy(url);
 
@@ -170,7 +169,7 @@ async function fetchStocks(rates) {
             setCachedData(cacheKey, currentPrice);
           }
         } else {
-          // Finnhub Direct
+          // Finnhub
           const res = await fetch(
             `https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${FINNHUB_KEY}`
           );
@@ -185,13 +184,14 @@ async function fetchStocks(rates) {
       }
     }
 
-    // Fallback
     if (!currentPrice && stock.fallbackPrice)
       currentPrice = stock.fallbackPrice;
 
     // Render
     const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
-    const priceDisplay = currentPrice ? `€${currentPrice.toFixed(2)}` : 'N/A';
+    const priceDisplay = currentPrice
+      ? `€${currentPrice.toFixed(2)}`
+      : '<span style="color:orange">N/A</span>';
 
     let plCell = '<td style="text-align:right">-</td>';
     if (currentPrice) {
@@ -214,59 +214,43 @@ async function fetchStocks(rates) {
   }
 }
 
-// --- 3. CRYPTO (Simples e Seguro) ---
+// --- 3. CRYPTO ---
 async function fetchCrypto() {
   const cacheKey = 'crypto_prices';
   let prices = getCachedData(cacheKey);
 
-  // Se não houver cache, tenta buscar
   if (!prices) {
     try {
       const ids = myCrypto.map((c) => c.id).join(',');
-      // Adicionamos um timestamp ao URL para garantir que não estamos a ler um erro 429 antigo da cache do browser
       const response = await fetch(
-        `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=eur&t=${Date.now()}`
+        `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=eur`
       );
-
       if (response.ok) {
         prices = await response.json();
         setCachedData(cacheKey, prices);
-      } else {
-        console.warn('Crypto Rate Limit (429). Tenta mais tarde.');
       }
-    } catch (e) {
-      console.warn('Erro Crypto Network');
-    }
+    } catch (e) {}
   }
 
-  // Renderizar (Se prices for null, mostra N/A)
   myCrypto.forEach((coin) => {
     const priceEl = document.getElementById(
       `price-${coin.symbol.toLowerCase()}`
     );
-    if (priceEl) {
-      if (prices && prices[coin.id]) {
-        const currentPrice = prices[coin.id].eur;
-        const plPercent =
-          ((currentPrice - coin.avgPrice) / coin.avgPrice) * 100;
-        const colorClass = plPercent >= 0 ? 'text-green' : 'text-red';
-        const sign = plPercent >= 0 ? '+' : '';
-        priceEl.innerHTML = `€${currentPrice.toFixed(
-          2
-        )} <span class="${colorClass}" style="font-size: 0.8em;">(${sign}${plPercent.toFixed(
-          1
-        )}%)</span>`;
-      } else {
-        // Mostra Loading ou Erro de forma discreta
-        priceEl.innerText = 'Limit Reached';
-        priceEl.style.color = 'orange';
-        priceEl.style.fontSize = '0.8em';
-      }
+    if (priceEl && prices && prices[coin.id]) {
+      const currentPrice = prices[coin.id].eur;
+      const plPercent = ((currentPrice - coin.avgPrice) / coin.avgPrice) * 100;
+      const colorClass = plPercent >= 0 ? 'text-green' : 'text-red';
+      const sign = plPercent >= 0 ? '+' : '';
+      priceEl.innerHTML = `€${currentPrice.toFixed(
+        2
+      )} <span class="${colorClass}" style="font-size: 0.8em;">(${sign}${plPercent.toFixed(
+        1
+      )}%)</span>`;
     }
   });
 }
 
-// --- 4. POKEMON (AGORA VIA RAW PROXY IGUAL AO VUSA) ---
+// --- 4. POKEMON (OPTIMIZADO: Só pede o Preço) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
@@ -281,13 +265,14 @@ async function fetchPokemon(rates) {
 
       if (!cardPrice) {
         try {
-          // USAMOS O MESMO PROXY QUE ARRANJOU O VUSA!
-          const url = `https://api.pokemontcg.io/v2/cards/${card.searchId}`;
-          // Isto contorna o erro de CORS porque o pedido é feito pelo servidor do AllOrigins
+          // OPTIMIZAÇÃO: ?select=tcgplayer
+          // Isto faz com que o JSON seja minúsculo e passe pelo Proxy sem erros
+          const url = `https://api.pokemontcg.io/v2/cards/${card.searchId}?select=tcgplayer`;
           const data = await fetchViaRawProxy(url);
 
           if (data?.data?.tcgplayer?.prices) {
             const prices = data.data.tcgplayer.prices;
+            // Prioridade: Holo > Normal > Reverse
             let usd =
               prices.holofoil?.market ||
               prices.normal?.market ||
@@ -304,6 +289,7 @@ async function fetchPokemon(rates) {
       }
     }
 
+    // Se searchId for null (Nidoking, Zoroark), fica N/A
     const displayPrice = cardPrice ? `Est: €${cardPrice.toFixed(0)}` : 'N/A';
 
     let badgeColor = '#555';
