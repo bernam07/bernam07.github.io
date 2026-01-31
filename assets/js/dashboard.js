@@ -41,49 +41,49 @@ const myCards = [
   {
     name: 'Mew ex (JP sv4a)',
     grade: 'PSA 10',
-    manualImg: 'https://images.pokemontcg.io/sv4pt5/232_hires.png',
+    manualImg:
+      'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg',
     searchId: 'sv4pt5-232',
   },
   {
     name: 'Pikachu (JP sm11b)',
     grade: 'CCC 9',
-    manualImg: 'https://images.pokemontcg.io/sm12/241_hires.png',
+    manualImg:
+      'https://tcgplayer-cdn.tcgplayer.com/product/574914_in_1000x1000.jpg',
     searchId: 'sm12-241',
   },
   {
-    name: "Team Rocket's Nidoking",
+    name: "Team Rocket's Nidoking EX",
     grade: 'Ungraded',
     manualImg:
       'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SV10/SV10_EN_233.png',
     searchId: null,
   },
   {
-    name: 'Leafeon VSTAR',
+    name: 'Leafeon VSTAR (JP s12a)',
     grade: 'PSA 10',
     manualImg:
-      'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SWSH12PT5GG/SWSH12PT5GG_EN_GG35.png',
+      'https://den-cards.pokellector.com/357/Leafeon-VSTAR.S12A.210.45960.png',
     searchId: 'swsh12pt5-gg35',
   },
   {
     name: 'Charizard V (JP s12a)',
     grade: 'CGC 9.5',
-    // Link corrigido pelo utilizador
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/cqvwd3dhpbt4giji/1600.jpg',
     searchId: 'swsh12pt5-18',
   },
   {
-    name: 'Iono (Paldean Fates)',
+    name: 'Iono',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
     searchId: 'sv4pt5-237',
   },
   {
-    name: "N's Zoroark EX",
+    name: "N's Zoroark EX (JP sv9)",
     grade: 'Ungraded',
-    // Link corrigido pelo utilizador
     manualImg:
-      'https://storage.googleapis.com/images.pricecharting.com/rplmvcnb4gnv6gy4/1600.jpg',
+      'https://tcgplayer-cdn.tcgplayer.com/product/615003_in_600x600.jpg',
     searchId: null,
   },
 ];

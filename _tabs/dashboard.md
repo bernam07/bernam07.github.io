@@ -53,7 +53,7 @@ title: Dashboard
 </div>
 <hr>
 
-## 🪙 Crypto Portfolio (Live)
+## 🪙 Crypto Portfolio
 <div class="dashboard-grid">
   <div class="asset-card">
     <h3>ONDO Finance</h3>
@@ -77,7 +77,7 @@ title: Dashboard
 <hr>
 
 ## 🃏 Pokemon Collection
-> Top 5 (Grades PSA/CCC).
+> Top 8 (Grades PSA/CGC/CCC).
 
 <div class="poke-grid" id="poke-container">
   <p>A carregar coleção...</p>
