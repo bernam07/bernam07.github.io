@@ -6,7 +6,6 @@ title: Dashboard
 ---
 
 <style>
-  /* --- ESTILOS VISUAIS --- */
   .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -21,24 +20,18 @@ title: Dashboard
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   }
   .asset-card h3 { margin-top: 0; font-size: 1.1rem; }
-  
   .text-green { color: #00ff00; font-weight: bold; }
   .text-red { color: #ff4d4d; font-weight: bold; }
-  
   .stock-table { width:100%; border-collapse: collapse; font-family: monospace; }
   .stock-table th { text-align: left; padding: 10px; border-bottom: 2px solid #555; }
   .stock-table td { padding: 10px; border-bottom: 1px solid #333; }
-
   .poke-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 15px;
     margin-bottom: 2rem;
   }
-  .poke-card {
-    background: transparent;
-    transition: transform 0.2s;
-  }
+  .poke-card { background: transparent; transition: transform 0.2s; }
   .poke-card img:hover { transform: scale(1.05); cursor: pointer; }
 </style>
 
@@ -54,11 +47,10 @@ title: Dashboard
       </tr>
     </thead>
     <tbody id="stock-rows">
-      <tr><td colspan="4">A atualizar preços...</td></tr>
+      <tr><td colspan="4">A atualizar...</td></tr>
     </tbody>
   </table>
 </div>
-
 <hr>
 
 ## 🪙 Crypto Portfolio (Live)
@@ -82,16 +74,14 @@ title: Dashboard
     <p>Live: <span id="price-ada">Loading...</span></p>
   </div>
 </div>
-
 <hr>
 
 ## 🃏 Pokemon Collection
-> A minha coleção pessoal (Top 5).
+> Top 5 (Grades PSA/CCC).
 
 <div class="poke-grid" id="poke-container">
   <p>A carregar coleção...</p>
 </div>
-
 <hr>
 
 ## 🔫 CS2 Inventory
@@ -108,24 +98,9 @@ title: Dashboard
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td><strong>AWP</strong></td>
-        <td>Desert Hydra</td>
-        <td>FN</td>
-        <td style="text-align: right;">1.800€</td>
-      </tr>
-      <tr>
-        <td><strong>AK-47</strong></td>
-        <td>Gold Arabesque</td>
-        <td>MW</td>
-        <td style="text-align: right;">1.200€</td>
-      </tr>
-      <tr>
-        <td><strong>Knife</strong></td>
-        <td>Butterfly Fade</td>
-        <td>FN</td>
-        <td style="text-align: right;">2.500€</td>
-      </tr>
+      <tr><td><strong>AWP</strong></td><td>Desert Hydra</td><td>FN</td><td style="text-align: right;">1.800€</td></tr>
+      <tr><td><strong>AK-47</strong></td><td>Gold Arabesque</td><td>MW</td><td style="text-align: right;">1.200€</td></tr>
+      <tr><td><strong>Knife</strong></td><td>Butterfly Fade</td><td>FN</td><td style="text-align: right;">2.500€</td></tr>
     </tbody>
   </table>
 </div>
