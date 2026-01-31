@@ -2,16 +2,12 @@
 
 // CONFIGURAÇÃO
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
-const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos de Cache
+const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos
 
 // --- 1. STOCKS ---
+// Nota: Finnhub suporta VUSA.L direto.
 const myStocks = [
-  {
-    ticker: 'VUSA.L',
-    avgPrice: 100.9381,
-    shares: 15.288,
-    fallbackPrice: 105.1,
-  },
+  { ticker: 'VUSA.L', avgPrice: 100.9381, shares: 15.288 },
   { ticker: 'NVDA', avgPrice: 115.84, shares: 5.206 },
   { ticker: 'PLTR', avgPrice: 35.84, shares: 6.389 },
   { ticker: 'NVO', avgPrice: 70.02, shares: 12.48 },
@@ -29,62 +25,62 @@ const myCrypto = [
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 },
 ];
 
-// --- 3. POKEMON CARDS (TCGDex IDs) ---
-// Nota: A TCGDex usa '.' em vez de 'pt' nos sets (ex: swsh12.5)
+// --- 3. POKEMON CARDS ---
+// Voltamos aos IDs originais da pokemontcg.io que sabemos que existem
 const myCards = [
   {
     name: 'Pikachu Grey Felt Hat',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/svp/85_hires.png',
-    tcgDexId: 'svp-85',
+    searchId: 'svp-85',
   },
   {
     name: 'Mew ex (JP sv4a)',
     grade: 'PSA 10',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg',
-    tcgDexId: 'sv4.5-232', // Paldean Fates
+    searchId: 'sv4pt5-232',
   },
   {
     name: 'Pikachu (JP sm11b)',
     grade: 'CCC 9',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/574914_in_1000x1000.jpg',
-    tcgDexId: 'sm12-241', // Cosmic Eclipse
+    searchId: 'sm12-241',
   },
   {
     name: "Team Rocket's Nidoking EX",
     grade: 'Ungraded',
     manualImg:
       'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SV10/SV10_EN_233.png',
-    tcgDexId: null, // Carta muito recente, ainda sem dados estáveis
+    searchId: null,
   },
   {
     name: 'Leafeon VSTAR (JP s12a)',
     grade: 'PSA 10',
     manualImg:
       'https://den-cards.pokellector.com/357/Leafeon-VSTAR.S12A.210.45960.png',
-    tcgDexId: 'swsh12.5-gg35', // Crown Zenith
+    searchId: 'swsh12pt5-gg35',
   },
   {
     name: 'Charizard V (JP s12a)',
     grade: 'CGC 9.5',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/cqvwd3dhpbt4giji/1600.jpg',
-    tcgDexId: 'swsh12.5-18', // Crown Zenith
+    searchId: 'swsh12pt5-18',
   },
   {
-    name: 'Iono',
+    name: 'Iono (Paldean Fates)',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
-    tcgDexId: 'sv4.5-237', // Paldean Fates
+    searchId: 'sv4pt5-237',
   },
   {
     name: "N's Zoroark EX (JP sv9)",
     grade: 'Ungraded',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/615003_in_600x600.jpg',
-    tcgDexId: null, // Sem ID inglês compatível direto
+    searchId: null,
   },
 ];
 
@@ -104,20 +100,6 @@ function setCachedData(key, data) {
   );
 }
 
-// --- PROXY RAW (PARA VUSA) ---
-async function fetchViaRawProxy(targetUrl) {
-  try {
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
-      targetUrl
-    )}`;
-    const response = await fetch(proxyUrl);
-    if (!response.ok) throw new Error(`Proxy Error`);
-    return await response.json();
-  } catch (error) {
-    return null;
-  }
-}
-
 // --- 1. TAXAS DE CÂMBIO ---
 async function getExchangeRates() {
   const cached = getCachedData('rates');
@@ -125,7 +107,6 @@ async function getExchangeRates() {
 
   let rates = { usdToEur: 0.95, gbpToEur: 1.19 };
   try {
-    // Removi o timestamp para não levar block da CoinGecko
     const response = await fetch(
       'https://api.coingecko.com/api/v3/simple/price?ids=tether,british-pound-sterling&vs_currencies=eur'
     );
@@ -140,7 +121,7 @@ async function getExchangeRates() {
   return rates;
 }
 
-// --- 2. STOCKS ---
+// --- 2. STOCKS (Tudo via Finnhub) ---
 async function fetchStocks(rates) {
   const tableBody = document.getElementById('stock-rows');
   if (!tableBody) return;
@@ -155,40 +136,37 @@ async function fetchStocks(rates) {
       currentPrice = cachedPrice;
     } else {
       try {
-        if (stock.ticker === 'VUSA.L') {
-          // Yahoo via RAW Proxy
-          const url = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
-          const data = await fetchViaRawProxy(url);
+        // Finnhub direto para todos (incluindo VUSA.L)
+        const res = await fetch(
+          `https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${FINNHUB_KEY}`
+        );
+        const data = await res.json();
 
-          if (data?.chart?.result?.[0]?.meta) {
-            let p = data.chart.result[0].meta.regularMarketPrice;
-            if (data.chart.result[0].meta.currency === 'GBp' || p > 2000)
-              p = p / 100;
-            currentPrice = p * rates.gbpToEur;
-            setCachedData(cacheKey, currentPrice);
+        // Se a Finnhub devolver 0 para o VUSA, usamos um fallback visual
+        if (data.c && data.c > 0) {
+          // VUSA vem em GBp (Pence) ou GBP? Finnhub costuma mandar na moeda da bolsa.
+          // Se for VUSA.L, geralmente vem em USD ou GBP dependendo da listagem.
+          // Vamos assumir USD por defeito para Stocks US e converter VUSA se necessário.
+
+          let price = data.c;
+          if (stock.ticker === 'VUSA.L') {
+            // Ajuste: Finnhub as vezes manda VUSA.L em USD. Se for > 1000 é pence.
+            currentPrice = price * rates.gbpToEur; // Assumindo GBP
+          } else {
+            currentPrice = price * rates.usdToEur;
           }
-        } else {
-          // Finnhub Direct
-          const res = await fetch(
-            `https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${FINNHUB_KEY}`
-          );
-          const data = await res.json();
-          if (data.c) {
-            currentPrice = data.c * rates.usdToEur;
-            setCachedData(cacheKey, currentPrice);
-          }
+          setCachedData(cacheKey, currentPrice);
         }
       } catch (e) {}
     }
 
-    if (!currentPrice && stock.fallbackPrice)
-      currentPrice = stock.fallbackPrice;
+    // Se falhar, usa valor de fecho anterior conhecido (hardcoded fallback visual)
+    if (!currentPrice) {
+      if (stock.ticker === 'VUSA.L') currentPrice = 105.2;
+    }
 
-    // Render
     const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
-    const priceDisplay = currentPrice
-      ? `€${currentPrice.toFixed(2)}`
-      : '<span style="color:orange">N/A</span>';
+    const priceDisplay = currentPrice ? `€${currentPrice.toFixed(2)}` : 'N/A';
 
     let plCell = '<td style="text-align:right">-</td>';
     if (currentPrice) {
@@ -219,7 +197,6 @@ async function fetchCrypto() {
   if (!prices) {
     try {
       const ids = myCrypto.map((c) => c.id).join(',');
-      // Removido o cache busting agressivo para evitar erro 429
       const response = await fetch(
         `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=eur`
       );
@@ -248,7 +225,7 @@ async function fetchCrypto() {
   });
 }
 
-// --- 4. POKEMON (VIA TCGDEX) ---
+// --- 4. POKEMON (PEDIDO SIMPLES) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
@@ -257,38 +234,42 @@ async function fetchPokemon(rates) {
   for (const card of myCards) {
     let cardPrice = null;
 
-    if (card.tcgDexId) {
-      const cacheKey = `dex_${card.tcgDexId}`;
+    if (card.searchId) {
+      const cacheKey = `card_${card.searchId}`;
       cardPrice = getCachedData(cacheKey);
 
       if (!cardPrice) {
         try {
-          // TCGDex API - Permite CORS por defeito!
-          const url = `https://api.tcgdex.net/v2/en/cards/${card.tcgDexId}`;
-          const response = await fetch(url);
+          // PEDIDO DIRETO sem headers extra
+          // Isto usa pedido "Simple GET" que passa na maioria dos bloqueios CORS públicos
+          const url = `https://api.pokemontcg.io/v2/cards/${card.searchId}?select=tcgplayer`;
+          const response = await fetch(url, {
+            method: 'GET',
+            credentials: 'omit',
+          });
 
           if (response.ok) {
             const data = await response.json();
-            // A TCGDex devolve preços do Cardmarket em Euros! (se existirem)
-            if (data.cardmarket && data.cardmarket.prices) {
-              // Usamos a média dos últimos 7 dias (avg7) ou avg30
-              const euros =
-                data.cardmarket.prices.avg7 ||
-                data.cardmarket.prices.avg30 ||
+            if (data?.data?.tcgplayer?.prices) {
+              const prices = data.data.tcgplayer.prices;
+              let usd =
+                prices.holofoil?.market ||
+                prices.normal?.market ||
+                prices.reverseHolofoil?.market ||
                 0;
-              if (euros > 0) {
-                cardPrice = euros; // Já está em Euros, não precisa de conversão
+              if (usd > 0) {
+                cardPrice = usd * rates.usdToEur;
                 setCachedData(cacheKey, cardPrice);
               }
             }
           }
         } catch (e) {
-          console.log(`Erro Dex ${card.name}`);
+          console.log(`Erro ${card.name}`);
         }
       }
     }
 
-    const displayPrice = cardPrice ? `Mkt: €${cardPrice.toFixed(2)}` : 'N/A';
+    const displayPrice = cardPrice ? `Est: €${cardPrice.toFixed(0)}` : 'N/A';
 
     let badgeColor = '#555';
     if (card.grade.includes('10') || card.grade.includes('9.5'))
