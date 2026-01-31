@@ -29,61 +29,62 @@ const myCrypto = [
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 },
 ];
 
-// --- 3. POKEMON CARDS ---
+// --- 3. POKEMON CARDS (TCGDex IDs) ---
+// Nota: A TCGDex usa '.' em vez de 'pt' nos sets (ex: swsh12.5)
 const myCards = [
   {
     name: 'Pikachu Grey Felt Hat',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/svp/85_hires.png',
-    searchId: 'svp-85',
+    tcgDexId: 'svp-85',
   },
   {
     name: 'Mew ex (JP sv4a)',
     grade: 'PSA 10',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg',
-    searchId: 'sv4pt5-232', // Paldean Fates (Inglês)
+    tcgDexId: 'sv4.5-232', // Paldean Fates
   },
   {
     name: 'Pikachu (JP sm11b)',
     grade: 'CCC 9',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/574914_in_1000x1000.jpg',
-    searchId: 'sm12-241', // Cosmic Eclipse
+    tcgDexId: 'sm12-241', // Cosmic Eclipse
   },
   {
     name: "Team Rocket's Nidoking EX",
     grade: 'Ungraded',
     manualImg:
       'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SV10/SV10_EN_233.png',
-    searchId: null, // Sem ID inglês ainda
+    tcgDexId: null, // Carta muito recente, ainda sem dados estáveis
   },
   {
     name: 'Leafeon VSTAR (JP s12a)',
     grade: 'PSA 10',
     manualImg:
       'https://den-cards.pokellector.com/357/Leafeon-VSTAR.S12A.210.45960.png',
-    searchId: 'swsh12pt5-gg35', // Crown Zenith
+    tcgDexId: 'swsh12.5-gg35', // Crown Zenith
   },
   {
     name: 'Charizard V (JP s12a)',
     grade: 'CGC 9.5',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/cqvwd3dhpbt4giji/1600.jpg',
-    searchId: 'swsh12pt5-18', // Crown Zenith
+    tcgDexId: 'swsh12.5-18', // Crown Zenith
   },
   {
     name: 'Iono',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
-    searchId: 'sv4pt5-237',
+    tcgDexId: 'sv4.5-237', // Paldean Fates
   },
   {
     name: "N's Zoroark EX (JP sv9)",
     grade: 'Ungraded',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/615003_in_600x600.jpg',
-    searchId: null, // Sem ID inglês compatível
+    tcgDexId: null, // Sem ID inglês compatível direto
   },
 ];
 
@@ -103,17 +104,16 @@ function setCachedData(key, data) {
   );
 }
 
-// --- PROXY RAW (FUNCIONAL PARA VUSA E AGORA POKEMON) ---
+// --- PROXY RAW (PARA VUSA) ---
 async function fetchViaRawProxy(targetUrl) {
   try {
     const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
       targetUrl
     )}`;
     const response = await fetch(proxyUrl);
-    if (!response.ok) throw new Error(`Proxy Error ${response.status}`);
+    if (!response.ok) throw new Error(`Proxy Error`);
     return await response.json();
   } catch (error) {
-    console.warn(`Proxy falhou para ${targetUrl}:`, error);
     return null;
   }
 }
@@ -125,6 +125,7 @@ async function getExchangeRates() {
 
   let rates = { usdToEur: 0.95, gbpToEur: 1.19 };
   try {
+    // Removi o timestamp para não levar block da CoinGecko
     const response = await fetch(
       'https://api.coingecko.com/api/v3/simple/price?ids=tether,british-pound-sterling&vs_currencies=eur'
     );
@@ -135,9 +136,7 @@ async function getExchangeRates() {
         rates.gbpToEur = data['british-pound-sterling'].eur;
       setCachedData('rates', rates);
     }
-  } catch (e) {
-    console.warn('Erro rates');
-  }
+  } catch (e) {}
   return rates;
 }
 
@@ -169,7 +168,7 @@ async function fetchStocks(rates) {
             setCachedData(cacheKey, currentPrice);
           }
         } else {
-          // Finnhub
+          // Finnhub Direct
           const res = await fetch(
             `https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${FINNHUB_KEY}`
           );
@@ -179,9 +178,7 @@ async function fetchStocks(rates) {
             setCachedData(cacheKey, currentPrice);
           }
         }
-      } catch (e) {
-        console.warn(e);
-      }
+      } catch (e) {}
     }
 
     if (!currentPrice && stock.fallbackPrice)
@@ -222,6 +219,7 @@ async function fetchCrypto() {
   if (!prices) {
     try {
       const ids = myCrypto.map((c) => c.id).join(',');
+      // Removido o cache busting agressivo para evitar erro 429
       const response = await fetch(
         `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=eur`
       );
@@ -250,7 +248,7 @@ async function fetchCrypto() {
   });
 }
 
-// --- 4. POKEMON (OPTIMIZADO: Só pede o Preço) ---
+// --- 4. POKEMON (VIA TCGDEX) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
@@ -259,38 +257,38 @@ async function fetchPokemon(rates) {
   for (const card of myCards) {
     let cardPrice = null;
 
-    if (card.searchId) {
-      const cacheKey = `card_${card.searchId}`;
+    if (card.tcgDexId) {
+      const cacheKey = `dex_${card.tcgDexId}`;
       cardPrice = getCachedData(cacheKey);
 
       if (!cardPrice) {
         try {
-          // OPTIMIZAÇÃO: ?select=tcgplayer
-          // Isto faz com que o JSON seja minúsculo e passe pelo Proxy sem erros
-          const url = `https://api.pokemontcg.io/v2/cards/${card.searchId}?select=tcgplayer`;
-          const data = await fetchViaRawProxy(url);
+          // TCGDex API - Permite CORS por defeito!
+          const url = `https://api.tcgdex.net/v2/en/cards/${card.tcgDexId}`;
+          const response = await fetch(url);
 
-          if (data?.data?.tcgplayer?.prices) {
-            const prices = data.data.tcgplayer.prices;
-            // Prioridade: Holo > Normal > Reverse
-            let usd =
-              prices.holofoil?.market ||
-              prices.normal?.market ||
-              prices.reverseHolofoil?.market ||
-              0;
-            if (usd > 0) {
-              cardPrice = usd * rates.usdToEur;
-              setCachedData(cacheKey, cardPrice);
+          if (response.ok) {
+            const data = await response.json();
+            // A TCGDex devolve preços do Cardmarket em Euros! (se existirem)
+            if (data.cardmarket && data.cardmarket.prices) {
+              // Usamos a média dos últimos 7 dias (avg7) ou avg30
+              const euros =
+                data.cardmarket.prices.avg7 ||
+                data.cardmarket.prices.avg30 ||
+                0;
+              if (euros > 0) {
+                cardPrice = euros; // Já está em Euros, não precisa de conversão
+                setCachedData(cacheKey, cardPrice);
+              }
             }
           }
         } catch (e) {
-          console.log(`Erro price ${card.name}`);
+          console.log(`Erro Dex ${card.name}`);
         }
       }
     }
 
-    // Se searchId for null (Nidoking, Zoroark), fica N/A
-    const displayPrice = cardPrice ? `Est: €${cardPrice.toFixed(0)}` : 'N/A';
+    const displayPrice = cardPrice ? `Mkt: €${cardPrice.toFixed(2)}` : 'N/A';
 
     let badgeColor = '#555';
     if (card.grade.includes('10') || card.grade.includes('9.5'))
