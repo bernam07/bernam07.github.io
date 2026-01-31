@@ -32,15 +32,34 @@ title: Dashboard
   .poke-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
+    gap: 15px;
+    margin-bottom: 2rem;
   }
-  .poke-card img {
-    width: 100%;
-    border-radius: 8px;
+  .poke-card {
+    background: transparent;
     transition: transform 0.2s;
   }
-  .poke-card img:hover { transform: scale(1.05); }
+  .poke-card img:hover { transform: scale(1.05); cursor: pointer; }
 </style>
+
+## 📈 Stock Market Positions
+<div class="table-responsive">
+  <table class="stock-table">
+    <thead>
+      <tr>
+        <th>Ticker</th>
+        <th>Avg Buy (€)</th>
+        <th>Live (€)</th>
+        <th style="text-align: right;">P/L (%)</th>
+      </tr>
+    </thead>
+    <tbody id="stock-rows">
+      <tr><td colspan="4">A atualizar preços...</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<hr>
 
 ## 🪙 Crypto Portfolio (Live)
 <div class="dashboard-grid">
@@ -64,35 +83,51 @@ title: Dashboard
   </div>
 </div>
 
-## 📈 Stock Market Positions
-<div class="table-responsive">
-  <table class="stock-table">
-    <thead>
-      <tr>
-        <th>Ticker</th>
-        <th>Avg Buy (€)</th>
-        <th>Live (€)</th>
-        <th style="text-align: right;">P/L (%)</th>
-      </tr>
-    </thead>
-    <tbody id="stock-rows">
-      <tr><td colspan="4">A atualizar preços e câmbio...</td></tr>
-    </tbody>
-  </table>
-</div>
-
-## 🔫 CS2 Inventory
-| Weapon | Skin | Condition | Value |
-| :--- | :--- | :--- | :--- |
-| **AWP** | Desert Hydra | FN | 1.800€ |
-| **AK-47** | Gold Arabesque | MW | 1.200€ |
-| **Knife** | Butterfly Fade | FN | 2.500€ |
+<hr>
 
 ## 🃏 Pokemon Collection
 > A minha coleção pessoal (Top 5).
 
 <div class="poke-grid" id="poke-container">
-  <p style="color: yellow;">A carregar cartas via API...</p>
+  <p>A carregar coleção...</p>
+</div>
+
+<hr>
+
+## 🔫 CS2 Inventory
+> Destaques da coleção Steam.
+
+<div class="table-responsive">
+  <table class="stock-table">
+    <thead>
+      <tr>
+        <th>Weapon</th>
+        <th>Skin</th>
+        <th>Condition</th>
+        <th style="text-align: right;">Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>AWP</strong></td>
+        <td>Desert Hydra</td>
+        <td>FN</td>
+        <td style="text-align: right;">1.800€</td>
+      </tr>
+      <tr>
+        <td><strong>AK-47</strong></td>
+        <td>Gold Arabesque</td>
+        <td>MW</td>
+        <td style="text-align: right;">1.200€</td>
+      </tr>
+      <tr>
+        <td><strong>Knife</strong></td>
+        <td>Butterfly Fade</td>
+        <td>FN</td>
+        <td style="text-align: right;">2.500€</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <script src="/assets/js/dashboard.js"></script>
