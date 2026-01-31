@@ -2,12 +2,17 @@
 
 // CONFIGURAÇÃO
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
+const POKEMON_KEY = 'b32cdab4-e8c3-42b5-b0ab-fc0944d6e70b'; // A tua KEY
 const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos
 
 // --- 1. STOCKS ---
-// Nota: Finnhub suporta VUSA.L direto.
 const myStocks = [
-  { ticker: 'VUSA.L', avgPrice: 100.9381, shares: 15.288 },
+  {
+    ticker: 'VUSA.L',
+    avgPrice: 100.9381,
+    shares: 15.288,
+    fallbackPrice: 105.2,
+  },
   { ticker: 'NVDA', avgPrice: 115.84, shares: 5.206 },
   { ticker: 'PLTR', avgPrice: 35.84, shares: 6.389 },
   { ticker: 'NVO', avgPrice: 70.02, shares: 12.48 },
@@ -26,7 +31,6 @@ const myCrypto = [
 ];
 
 // --- 3. POKEMON CARDS ---
-// Voltamos aos IDs originais da pokemontcg.io que sabemos que existem
 const myCards = [
   {
     name: 'Pikachu Grey Felt Hat',
@@ -100,6 +104,20 @@ function setCachedData(key, data) {
   );
 }
 
+// --- PROXY RAW (Necessário APENAS para o VUSA) ---
+async function fetchViaRawProxy(targetUrl) {
+  try {
+    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
+      targetUrl
+    )}`;
+    const response = await fetch(proxyUrl);
+    if (!response.ok) throw new Error('Proxy Error');
+    return await response.json();
+  } catch (error) {
+    return null;
+  }
+}
+
 // --- 1. TAXAS DE CÂMBIO ---
 async function getExchangeRates() {
   const cached = getCachedData('rates');
@@ -121,7 +139,7 @@ async function getExchangeRates() {
   return rates;
 }
 
-// --- 2. STOCKS (Tudo via Finnhub) ---
+// --- 2. STOCKS ---
 async function fetchStocks(rates) {
   const tableBody = document.getElementById('stock-rows');
   if (!tableBody) return;
@@ -136,35 +154,36 @@ async function fetchStocks(rates) {
       currentPrice = cachedPrice;
     } else {
       try {
-        // Finnhub direto para todos (incluindo VUSA.L)
-        const res = await fetch(
-          `https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${FINNHUB_KEY}`
-        );
-        const data = await res.json();
+        if (stock.ticker === 'VUSA.L') {
+          // Yahoo via RAW Proxy (O ÚNICO MÉTODO QUE FUNCIONOU)
+          const url = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
+          const data = await fetchViaRawProxy(url);
 
-        // Se a Finnhub devolver 0 para o VUSA, usamos um fallback visual
-        if (data.c && data.c > 0) {
-          // VUSA vem em GBp (Pence) ou GBP? Finnhub costuma mandar na moeda da bolsa.
-          // Se for VUSA.L, geralmente vem em USD ou GBP dependendo da listagem.
-          // Vamos assumir USD por defeito para Stocks US e converter VUSA se necessário.
-
-          let price = data.c;
-          if (stock.ticker === 'VUSA.L') {
-            // Ajuste: Finnhub as vezes manda VUSA.L em USD. Se for > 1000 é pence.
-            currentPrice = price * rates.gbpToEur; // Assumindo GBP
-          } else {
-            currentPrice = price * rates.usdToEur;
+          if (data?.chart?.result?.[0]?.meta) {
+            let p = data.chart.result[0].meta.regularMarketPrice;
+            if (data.chart.result[0].meta.currency === 'GBp' || p > 2000)
+              p = p / 100;
+            currentPrice = p * rates.gbpToEur;
+            setCachedData(cacheKey, currentPrice);
           }
-          setCachedData(cacheKey, currentPrice);
+        } else {
+          // Finnhub Direct
+          const res = await fetch(
+            `https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${FINNHUB_KEY}`
+          );
+          const data = await res.json();
+          if (data.c) {
+            currentPrice = data.c * rates.usdToEur;
+            setCachedData(cacheKey, currentPrice);
+          }
         }
       } catch (e) {}
     }
 
-    // Se falhar, usa valor de fecho anterior conhecido (hardcoded fallback visual)
-    if (!currentPrice) {
-      if (stock.ticker === 'VUSA.L') currentPrice = 105.2;
-    }
+    if (!currentPrice && stock.fallbackPrice)
+      currentPrice = stock.fallbackPrice;
 
+    // Render
     const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
     const priceDisplay = currentPrice ? `€${currentPrice.toFixed(2)}` : 'N/A';
 
@@ -225,7 +244,7 @@ async function fetchCrypto() {
   });
 }
 
-// --- 4. POKEMON (PEDIDO SIMPLES) ---
+// --- 4. POKEMON (COM TUA KEY) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
@@ -240,12 +259,10 @@ async function fetchPokemon(rates) {
 
       if (!cardPrice) {
         try {
-          // PEDIDO DIRETO sem headers extra
-          // Isto usa pedido "Simple GET" que passa na maioria dos bloqueios CORS públicos
-          const url = `https://api.pokemontcg.io/v2/cards/${card.searchId}?select=tcgplayer`;
+          // Fetch Direto com a TUA Key, como pediste
+          const url = `https://api.pokemontcg.io/v2/cards/${card.searchId}`;
           const response = await fetch(url, {
-            method: 'GET',
-            credentials: 'omit',
+            headers: { 'X-Api-Key': POKEMON_KEY },
           });
 
           if (response.ok) {
