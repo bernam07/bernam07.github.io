@@ -57,7 +57,7 @@ title: Dashboard
 <div class="dashboard-grid">
   <div class="asset-card">
     <h3>ONDO Finance</h3>
-    <p>Holdings: 1.278</p>
+    <p>Holdings: 1278</p>
     <p>Avg Buy: €0.799</p>
     <p>Live: <span id="price-ondo">Loading...</span></p>
   </div>
@@ -85,7 +85,6 @@ title: Dashboard
 <hr>
 
 ## 🔫 CS2 Inventory
-> Destaques da coleção Steam.
 
 <div class="table-responsive">
   <table class="stock-table">

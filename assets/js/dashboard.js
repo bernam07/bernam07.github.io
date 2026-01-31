@@ -33,7 +33,7 @@ const myCrypto = [
 // --- 3. POKEMON CARDS ---
 const myCards = [
   {
-    name: 'Pikachu Grey Felt Hat',
+    name: 'Pikachu with Grey Felt Hat',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/svp/85_hires.png',
     searchId: 'svp-85',
@@ -74,7 +74,7 @@ const myCards = [
     searchId: 'swsh12pt5-18',
   },
   {
-    name: 'Iono (Paldean Fates)',
+    name: 'Iono',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
     searchId: 'sv4pt5-237',
@@ -104,7 +104,7 @@ function setCachedData(key, data) {
   );
 }
 
-// --- PROXY RAW (Necessário APENAS para o VUSA) ---
+// --- PROXY RAW ---
 async function fetchViaRawProxy(targetUrl) {
   try {
     const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
@@ -155,7 +155,6 @@ async function fetchStocks(rates) {
     } else {
       try {
         if (stock.ticker === 'VUSA.L') {
-          // Yahoo via RAW Proxy (O ÚNICO MÉTODO QUE FUNCIONOU)
           const url = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
           const data = await fetchViaRawProxy(url);
 
@@ -244,7 +243,7 @@ async function fetchCrypto() {
   });
 }
 
-// --- 4. POKEMON (COM TUA KEY) ---
+// --- 4. POKEMON ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
@@ -259,7 +258,6 @@ async function fetchPokemon(rates) {
 
       if (!cardPrice) {
         try {
-          // Fetch Direto com a TUA Key, como pediste
           const url = `https://api.pokemontcg.io/v2/cards/${card.searchId}`;
           const response = await fetch(url, {
             headers: { 'X-Api-Key': POKEMON_KEY },
