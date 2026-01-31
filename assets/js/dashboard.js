@@ -2,7 +2,6 @@
 
 // CONFIGURAÇÃO
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
-const POKEMON_KEY = 'b32cdab4-e8c3-42b5-b0ab-fc0944d6e70b'; // A tua chave
 const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos
 
 // --- 1. STOCKS ---
@@ -57,7 +56,7 @@ const myCards = [
     grade: 'Ungraded',
     manualImg:
       'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SV10/SV10_EN_233.png',
-    searchId: null, // Carta nova, sem preço na API ainda
+    searchId: null, // Carta nova
   },
   {
     name: 'Leafeon VSTAR (JP s12a)',
@@ -105,9 +104,10 @@ function setCachedData(key, data) {
 }
 
 // --- PROXY ROBUSTO (CorsProxy.io) ---
-// Mais estável para Yahoo Finance
+// Resolve CORS para Yahoo e Pokemon
 async function fetchViaProxy(targetUrl) {
   try {
+    // Adiciona timestamp para evitar cache do browser
     const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
     const response = await fetch(proxyUrl);
     if (!response.ok) throw new Error('Proxy Error');
@@ -157,7 +157,7 @@ async function fetchStocks(rates) {
     } else {
       try {
         if (stock.ticker === 'VUSA.L') {
-          // Yahoo via CorsProxy
+          // Yahoo via Proxy
           const url = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
           const data = await fetchViaProxy(url);
 
@@ -169,7 +169,7 @@ async function fetchStocks(rates) {
             setCachedData(cacheKey, currentPrice);
           }
         } else {
-          // Finnhub Direct
+          // Finnhub Directo
           const res = await fetch(
             `https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${FINNHUB_KEY}`
           );
@@ -251,7 +251,7 @@ async function fetchCrypto() {
   });
 }
 
-// --- 4. POKEMON (COM API KEY) ---
+// --- 4. POKEMON (VIA PROXY) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
@@ -266,27 +266,22 @@ async function fetchPokemon(rates) {
 
       if (!cardPrice) {
         try {
-          // PEDIDO DIRETO COM API KEY NOS HEADERS
+          // USAMOS PROXY SEM API KEY.
+          // Isto contorna o erro de CORS e Preflight.
           const url = `https://api.pokemontcg.io/v2/cards/${card.searchId}`;
-          const response = await fetch(url, {
-            headers: { 'X-Api-Key': POKEMON_KEY },
-          });
+          const data = await fetchViaProxy(url);
 
-          if (response.ok) {
-            const data = await response.json();
-            if (data?.data?.tcgplayer?.prices) {
-              const prices = data.data.tcgplayer.prices;
-              // Tenta preços por ordem de prioridade
-              let usd =
-                prices.holofoil?.market ||
-                prices.normal?.market ||
-                prices.reverseHolofoil?.market ||
-                0;
+          if (data?.data?.tcgplayer?.prices) {
+            const prices = data.data.tcgplayer.prices;
+            let usd =
+              prices.holofoil?.market ||
+              prices.normal?.market ||
+              prices.reverseHolofoil?.market ||
+              0;
 
-              if (usd > 0) {
-                cardPrice = usd * rates.usdToEur;
-                setCachedData(cacheKey, cardPrice);
-              }
+            if (usd > 0) {
+              cardPrice = usd * rates.usdToEur;
+              setCachedData(cacheKey, cardPrice);
             }
           }
         } catch (e) {
