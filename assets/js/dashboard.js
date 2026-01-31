@@ -24,7 +24,7 @@ const myStocks = [
   { ticker: 'ORCL', avgPrice: 166.78, shares: 2.419 },
 ];
 
-// --- 2. CRYPTO (MANTIDO IGUAL - FUNCIONAL) ---
+// --- 2. CRYPTO ---
 const myCrypto = [
   { id: 'ondo-finance', symbol: 'ONDO', avgPrice: 0.799, holdings: 1278.461 },
   { id: 'avalanche-2', symbol: 'AVAX', avgPrice: 11.76, holdings: 7.237 },
@@ -32,14 +32,12 @@ const myCrypto = [
 ];
 
 // --- 3. POKEMON CARDS ---
-// query: Nome + Número para a pesquisa ser exata
-// lang: 'english' ou 'japanese'
 const myCards = [
   {
-    name: 'Pikachu with Grey Felt Hat',
+    name: 'Pikachu Grey Felt Hat',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/svp/85_hires.png',
-    query: 'Pikachu with Grey Felt Hat',
+    query: 'Pikachu Grey Felt Hat',
     lang: 'english',
   },
   {
@@ -47,7 +45,7 @@ const myCards = [
     grade: 'PSA 10',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg',
-    query: 'Mew ex 347',
+    query: 'Mew ex 348',
     lang: 'japanese',
   },
   {
@@ -56,7 +54,7 @@ const myCards = [
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/574914_in_1000x1000.jpg',
     query: 'Pikachu 054',
-    lang: 'japanese', // Dream League CHR #054
+    lang: 'japanese',
   },
   {
     name: "Team Rocket's Nidoking",
@@ -67,7 +65,7 @@ const myCards = [
     lang: 'english',
   },
   {
-    name: 'Leafeon VSTAR (JP s12a)',
+    name: 'Leafeon VSTAR (JP)',
     grade: 'PSA 10',
     manualImg:
       'https://den-cards.pokellector.com/357/Leafeon-VSTAR.S12A.210.45960.png',
@@ -95,7 +93,7 @@ const myCards = [
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/615003_in_600x600.jpg',
     query: 'Zoroark 102',
-    lang: 'japanese', // BW Era costuma ser 102 ou similar
+    lang: 'japanese',
   },
 ];
 
@@ -257,7 +255,7 @@ async function fetchCrypto() {
   });
 }
 
-// --- 4. POKEMON (Via PokemonPriceTracker API v2) ---
+// --- 4. POKEMON (COM CORSPROXY PARA RESOLVER ERRO) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
@@ -272,39 +270,47 @@ async function fetchPokemon(rates) {
       try {
         const encodedQuery = encodeURIComponent(card.query);
         const lang = card.lang || 'english';
-        // Endpoint V2 com includeEbay=true
-        const url = `https://www.pokemonpricetracker.com/api/v2/cards?search=${encodedQuery}&language=${lang}&includeEbay=true`;
 
-        const response = await fetch(url, {
+        // 1. URL da API
+        const targetUrl = `https://www.pokemonpricetracker.com/api/v2/cards?search=${encodedQuery}&language=${lang}&includeEbay=true`;
+
+        // 2. Envolvemos no corsproxy.io para o browser não bloquear
+        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(
+          targetUrl
+        )}`;
+
+        const response = await fetch(proxyUrl, {
           method: 'GET',
           headers: {
-            Authorization: `Bearer ${PPT_KEY}`,
+            Authorization: `Bearer ${PPT_KEY}`, // A Key passa pelo Proxy
           },
         });
 
         if (response.ok) {
-          const data = await response.json(); // A resposta costuma ser uma lista [card1, card2]
+          const data = await response.json();
 
-          // Pegamos o primeiro resultado da pesquisa
           if (Array.isArray(data) && data.length > 0) {
             const bestMatch = data[0];
             let usd = 0;
 
-            // Tenta encontrar o preço da Grade específica
+            // Lógica de Grade
             if (
               card.grade !== 'Ungraded' &&
               bestMatch.ebay &&
               bestMatch.ebay.graded
             ) {
-              // Normaliza a grade para o formato da chave (ex: "PSA 9" -> "psa9")
-              const gradeKey = card.grade.toLowerCase().replace(/ /g, '');
-              const gradeObj = bestMatch.ebay.graded[gradeKey];
+              const gradeKey = card.grade.toLowerCase().replace(/ /g, ''); // ex: psa10
+              const gradeObj = bestMatch.ebay.graded[gradeKey]; // Tenta 'psa10'
 
-              // Tenta "average" (média) ou "price" (último preço)
               if (gradeObj) usd = gradeObj.average || gradeObj.price;
+
+              // Se não deu, tenta key maiuscula "PSA 10" (algumas apis variam)
+              if (usd === 0 && bestMatch.ebay.graded[card.grade]) {
+                usd = bestMatch.ebay.graded[card.grade].average;
+              }
             }
 
-            // Fallback: Se não encontrou grade ou é Ungraded, usa preço normal
+            // Fallback
             if (!usd || usd === 0) {
               usd = bestMatch.price || bestMatch.tcgPlayer?.price || 0;
             }
@@ -320,7 +326,7 @@ async function fetchPokemon(rates) {
       }
     }
 
-    const displayPrice = cardPrice ? `Est: €${cardPrice.toFixed(0)}` : 'N/A';
+    const displayPrice = cardPrice ? `€${cardPrice.toFixed(0)}` : 'N/A';
 
     let badgeColor = '#555';
     if (card.grade.includes('10') || card.grade.includes('9.5'))
