@@ -2,7 +2,7 @@
 
 // CONFIGURAÇÃO
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
-const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos
+const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos de Cache
 
 // --- 1. STOCKS ---
 const myStocks = [
@@ -56,7 +56,7 @@ const myCards = [
     grade: 'Ungraded',
     manualImg:
       'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SV10/SV10_EN_233.png',
-    searchId: null, // Carta nova
+    searchId: null,
   },
   {
     name: 'Leafeon VSTAR (JP s12a)',
@@ -73,7 +73,7 @@ const myCards = [
     searchId: 'swsh12pt5-18',
   },
   {
-    name: 'Iono',
+    name: 'Iono (Paldean Fates)',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
     searchId: 'sv4pt5-237',
@@ -103,15 +103,26 @@ function setCachedData(key, data) {
   );
 }
 
-// --- PROXY ROBUSTO (CorsProxy.io) ---
-// Resolve CORS para Yahoo e Pokemon
+// --- FUNÇÃO DE PROXY (AllOrigins) ---
 async function fetchViaProxy(targetUrl) {
   try {
-    // Adiciona timestamp para evitar cache do browser
-    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+    // O 'rand' evita que o browser use cache velha
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(
+      targetUrl
+    )}&rand=${Math.random()}`;
+
     const response = await fetch(proxyUrl);
     if (!response.ok) throw new Error('Proxy Error');
-    return await response.json();
+
+    const data = await response.json();
+    if (!data.contents) return null;
+
+    // O AllOrigins devolve string ou JSON, tentamos parse
+    try {
+      return JSON.parse(data.contents);
+    } catch (e) {
+      return data.contents;
+    }
   } catch (error) {
     console.warn(`Proxy falhou para ${targetUrl}`);
     return null;
@@ -135,9 +146,7 @@ async function getExchangeRates() {
         rates.gbpToEur = data['british-pound-sterling'].eur;
       setCachedData('rates', rates);
     }
-  } catch (e) {
-    console.warn('Erro câmbio, usando fallback');
-  }
+  } catch (e) {}
   return rates;
 }
 
@@ -157,7 +166,7 @@ async function fetchStocks(rates) {
     } else {
       try {
         if (stock.ticker === 'VUSA.L') {
-          // Yahoo via Proxy
+          // Yahoo via AllOrigins
           const url = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
           const data = await fetchViaProxy(url);
 
@@ -169,7 +178,7 @@ async function fetchStocks(rates) {
             setCachedData(cacheKey, currentPrice);
           }
         } else {
-          // Finnhub Directo
+          // Finnhub Direct
           const res = await fetch(
             `https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${FINNHUB_KEY}`
           );
@@ -179,9 +188,7 @@ async function fetchStocks(rates) {
             setCachedData(cacheKey, currentPrice);
           }
         }
-      } catch (e) {
-        console.warn(e);
-      }
+      } catch (e) {}
     }
 
     // Fallback
@@ -191,16 +198,17 @@ async function fetchStocks(rates) {
     // Render
     const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
     const priceDisplay = currentPrice ? `€${currentPrice.toFixed(2)}` : 'N/A';
-    const plCell = currentPrice
-      ? (() => {
-          const pl = ((currentPrice - stock.avgPrice) / stock.avgPrice) * 100;
-          const color = pl >= 0 ? 'text-green' : 'text-red';
-          const sign = pl >= 0 ? '+' : '';
-          return `<td class="${color}" style="text-align:right; font-weight:bold;">${sign}${pl.toFixed(
-            1
-          )}%</td>`;
-        })()
-      : `<td style="text-align:right">-</td>`;
+
+    // Calcula cor do P/L
+    let plCell = '<td style="text-align:right">-</td>';
+    if (currentPrice) {
+      const pl = ((currentPrice - stock.avgPrice) / stock.avgPrice) * 100;
+      const color = pl >= 0 ? 'text-green' : 'text-red';
+      const sign = pl >= 0 ? '+' : '';
+      plCell = `<td class="${color}" style="text-align:right; font-weight:bold;">${sign}${pl.toFixed(
+        1
+      )}%</td>`;
+    }
 
     const row = `
       <tr style="border-bottom: 1px solid #333;">
@@ -228,9 +236,7 @@ async function fetchCrypto() {
         prices = await response.json();
         setCachedData(cacheKey, prices);
       }
-    } catch (e) {
-      console.warn('Erro Crypto API');
-    }
+    } catch (e) {}
   }
 
   myCrypto.forEach((coin) => {
@@ -251,7 +257,7 @@ async function fetchCrypto() {
   });
 }
 
-// --- 4. POKEMON (VIA PROXY) ---
+// --- 4. POKEMON ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
@@ -266,8 +272,6 @@ async function fetchPokemon(rates) {
 
       if (!cardPrice) {
         try {
-          // USAMOS PROXY SEM API KEY.
-          // Isto contorna o erro de CORS e Preflight.
           const url = `https://api.pokemontcg.io/v2/cards/${card.searchId}`;
           const data = await fetchViaProxy(url);
 
@@ -278,14 +282,13 @@ async function fetchPokemon(rates) {
               prices.normal?.market ||
               prices.reverseHolofoil?.market ||
               0;
-
             if (usd > 0) {
               cardPrice = usd * rates.usdToEur;
               setCachedData(cacheKey, cardPrice);
             }
           }
         } catch (e) {
-          console.log(`Erro ao obter preço para ${card.name}:`, e);
+          console.log(`Erro price ${card.name}`);
         }
       }
     }
