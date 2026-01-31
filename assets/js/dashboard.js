@@ -2,11 +2,16 @@
 
 // CONFIGURAÇÃO
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
-const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos
+const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos de Cache
 
 // --- 1. STOCKS ---
 const myStocks = [
-  { ticker: 'VUSA.L', avgPrice: 100.9381, shares: 15.288 },
+  {
+    ticker: 'VUSA.L',
+    avgPrice: 100.9381,
+    shares: 15.288,
+    fallbackPrice: 105.1,
+  },
   { ticker: 'NVDA', avgPrice: 115.84, shares: 5.206 },
   { ticker: 'PLTR', avgPrice: 35.84, shares: 6.389 },
   { ticker: 'NVO', avgPrice: 70.02, shares: 12.48 },
@@ -68,7 +73,7 @@ const myCards = [
     searchId: 'swsh12pt5-18',
   },
   {
-    name: 'Iono (Paldean Fates)',
+    name: 'Iono',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
     searchId: 'sv4pt5-237',
@@ -98,6 +103,22 @@ function setCachedData(key, data) {
   );
 }
 
+// --- PROXY "RAW" (O QUE ARRANJOU O VUSA) ---
+// Usa allorigins em modo RAW para ignorar CORS e receber JSON limpo
+async function fetchViaRawProxy(targetUrl) {
+  try {
+    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
+      targetUrl
+    )}`;
+    const response = await fetch(proxyUrl);
+    if (!response.ok) throw new Error(`Proxy Error ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.warn(`Proxy falhou para ${targetUrl}:`, error);
+    return null;
+  }
+}
+
 // --- 1. TAXAS DE CÂMBIO ---
 async function getExchangeRates() {
   const cached = getCachedData('rates');
@@ -115,7 +136,9 @@ async function getExchangeRates() {
         rates.gbpToEur = data['british-pound-sterling'].eur;
       setCachedData('rates', rates);
     }
-  } catch (e) {}
+  } catch (e) {
+    console.warn('Erro rates, usando fallback');
+  }
   return rates;
 }
 
@@ -135,23 +158,16 @@ async function fetchStocks(rates) {
     } else {
       try {
         if (stock.ticker === 'VUSA.L') {
-          // Yahoo via AllOrigins (Modo RAW para evitar erros de JSON)
-          const targetUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
-          // O 'raw' devolve o JSON original do Yahoo limpo
-          const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
-            targetUrl
-          )}`;
+          // Yahoo via RAW Proxy (O que funcionou!)
+          const url = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
+          const data = await fetchViaRawProxy(url);
 
-          const res = await fetch(proxyUrl);
-          if (res.ok) {
-            const data = await res.json();
-            const meta = data.chart?.result?.[0]?.meta;
-            if (meta) {
-              let p = meta.regularMarketPrice;
-              if (meta.currency === 'GBp' || p > 2000) p = p / 100;
-              currentPrice = p * rates.gbpToEur;
-              setCachedData(cacheKey, currentPrice);
-            }
+          if (data?.chart?.result?.[0]?.meta) {
+            let p = data.chart.result[0].meta.regularMarketPrice;
+            if (data.chart.result[0].meta.currency === 'GBp' || p > 2000)
+              p = p / 100;
+            currentPrice = p * rates.gbpToEur;
+            setCachedData(cacheKey, currentPrice);
           }
         } else {
           // Finnhub Direct
@@ -165,17 +181,17 @@ async function fetchStocks(rates) {
           }
         }
       } catch (e) {
-        console.warn(`Falha ${stock.ticker}`);
+        console.warn(e);
       }
     }
 
+    // Fallback
+    if (!currentPrice && stock.fallbackPrice)
+      currentPrice = stock.fallbackPrice;
+
     // Render
     const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
-
-    // Se não temos preço, usamos um placeholder "N/A" sem cor
-    const priceDisplay = currentPrice
-      ? `€${currentPrice.toFixed(2)}`
-      : '<span style="color:orange">N/A</span>';
+    const priceDisplay = currentPrice ? `€${currentPrice.toFixed(2)}` : 'N/A';
 
     let plCell = '<td style="text-align:right">-</td>';
     if (currentPrice) {
@@ -198,43 +214,59 @@ async function fetchStocks(rates) {
   }
 }
 
-// --- 3. CRYPTO ---
+// --- 3. CRYPTO (Simples e Seguro) ---
 async function fetchCrypto() {
   const cacheKey = 'crypto_prices';
   let prices = getCachedData(cacheKey);
 
+  // Se não houver cache, tenta buscar
   if (!prices) {
     try {
       const ids = myCrypto.map((c) => c.id).join(',');
+      // Adicionamos um timestamp ao URL para garantir que não estamos a ler um erro 429 antigo da cache do browser
       const response = await fetch(
-        `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=eur`
+        `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=eur&t=${Date.now()}`
       );
+
       if (response.ok) {
         prices = await response.json();
         setCachedData(cacheKey, prices);
+      } else {
+        console.warn('Crypto Rate Limit (429). Tenta mais tarde.');
       }
-    } catch (e) {}
+    } catch (e) {
+      console.warn('Erro Crypto Network');
+    }
   }
 
+  // Renderizar (Se prices for null, mostra N/A)
   myCrypto.forEach((coin) => {
     const priceEl = document.getElementById(
       `price-${coin.symbol.toLowerCase()}`
     );
-    if (priceEl && prices && prices[coin.id]) {
-      const currentPrice = prices[coin.id].eur;
-      const plPercent = ((currentPrice - coin.avgPrice) / coin.avgPrice) * 100;
-      const colorClass = plPercent >= 0 ? 'text-green' : 'text-red';
-      const sign = plPercent >= 0 ? '+' : '';
-      priceEl.innerHTML = `€${currentPrice.toFixed(
-        2
-      )} <span class="${colorClass}" style="font-size: 0.8em;">(${sign}${plPercent.toFixed(
-        1
-      )}%)</span>`;
+    if (priceEl) {
+      if (prices && prices[coin.id]) {
+        const currentPrice = prices[coin.id].eur;
+        const plPercent =
+          ((currentPrice - coin.avgPrice) / coin.avgPrice) * 100;
+        const colorClass = plPercent >= 0 ? 'text-green' : 'text-red';
+        const sign = plPercent >= 0 ? '+' : '';
+        priceEl.innerHTML = `€${currentPrice.toFixed(
+          2
+        )} <span class="${colorClass}" style="font-size: 0.8em;">(${sign}${plPercent.toFixed(
+          1
+        )}%)</span>`;
+      } else {
+        // Mostra Loading ou Erro de forma discreta
+        priceEl.innerText = 'Limit Reached';
+        priceEl.style.color = 'orange';
+        priceEl.style.fontSize = '0.8em';
+      }
     }
   });
 }
 
-// --- 4. POKEMON (DIRETO E LIMPO) ---
+// --- 4. POKEMON (AGORA VIA RAW PROXY IGUAL AO VUSA) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
@@ -249,38 +281,31 @@ async function fetchPokemon(rates) {
 
       if (!cardPrice) {
         try {
-          // PEDIDO DIRETO OFICIAL (Sem proxy, sem key, sem headers)
-          // 'credentials: omit' garante que o browser não envia nada que dispare CORS
+          // USAMOS O MESMO PROXY QUE ARRANJOU O VUSA!
           const url = `https://api.pokemontcg.io/v2/cards/${card.searchId}`;
-          const response = await fetch(url, {
-            method: 'GET',
-            credentials: 'omit',
-          });
+          // Isto contorna o erro de CORS porque o pedido é feito pelo servidor do AllOrigins
+          const data = await fetchViaRawProxy(url);
 
-          if (response.ok) {
-            const data = await response.json();
-            if (data?.data?.tcgplayer?.prices) {
-              const prices = data.data.tcgplayer.prices;
-              let usd =
-                prices.holofoil?.market ||
-                prices.normal?.market ||
-                prices.reverseHolofoil?.market ||
-                0;
-              if (usd > 0) {
-                cardPrice = usd * rates.usdToEur;
-                setCachedData(cacheKey, cardPrice);
-              }
+          if (data?.data?.tcgplayer?.prices) {
+            const prices = data.data.tcgplayer.prices;
+            let usd =
+              prices.holofoil?.market ||
+              prices.normal?.market ||
+              prices.reverseHolofoil?.market ||
+              0;
+            if (usd > 0) {
+              cardPrice = usd * rates.usdToEur;
+              setCachedData(cacheKey, cardPrice);
             }
           }
         } catch (e) {
-          console.log(`Erro ${card.name}`);
+          console.log(`Erro price ${card.name}`);
         }
       }
     }
 
     const displayPrice = cardPrice ? `Est: €${cardPrice.toFixed(0)}` : 'N/A';
 
-    // Cores da Badge
     let badgeColor = '#555';
     if (card.grade.includes('10') || card.grade.includes('9.5'))
       badgeColor = '#d4af37';
