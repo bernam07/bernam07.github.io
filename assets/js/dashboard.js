@@ -6,13 +6,7 @@ const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos
 
 // --- 1. STOCKS ---
 const myStocks = [
-  // FallbackPrice atualizado: Se tudo falhar, mostra este valor
-  {
-    ticker: 'VUSA.L',
-    avgPrice: 100.9381,
-    shares: 15.288,
-    fallbackPrice: 105.1,
-  },
+  { ticker: 'VUSA.L', avgPrice: 100.9381, shares: 15.288 },
   { ticker: 'NVDA', avgPrice: 115.84, shares: 5.206 },
   { ticker: 'PLTR', avgPrice: 35.84, shares: 6.389 },
   { ticker: 'NVO', avgPrice: 70.02, shares: 12.48 },
@@ -33,7 +27,7 @@ const myCrypto = [
 // --- 3. POKEMON CARDS ---
 const myCards = [
   {
-    name: 'Pikachu with Grey Felt Hat',
+    name: 'Pikachu Grey Felt Hat',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/svp/85_hires.png',
     searchId: 'svp-85',
@@ -74,7 +68,7 @@ const myCards = [
     searchId: 'swsh12pt5-18',
   },
   {
-    name: 'Iono',
+    name: 'Iono (Paldean Fates)',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
     searchId: 'sv4pt5-237',
@@ -102,21 +96,6 @@ function setCachedData(key, data) {
     key,
     JSON.stringify({ timestamp: Date.now(), data: data })
   );
-}
-
-// --- PROXY CodeTabs (Só para o Yahoo) ---
-async function fetchViaProxy(targetUrl) {
-  try {
-    const proxyUrl = `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(
-      targetUrl
-    )}`;
-    const response = await fetch(proxyUrl);
-    if (!response.ok) throw new Error('Proxy Error');
-    return await response.json();
-  } catch (error) {
-    console.warn(`Proxy falhou para ${targetUrl}`);
-    return null;
-  }
 }
 
 // --- 1. TAXAS DE CÂMBIO ---
@@ -156,16 +135,23 @@ async function fetchStocks(rates) {
     } else {
       try {
         if (stock.ticker === 'VUSA.L') {
-          // Yahoo via CodeTabs Proxy
-          const url = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
-          const data = await fetchViaProxy(url);
+          // Yahoo via AllOrigins (Modo RAW para evitar erros de JSON)
+          const targetUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
+          // O 'raw' devolve o JSON original do Yahoo limpo
+          const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
+            targetUrl
+          )}`;
 
-          if (data?.chart?.result?.[0]?.meta) {
-            let p = data.chart.result[0].meta.regularMarketPrice;
-            if (data.chart.result[0].meta.currency === 'GBp' || p > 2000)
-              p = p / 100;
-            currentPrice = p * rates.gbpToEur;
-            setCachedData(cacheKey, currentPrice);
+          const res = await fetch(proxyUrl);
+          if (res.ok) {
+            const data = await res.json();
+            const meta = data.chart?.result?.[0]?.meta;
+            if (meta) {
+              let p = meta.regularMarketPrice;
+              if (meta.currency === 'GBp' || p > 2000) p = p / 100;
+              currentPrice = p * rates.gbpToEur;
+              setCachedData(cacheKey, currentPrice);
+            }
           }
         } else {
           // Finnhub Direct
@@ -178,16 +164,18 @@ async function fetchStocks(rates) {
             setCachedData(cacheKey, currentPrice);
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        console.warn(`Falha ${stock.ticker}`);
+      }
     }
-
-    // Fallback
-    if (!currentPrice && stock.fallbackPrice)
-      currentPrice = stock.fallbackPrice;
 
     // Render
     const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
-    const priceDisplay = currentPrice ? `€${currentPrice.toFixed(2)}` : 'N/A';
+
+    // Se não temos preço, usamos um placeholder "N/A" sem cor
+    const priceDisplay = currentPrice
+      ? `€${currentPrice.toFixed(2)}`
+      : '<span style="color:orange">N/A</span>';
 
     let plCell = '<td style="text-align:right">-</td>';
     if (currentPrice) {
@@ -246,7 +234,7 @@ async function fetchCrypto() {
   });
 }
 
-// --- 4. POKEMON (DIRETO, SEM PROXY, SEM KEY) ---
+// --- 4. POKEMON (DIRETO E LIMPO) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
@@ -261,9 +249,13 @@ async function fetchPokemon(rates) {
 
       if (!cardPrice) {
         try {
-          // PEDIDO DIRETO (A API permite se não mandarmos headers estranhos)
+          // PEDIDO DIRETO OFICIAL (Sem proxy, sem key, sem headers)
+          // 'credentials: omit' garante que o browser não envia nada que dispare CORS
           const url = `https://api.pokemontcg.io/v2/cards/${card.searchId}`;
-          const response = await fetch(url);
+          const response = await fetch(url, {
+            method: 'GET',
+            credentials: 'omit',
+          });
 
           if (response.ok) {
             const data = await response.json();
@@ -288,6 +280,7 @@ async function fetchPokemon(rates) {
 
     const displayPrice = cardPrice ? `Est: €${cardPrice.toFixed(0)}` : 'N/A';
 
+    // Cores da Badge
     let badgeColor = '#555';
     if (card.grade.includes('10') || card.grade.includes('9.5'))
       badgeColor = '#d4af37';
