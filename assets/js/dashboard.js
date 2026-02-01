@@ -29,8 +29,8 @@ const myCrypto = [
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 },
 ];
 
-// --- 3. POKEMON CARDS (Pokemontcg.io Direto) ---
-// SearchID = ID da carta em Inglês (Para obter preço automático)
+// --- 3. POKEMON CARDS ---
+// SearchID = ID da carta em Inglês
 const myCards = [
   {
     name: 'Pikachu with Grey Felt Hat',
@@ -43,49 +43,48 @@ const myCards = [
     grade: 'PSA 10',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg',
-    searchId: 'sv4pt5-232', // Paldean Fates (Equivalente)
+    searchId: 'sv4pt5-232',
   },
   {
     name: 'Pikachu (JP Dream League)',
     grade: 'CCC 9',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/574914_in_1000x1000.jpg',
-    searchId: 'sm12-241', // Cosmic Eclipse (Equivalente)
+    searchId: 'sm12-241',
   },
   {
     name: "Team Rocket's Nidoking",
     grade: 'Ungraded',
     manualImg:
       'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SV10/SV10_EN_233.png',
-    searchId: null, // Carta muito recente, sem preço na API -> Usa N/A ou manual
-    fallbackPrice: 15, // Preço fixo se API falhar
+    searchId: null,
   },
   {
     name: 'Leafeon VSTAR (JP)',
     grade: 'PSA 10',
     manualImg:
       'https://den-cards.pokellector.com/357/Leafeon-VSTAR.S12A.210.45960.png',
-    searchId: 'swsh12pt5-gg35', // Crown Zenith
+    searchId: 'swsh12pt5-gg35',
   },
   {
     name: 'Charizard V (JP SAR)',
     grade: 'CGC 9.5',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/cqvwd3dhpbt4giji/1600.jpg',
-    searchId: 'swsh12pt5-18', // Crown Zenith
+    searchId: 'swsh12pt5-18',
   },
   {
     name: 'Iono (SIR)',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
-    searchId: 'sv4pt5-237', // Paldean Fates
+    searchId: 'sv4pt5-237',
   },
   {
     name: "N's Zoroark EX",
     grade: 'Ungraded',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/615003_in_600x600.jpg',
-    searchId: 'bw3-102', // Noble Victories (Aprox)
+    searchId: 'bw3-102',
   },
 ];
 
@@ -118,7 +117,7 @@ const mySkins = [
     float: '0.1664',
     price: 80,
     rarity: 'knife',
-    img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
+    img: 'https://community.fastly.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Tg_13jRBnOnITv9idV6fOgb5tqLP-FC3Svzv5zouB9Ria9xE0YoDOEkYrqKiLJAVR8W8ErKrpf5kn9z8rgNeu37gbf3Y5Hziv4j3gbvyxo47pQBfVzq6feiVvBMeU8tJEGJvmvU13QD-pmf_lF/330x192?allow_animated=1',
   },
   {
     weapon: '★ Specialist Gloves',
@@ -127,7 +126,7 @@ const mySkins = [
     float: '0.1820',
     price: 180,
     rarity: 'knife',
-    img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
+    img: 'https://community.fastly.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Tk71ruQBH4jYLf-i5U-fe9V7d9JfOaD2uZ0vpJouhqRDqygiIksjCKpYL8JSLSMxggC5NxELMD5ES5xtznZeOzsVPZjdlGyCv-3Cgc7ixi4uhQVqdz8vWBkUifZmiWDZ2w/330x192?allow_animated=1',
   },
   {
     weapon: 'M4A1-S (Souvenir)',
@@ -137,7 +136,7 @@ const mySkins = [
     price: 250,
     rarity: 'classified',
     desc: 'DreamEaters vs G2 (Shox Gold)',
-    img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
+    img: 'https://community.fastly.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_OGMWrEwL87o956RiW2mx4ijDCAnobsLGWUOwUoCMN2RrUL5hHrxN3gZu7ltFeM3dkUmy__jS1A7i9o6rxTV_Ys5OSJ2LuWmDvh/330x192?allow_animated=1',
   },
   {
     weapon: 'AK-47',
@@ -146,7 +145,7 @@ const mySkins = [
     float: '0.1512',
     price: 350,
     rarity: 'covert',
-    img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
+    img: 'https://community.fastly.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiFO0P24bbZ9IeOAMWqfz_1itfNWTiLnwiIqtjmMj4K3IC-Xb1d2WZUmEbMN4xDrmoDlPujktgONjY1HmH_4jCJJ7C454LsHAL1lpPMPrvuW_g/330x192?allow_animated=1',
   },
 ];
 
@@ -348,7 +347,6 @@ function renderCS2() {
 
   for (const skin of mySkins) {
     const rarityClass = `rarity-${skin.rarity || 'restricted'}`;
-    // Se o link falhar, vai aparecer o placeholder da Steam, mas substitui pelos teus links
     const imgUrl =
       skin.img ||
       'https://community.cloudflare.steamstatic.com/economy/image/default_placeholder.png';
