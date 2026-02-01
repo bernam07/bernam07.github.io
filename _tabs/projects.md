@@ -13,17 +13,35 @@ Here are some of the projects I've worked on, ranging from university assignment
 
   <div class="project-card">
     <div class="card-header">
-      <i class="fas fa-university card-icon"></i>
-      <h3>Academic System</h3>
+      <i class="fas fa-shopping-cart card-icon"></i>
+      <h3>Loja Social SAS</h3>
     </div>
-    <p>A comprehensive management system developed during my degree at IPCA. Handles student registrations, grades, and course schedules.</p>
+    <p>A social store management platform developed for IPCA's Social Services. Features inventory management, user requests, and admin dashboards. Built as a team project for university.</p>
     <div class="tech-stack">
       <span class="badge">C#</span>
-      <span class="badge">.NET</span>
+      <span class="badge">ASP.NET Core</span>
+      <span class="badge">MVC</span>
       <span class="badge">SQL Server</span>
     </div>
     <div class="card-links">
-      <a href="https://github.com/bernam07" target="_blank"><i class="fab fa-github"></i> View Code</a>
+      <a href="https://github.com/joseegomes555/G7-LojaSas" target="_blank"><i class="fab fa-github"></i> View Code</a>
+    </div>
+  </div>
+
+  <div class="project-card">
+    <div class="card-header">
+      <i class="fas fa-laptop-code card-icon"></i>
+      <h3>Personal Dashboard</h3>
+    </div>
+    <p>This portfolio website! A static site featuring a real-time financial dashboard (Stocks/Crypto) and CS2 inventory showcase built with JavaScript and APIs.</p>
+    <div class="tech-stack">
+      <span class="badge">JavaScript</span>
+      <span class="badge">Jekyll</span>
+      <span class="badge">APIs</span>
+      <span class="badge">GitHub Pages</span>
+    </div>
+    <div class="card-links">
+      <a href="https://github.com/bernam07/bernam07.github.io" target="_blank"><i class="fab fa-github"></i> Repository</a>
     </div>
   </div>
 
@@ -32,7 +50,7 @@ Here are some of the projects I've worked on, ranging from university assignment
       <i class="fas fa-robot card-icon"></i>
       <h3>Auto Scraper</h3>
     </div>
-    <p>Python script to automate data extraction from financial websites. Used to track stock prices and generate alerts.</p>
+    <p>Python script to automate data extraction from websites. Used to track specific data points and generate automated reports/alerts.</p>
     <div class="tech-stack">
       <span class="badge">Python</span>
       <span class="badge">Selenium</span>
@@ -43,34 +61,14 @@ Here are some of the projects I've worked on, ranging from university assignment
     </div>
   </div>
 
-  <div class="project-card">
+  <div class="project-card" style="opacity: 0.7; border-style: dashed;">
     <div class="card-header">
-      <i class="fas fa-laptop-code card-icon"></i>
-      <h3>Personal Dashboard</h3>
+      <i class="fas fa-flask card-icon"></i>
+      <h3>Work in Progress</h3>
     </div>
-    <p>This portfolio website! A static site featuring a real-time financial dashboard (Stocks/Crypto) and CS2 inventory showcase.</p>
+    <p>Currently developing a new tool related to system optimization. Stay tuned for updates!</p>
     <div class="tech-stack">
-      <span class="badge">JavaScript</span>
-      <span class="badge">Jekyll</span>
-      <span class="badge">APIs</span>
-    </div>
-    <div class="card-links">
-      <a href="https://github.com/bernam07/bernam07.github.io" target="_blank"><i class="fab fa-github"></i> Repository</a>
-    </div>
-  </div>
-
-  <div class="project-card">
-    <div class="card-header">
-      <i class="fas fa-gamepad card-icon"></i>
-      <h3>CS2 Config Manager</h3>
-    </div>
-    <p>A simple tool to manage and swap Counter-Strike 2 config files and autoexecs based on different playstyles.</p>
-    <div class="tech-stack">
-      <span class="badge">Shell</span>
-      <span class="badge">Lua</span>
-    </div>
-    <div class="card-links">
-      <a href="#" target="_blank"><i class="fab fa-github"></i> View Code</a>
+      <span class="badge">Coming Soon</span>
     </div>
   </div>
 
@@ -125,6 +123,7 @@ Here are some of the projects I've worked on, ranging from university assignment
     opacity: 0.9;
     flex-grow: 1;
     margin-bottom: 15px;
+    line-height: 1.5;
   }
 
   .tech-stack {
@@ -149,6 +148,9 @@ Here are some of the projects I've worked on, ranging from university assignment
     font-weight: bold;
     font-size: 0.9rem;
     color: var(--link-color);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
   }
   
   .card-links a:hover {
