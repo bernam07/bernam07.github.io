@@ -30,7 +30,7 @@ const myCrypto = [
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 },
 ];
 
-// --- 3. POKEMON CARDS (Via Teu Worker) ---
+// --- 3. POKEMON CARDS ---
 const myCards = [
   {
     name: 'Pikachu with Grey Felt Hat',
@@ -39,14 +39,14 @@ const myCards = [
     tcgId: '518861',
   },
   {
-    name: 'Mew ex (JP sv4a)',
+    name: 'Mew ex (sv4a #347)',
     grade: 'PSA 10',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg',
     tcgId: '534919',
   },
   {
-    name: 'Pikachu (JP Dream League)',
+    name: 'Pikachu (sm11b #054)',
     grade: 'CCC 9',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/574914_in_1000x1000.jpg',
@@ -60,27 +60,27 @@ const myCards = [
     tcgId: '633033',
   },
   {
-    name: 'Leafeon VSTAR (JP)',
+    name: 'Leafeon VSTAR (s12a #210)',
     grade: 'PSA 10',
     manualImg:
       'https://den-cards.pokellector.com/357/Leafeon-VSTAR.S12A.210.45960.png',
     tcgId: '477060',
   },
   {
-    name: 'Charizard V (JP SAR)',
+    name: 'Charizard V (s12a #211)',
     grade: 'CGC 9.5',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/cqvwd3dhpbt4giji/1600.jpg',
     tcgId: '285384',
   },
   {
-    name: 'Iono (SIR)',
+    name: 'Iono',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
     tcgId: '535101',
   },
   {
-    name: "N's Zoroark EX",
+    name: "N's Zoroark EX (sv9 #127)",
     grade: 'Ungraded',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/615003_in_600x600.jpg',
@@ -314,7 +314,6 @@ async function fetchPokemon(rates) {
       const requestBody = myCards
         .filter((c) => c.tcgId)
         .map((c) => ({ tcgplayerId: c.tcgId }));
-      // CHAMADA AO TEU WORKER (Sem chaves expostas, sem CORS)
       const response = await fetch(WORKER_URL, {
         method: 'POST',
         body: JSON.stringify(requestBody),
@@ -354,7 +353,7 @@ async function fetchPokemon(rates) {
   });
 }
 
-// --- 5. CS2 (Render) ---
+// --- 5. CS2 ---
 function renderCS2() {
   const container = document.getElementById('cs2-container');
   if (!container) return;
