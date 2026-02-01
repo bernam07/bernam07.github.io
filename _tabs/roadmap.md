@@ -1,7 +1,7 @@
 ---
 layout: page
 icon: fas fa-map-signs
-order: 4
+order: 2
 title: Roadmap
 ---
 
