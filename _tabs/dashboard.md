@@ -85,7 +85,7 @@ title: Dashboard
 <hr>
 
 ## 🔫 CS2 Inventory
-> Destaques da coleção (Preços de mercado estimados).
+> Inventory highlights (Estimated market prices).
 
 <div id="cs2-container" class="cs2-grid">
   <p>A carregar inventário...</p>

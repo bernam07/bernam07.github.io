@@ -10,7 +10,7 @@ title: Setup
 Here is the hardware and software configuration I use daily for software development, university tasks, and competitive gaming.
 
 ## 🖥️ The Battlestation (Desktop)
-My main workhorse for heavy projects, code compilation, and CS2 sessions.
+My main workhorse for heavy projects, code compilation and CS2 sessions.
 
 | Component | Specs |
 | :--- | :--- |
@@ -18,26 +18,26 @@ My main workhorse for heavy projects, code compilation, and CS2 sessions.
 | **GPU** | NVIDIA RTX 3070 |
 | **RAM** | 16GB DDR4 3600MHz |
 | **Storage** | 500GB NVMe Gen4 |
-| **Case** | [Insert Case Model] |
-| **Monitor 1** | [e.g., LG 27'' 144Hz] |
-| **Monitor 2** | [e.g., Dell 24''] |
+| **Case** | NOX Infinity SIGMA |
+| **Monitor 1** | AOC AG251FZ2E 24.5" 240Hz |
+| **Monitor 2** | AOC 27G2U5 27" 75Hz |
 
 <br>
 
 ## 💻 On The Go (Laptop)
-The portable machine for classes at IPCA, casual gaming, and side projects.
+The portable machine for classes at IPCA, casual gaming and side projects.
 
-* **Model:** [Insert Laptop Model]
-* **Specs:** [Insert Specs, e.g., i7 / 16GB RAM]
+* **Model:** HP Omen Laptop 16-c0007np
+* **Specs:** AMD Ryzen 7 5800H - NVIDIA RTX 3070 - 16 GB DDR4 - 512 GB SSD 
 * **OS:** Windows 11
 
 <br>
 
 ## ⌨️ Peripherals & Audio
-* **Keyboard:** [Insert Keyboard]
-* **Mouse:** [Insert Mouse]
-* **Headset:** [Insert Headset]
-* **Microphone:** [Insert Microphone]
+* **Keyboard:** Razer Blackwidow V3 Tenkeyless
+* **Mouse:** Steelseries Rival 650 Wireless
+* **Headset:** Sony WH-1000XM4
+* **Microphone:** Logitech G Yeti GX
 
 ---
 
