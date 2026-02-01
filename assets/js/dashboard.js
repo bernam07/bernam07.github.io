@@ -30,13 +30,15 @@ const myCrypto = [
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 },
 ];
 
-// --- 3. POKEMON CARDS (JustTCG API) ---
+// --- 3. POKEMON CARDS ---
+// Usamos tcgId para JustTCG e searchId para o fallback (pokemontcg.io)
 const myCards = [
   {
     name: 'Pikachu Grey Felt Hat',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/svp/85_hires.png',
-    tcgId: '518861',
+    tcgId: '518861', // JustTCG ID
+    searchId: 'svp-85', // Pokemontcg.io ID
   },
   {
     name: 'Mew ex (JP sv4a)',
@@ -44,6 +46,7 @@ const myCards = [
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg',
     tcgId: '534919',
+    searchId: 'sv4pt5-232',
   },
   {
     name: 'Pikachu (JP Dream League)',
@@ -51,6 +54,7 @@ const myCards = [
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/574914_in_1000x1000.jpg',
     tcgId: '201352',
+    searchId: 'sm12-241',
   },
   {
     name: "Team Rocket's Nidoking",
@@ -58,6 +62,7 @@ const myCards = [
     manualImg:
       'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SV10/SV10_EN_233.png',
     tcgId: '633033',
+    searchId: null, // Recente
   },
   {
     name: 'Leafeon VSTAR (JP)',
@@ -65,6 +70,7 @@ const myCards = [
     manualImg:
       'https://den-cards.pokellector.com/357/Leafeon-VSTAR.S12A.210.45960.png',
     tcgId: '477060',
+    searchId: 'swsh12pt5-gg35',
   },
   {
     name: 'Charizard V (JP SAR)',
@@ -72,12 +78,14 @@ const myCards = [
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/cqvwd3dhpbt4giji/1600.jpg',
     tcgId: '285384',
+    searchId: 'swsh12pt5-18',
   },
   {
     name: 'Iono (SIR)',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
     tcgId: '535101',
+    searchId: 'sv4pt5-237',
   },
   {
     name: "N's Zoroark EX",
@@ -85,10 +93,11 @@ const myCards = [
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/615003_in_600x600.jpg',
     tcgId: '623612',
+    searchId: null,
   },
 ];
 
-// --- 5. CS2 INVENTORY (A tua seleção) ---
+// --- 5. CS2 INVENTORY (A tua seleção com Imagens Reais) ---
 const mySkins = [
   {
     weapon: '★ Huntsman Knife',
@@ -135,7 +144,7 @@ const mySkins = [
     float: '0.200',
     price: 250,
     rarity: 'classified',
-    desc: 'DreamEaters vs G2 (shox gold)',
+    desc: 'DreamEaters vs G2',
     img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
   },
   {
@@ -145,12 +154,11 @@ const mySkins = [
     float: '0.1512',
     price: 350,
     rarity: 'covert',
-    desc: 'Renamed (Jaguar Craft)',
     img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
   },
 ];
 
-// --- SISTEMA DE CACHE ---
+// --- HELPERS ---
 function getCachedData(key) {
   const cached = localStorage.getItem(key);
   if (!cached) return null;
@@ -158,7 +166,6 @@ function getCachedData(key) {
   if (Date.now() - parsed.timestamp > CACHE_DURATION) return null;
   return parsed.data;
 }
-
 function setCachedData(key, data) {
   localStorage.setItem(
     key,
@@ -166,25 +173,12 @@ function setCachedData(key, data) {
   );
 }
 
-// --- PROXY HELPER ---
+// PROXY SEGURO para JustTCG
 async function fetchViaProxy(targetUrl, options = {}) {
   try {
     const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
     const response = await fetch(proxyUrl, options);
-    if (!response.ok) return null;
-    return await response.json();
-  } catch (error) {
-    return null;
-  }
-}
-
-async function fetchViaRawProxy(targetUrl) {
-  try {
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
-      targetUrl
-    )}`;
-    const response = await fetch(proxyUrl);
-    if (!response.ok) throw new Error('Proxy Error');
+    if (!response.ok) throw new Error('Proxy Failed');
     return await response.json();
   } catch (error) {
     return null;
@@ -195,7 +189,6 @@ async function fetchViaRawProxy(targetUrl) {
 async function getExchangeRates() {
   const cached = getCachedData('rates');
   if (cached) return cached;
-
   let rates = { usdToEur: 0.95, gbpToEur: 1.19 };
   try {
     const response = await fetch(
@@ -217,12 +210,10 @@ async function fetchStocks(rates) {
   const tableBody = document.getElementById('stock-rows');
   if (!tableBody) return;
   tableBody.innerHTML = '';
-
   for (const stock of myStocks) {
     let currentPrice = null;
     const cacheKey = `stock_${stock.ticker}`;
     const cachedPrice = getCachedData(cacheKey);
-
     if (cachedPrice) currentPrice = cachedPrice;
     else {
       try {
@@ -251,21 +242,19 @@ async function fetchStocks(rates) {
         }
       } catch (e) {}
     }
-
     if (!currentPrice && stock.fallbackPrice)
       currentPrice = stock.fallbackPrice;
-
     const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
     const priceDisplay = currentPrice ? `€${currentPrice.toFixed(2)}` : 'N/A';
-    let plCell = '<td style="text-align:right">-</td>';
-    if (currentPrice) {
-      const pl = ((currentPrice - stock.avgPrice) / stock.avgPrice) * 100;
-      const color = pl >= 0 ? 'text-green' : 'text-red';
-      const sign = pl >= 0 ? '+' : '';
-      plCell = `<td class="${color}" style="text-align:right; font-weight:bold;">${sign}${pl.toFixed(
-        1
-      )}%</td>`;
-    }
+    const plCell = currentPrice
+      ? `<td class="${
+          currentPrice >= stock.avgPrice ? 'text-green' : 'text-red'
+        }" style="text-align:right; font-weight:bold;">${
+          currentPrice >= stock.avgPrice ? '+' : ''
+        }${(((currentPrice - stock.avgPrice) / stock.avgPrice) * 100).toFixed(
+          1
+        )}%</td>`
+      : '<td style="text-align:right">-</td>';
     tableBody.innerHTML += `<tr style="border-bottom: 1px solid #333;"><td><strong>${cleanTicker}</strong></td><td>€${stock.avgPrice.toFixed(
       2
     )}</td><td>${priceDisplay}</td>${plCell}</tr>`;
@@ -306,13 +295,13 @@ async function fetchCrypto() {
   });
 }
 
-// --- 4. POKEMON (JustTCG - Batch Request) ---
+// --- 4. POKEMON (JustTCG Principal -> Fallback Pokemontcg.io) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
   container.innerHTML = '';
 
-  // Gera HTML com Loading
+  // Renderiza cartões com Loading
   myCards.forEach((card, index) => {
     container.innerHTML += `
       <div id="card-${index}" class="poke-card" style="position: relative; display: inline-block;">
@@ -334,8 +323,10 @@ async function fetchPokemon(rates) {
       </div>`;
   });
 
+  // TENTA JUSTTCG VIA PROXY
+  let batchData = null;
   const cacheKey = 'justtcg_batch_prices';
-  let batchData = getCachedData(cacheKey);
+  batchData = getCachedData(cacheKey);
 
   if (!batchData) {
     try {
@@ -355,34 +346,58 @@ async function fetchPokemon(rates) {
         setCachedData(cacheKey, batchData);
       }
     } catch (e) {
-      console.log('Erro JustTCG Batch', e);
+      console.log('JustTCG Proxy falhou, a tentar fallback...');
     }
   }
 
-  myCards.forEach((card, index) => {
+  // ATUALIZA PREÇOS (Com Fallback Individual se JustTCG falhar)
+  for (let index = 0; index < myCards.length; index++) {
+    const card = myCards[index];
     const priceEl = document.getElementById(`price-${index}`);
-    if (!batchData) {
-      priceEl.innerText = 'N/A';
-      return;
-    }
-    const apiCard = batchData.find((c) => c.tcgplayerId === card.tcgId);
     let finalPrice = 0;
-    if (apiCard && apiCard.variants) {
-      const bestVariant =
-        apiCard.variants.find(
-          (v) =>
-            v.condition === 'Near Mint' &&
-            (v.printing === 'Holofoil' || v.printing === 'Normal')
-        ) || apiCard.variants[0];
-      if (bestVariant && bestVariant.price)
-        finalPrice = bestVariant.price * rates.usdToEur;
+
+    // 1. Tenta JustTCG (Se tivermos dados)
+    if (batchData) {
+      const apiCard = batchData.find((c) => c.tcgplayerId === card.tcgId);
+      if (apiCard && apiCard.variants) {
+        const bestVariant =
+          apiCard.variants.find(
+            (v) =>
+              v.condition === 'Near Mint' &&
+              (v.printing === 'Holofoil' || v.printing === 'Normal')
+          ) || apiCard.variants[0];
+        if (bestVariant && bestVariant.price)
+          finalPrice = bestVariant.price * rates.usdToEur;
+      }
     }
+
+    // 2. Fallback: Pokemontcg.io (Se JustTCG falhou ou não encontrou a carta)
+    if (!finalPrice && card.searchId) {
+      try {
+        // Fetch direto API publica (sem proxy, costuma funcionar melhor)
+        const res = await fetch(
+          `https://api.pokemontcg.io/v2/cards/${card.searchId}`,
+          { headers: { 'X-Api-Key': 'b32cdab4-e8c3-42b5-b0ab-fc0944d6e70b' } }
+        ); // Tua key antiga se quiseres, ou sem
+        const data = await res.json();
+        if (data.data && data.data.tcgplayer && data.data.tcgplayer.prices) {
+          const prices = data.data.tcgplayer.prices;
+          const usd =
+            prices.holofoil?.market ||
+            prices.normal?.market ||
+            prices.reverseHolofoil?.market ||
+            0;
+          if (usd > 0) finalPrice = usd * rates.usdToEur;
+        }
+      } catch (e) {}
+    }
+
     priceEl.innerText =
       finalPrice > 0 ? `Est: €${finalPrice.toFixed(2)}` : 'N/A';
-  });
+  }
 }
 
-// --- 5. CS2 SKINS (Render Manual) ---
+// --- 5. CS2 SKINS (Render Manual com Imagens Reais) ---
 function renderCS2() {
   const container = document.getElementById('cs2-container');
   if (!container) return;
