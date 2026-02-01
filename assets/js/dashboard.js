@@ -3,6 +3,7 @@
 // CONFIGURAÇÃO
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
 const JUSTTCG_KEY = 'tcg_958179cf4f9147f392943be40a28779f';
+const JUSTTCG_KEY = 'tcg_958179cf4f9147f392943be40a28779f';
 const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos
 
 // --- 1. STOCKS ---
@@ -177,11 +178,10 @@ async function fetchViaProxy(targetUrl, options = {}) {
 
 async function fetchViaRawProxy(targetUrl) {
   try {
-    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
-      targetUrl
-    )}`;
-    const response = await fetch(proxyUrl);
-    if (!response.ok) throw new Error('Proxy Error');
+    // Usamos corsproxy.io para passar o pedido POST com headers
+    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+    const response = await fetch(proxyUrl, options);
+    if (!response.ok) return null;
     return await response.json();
   } catch (error) {
     return null;
@@ -209,7 +209,7 @@ async function getExchangeRates() {
   return rates;
 }
 
-// --- 2. STOCKS ---
+// --- 2. STOCKS (Mantido) ---
 async function fetchStocks(rates) {
   const tableBody = document.getElementById('stock-rows');
   if (!tableBody) return;
@@ -254,6 +254,7 @@ async function fetchStocks(rates) {
 
     const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
     const priceDisplay = currentPrice ? `€${currentPrice.toFixed(2)}` : 'N/A';
+    const priceDisplay = currentPrice ? `€${currentPrice.toFixed(2)}` : 'N/A';
     let plCell = '<td style="text-align:right">-</td>';
     if (currentPrice) {
       const pl = ((currentPrice - stock.avgPrice) / stock.avgPrice) * 100;
@@ -269,7 +270,7 @@ async function fetchStocks(rates) {
   }
 }
 
-// --- 3. CRYPTO ---
+// --- 3. CRYPTO (Mantido) ---
 async function fetchCrypto() {
   const cacheKey = 'crypto_prices';
   let prices = getCachedData(cacheKey);
