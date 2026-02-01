@@ -36,14 +36,14 @@ const myCards = [
     name: 'Pikachu Grey Felt Hat',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/svp/85_hires.png',
-    dexId: 'svp-85',
+    dexId: 'svp-085',
   },
   {
     name: 'Mew ex (JP sv4a)',
     grade: 'PSA 10',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg',
-    dexId: 'sv4.5-232', // Paldean Fates
+    dexId: 'sv4a-347', // Paldean Fates
   },
   {
     name: 'Pikachu (JP Dream League)',
