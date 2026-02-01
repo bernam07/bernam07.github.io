@@ -2,6 +2,7 @@
 
 // CONFIGURAÇÃO
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
+const JUSTTCG_KEY = 'tcg_958179cf4f9147f392943be40a28779f';
 const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos
 
 // --- 1. STOCKS ---
@@ -29,62 +30,120 @@ const myCrypto = [
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 },
 ];
 
-// --- 3. POKEMON CARDS (Mapeamento TCGdex) ---
-// Usamos IDs Ingleses equivalentes para ter preços do Cardmarket (Europa)
+// --- 3. POKEMON CARDS (JustTCG API) ---
+// IDs baseados no TCGPlayer (usando equivalentes EN para JP quando necessário para obter preços)
 const myCards = [
   {
     name: 'Pikachu Grey Felt Hat',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/svp/85_hires.png',
-    dexId: 'svp-085',
+    tcgId: '518861', // SVP Promo 085
   },
   {
     name: 'Mew ex (JP sv4a)',
     grade: 'PSA 10',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg',
-    dexId: 'sv4a-347', // Paldean Fates
+    tcgId: '534919', // Paldean Fates 232 (Equivalente EN para preço)
   },
   {
     name: 'Pikachu (JP Dream League)',
     grade: 'CCC 9',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/574914_in_1000x1000.jpg',
-    dexId: 'sm12-241', // Cosmic Eclipse
+    tcgId: '201352', // Cosmic Eclipse 241
   },
   {
     name: "Team Rocket's Nidoking",
     grade: 'Ungraded',
     manualImg:
       'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SV10/SV10_EN_233.png',
-    dexId: null, // Carta demasiado recente, sem dados estáveis
+    tcgId: '633033', // SV10 Destined Rivals
   },
   {
     name: 'Leafeon VSTAR (JP)',
     grade: 'PSA 10',
     manualImg:
       'https://den-cards.pokellector.com/357/Leafeon-VSTAR.S12A.210.45960.png',
-    dexId: 'swsh12.5-gg35', // Crown Zenith Galarian Gallery
+    tcgId: '477060', // Crown Zenith GG35
   },
   {
     name: 'Charizard V (JP SAR)',
     grade: 'CGC 9.5',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/cqvwd3dhpbt4giji/1600.jpg',
-    dexId: 'swsh12.5-18', // Crown Zenith
+    tcgId: '285384', // SWSH Promo 260 (Art correspondente)
   },
   {
     name: 'Iono (SIR)',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
-    dexId: 'sv4.5-237', // Paldean Fates
+    tcgId: '535101', // Paldean Fates 237
   },
   {
     name: "N's Zoroark EX",
     grade: 'Ungraded',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/615003_in_600x600.jpg',
-    dexId: 'bw3-102', // Noble Victories (Era BW)
+    tcgId: '623612', // Journey Together 185
+  },
+];
+
+// --- 5. CS2 INVENTORY (Do teu CSV) ---
+const mySkins = [
+  {
+    weapon: '★ Huntsman Knife',
+    name: 'Gamma Doppler (Emerald)',
+    wear: 'FN',
+    float: '0.03', // Factory New
+    price: 1100, // Valor Estimado (Emerald é rara)
+    rarity: 'knife',
+    img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
+  },
+  {
+    weapon: '★ Flip Knife',
+    name: 'Doppler (Phase 1)',
+    wear: 'FN',
+    float: '0.02',
+    price: 550,
+    rarity: 'knife',
+    img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
+  },
+  {
+    weapon: '★ Broken Fang Gloves',
+    name: 'Unhinged',
+    wear: 'FT',
+    float: '0.25', // Field-Tested
+    price: 80,
+    rarity: 'knife', // Luvas (Ouro)
+    img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
+  },
+  {
+    weapon: 'AWP',
+    name: 'Chrome Cannon',
+    wear: 'MW',
+    float: '0.10', // Minimal Wear
+    price: 130,
+    rarity: 'covert', // Vermelho
+    img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
+  },
+  {
+    weapon: 'M4A1-S',
+    name: 'Master Piece',
+    wear: 'FT',
+    float: '0.20', // Field-Tested
+    price: 140,
+    rarity: 'classified', // Rosa
+    img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
+  },
+  {
+    weapon: 'Desert Eagle',
+    name: 'Kumicho Dragon',
+    wear: 'FT',
+    float: '0.22',
+    price: 25,
+    rarity: 'classified',
+    img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
   },
 ];
 
@@ -104,7 +163,18 @@ function setCachedData(key, data) {
   );
 }
 
-// --- PROXY RAW (Exclusivo para VUSA) ---
+// --- PROXY HELPER ---
+async function fetchViaProxy(targetUrl, options = {}) {
+  try {
+    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
+    const response = await fetch(proxyUrl, options);
+    if (!response.ok) return null;
+    return await response.json();
+  } catch (error) {
+    return null;
+  }
+}
+
 async function fetchViaRawProxy(targetUrl) {
   try {
     const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
@@ -118,7 +188,7 @@ async function fetchViaRawProxy(targetUrl) {
   }
 }
 
-// --- 1. TAXAS DE CÂMBIO ---
+// --- 1. RATES ---
 async function getExchangeRates() {
   const cached = getCachedData('rates');
   if (cached) return cached;
@@ -150,15 +220,15 @@ async function fetchStocks(rates) {
     const cacheKey = `stock_${stock.ticker}`;
     const cachedPrice = getCachedData(cacheKey);
 
-    if (cachedPrice) {
-      currentPrice = cachedPrice;
-    } else {
+    if (cachedPrice) currentPrice = cachedPrice;
+    else {
       try {
         if (stock.ticker === 'VUSA.L') {
-          // Yahoo via RAW Proxy
           const url = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
-          const data = await fetchViaRawProxy(url);
-
+          const res = await fetch(
+            `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
+          );
+          const data = await res.json();
           if (data?.chart?.result?.[0]?.meta) {
             let p = data.chart.result[0].meta.regularMarketPrice;
             if (data.chart.result[0].meta.currency === 'GBp' || p > 2000)
@@ -167,7 +237,6 @@ async function fetchStocks(rates) {
             setCachedData(cacheKey, currentPrice);
           }
         } else {
-          // Finnhub Direct
           const res = await fetch(
             `https://finnhub.io/api/v1/quote?symbol=${stock.ticker}&token=${FINNHUB_KEY}`
           );
@@ -183,12 +252,8 @@ async function fetchStocks(rates) {
     if (!currentPrice && stock.fallbackPrice)
       currentPrice = stock.fallbackPrice;
 
-    // Render
     const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
-    const priceDisplay = currentPrice
-      ? `€${currentPrice.toFixed(2)}`
-      : '<span style="color:orange">N/A</span>';
-
+    const priceDisplay = currentPrice ? `€${currentPrice.toFixed(2)}` : 'N/A';
     let plCell = '<td style="text-align:right">-</td>';
     if (currentPrice) {
       const pl = ((currentPrice - stock.avgPrice) / stock.avgPrice) * 100;
@@ -198,15 +263,9 @@ async function fetchStocks(rates) {
         1
       )}%</td>`;
     }
-
-    const row = `
-      <tr style="border-bottom: 1px solid #333;">
-        <td><strong>${cleanTicker}</strong></td>
-        <td>€${stock.avgPrice.toFixed(2)}</td>
-        <td>${priceDisplay}</td>
-        ${plCell}
-      </tr>`;
-    tableBody.innerHTML += row;
+    tableBody.innerHTML += `<tr style="border-bottom: 1px solid #333;"><td><strong>${cleanTicker}</strong></td><td>€${stock.avgPrice.toFixed(
+      2
+    )}</td><td>${priceDisplay}</td>${plCell}</tr>`;
   }
 }
 
@@ -214,7 +273,6 @@ async function fetchStocks(rates) {
 async function fetchCrypto() {
   const cacheKey = 'crypto_prices';
   let prices = getCachedData(cacheKey);
-
   if (!prices) {
     try {
       const ids = myCrypto.map((c) => c.id).join(',');
@@ -227,7 +285,6 @@ async function fetchCrypto() {
       }
     } catch (e) {}
   }
-
   myCrypto.forEach((coin) => {
     const priceEl = document.getElementById(
       `price-${coin.symbol.toLowerCase()}`
@@ -246,66 +303,121 @@ async function fetchCrypto() {
   });
 }
 
-// --- 4. POKEMON (TCGdex - Sem Proxy, Sem Erros) ---
+// --- 4. POKEMON (JustTCG - Batch Request) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
   container.innerHTML = '';
 
-  for (const card of myCards) {
-    let cardPrice = null;
+  // Gera HTML com Loading
+  myCards.forEach((card, index) => {
+    container.innerHTML += `
+      <div id="card-${index}" class="poke-card" style="position: relative; display: inline-block;">
+        <div style="position: absolute; top: -10px; right: -10px; background: ${
+          card.grade.includes('10') || card.grade.includes('9.5')
+            ? '#d4af37'
+            : card.grade.includes('9')
+            ? '#c0c0c0'
+            : '#555'
+        }; color: white; padding: 4px 8px; border-radius: 12px; font-weight: bold; font-size: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.5); z-index: 10;">${
+      card.grade
+    }</div>
+        <a href="${card.manualImg}" target="_blank"><img src="${
+      card.manualImg
+    }" alt="${card.name}" style="border-radius: 10px; width: 100%;"></a>
+        <center><small style="opacity: 0.9; font-weight: bold; margin-top: 5px; display: block; min-height: 40px;">${
+          card.name
+        }</small><small id="price-${index}" style="opacity: 0.6; font-size: 0.75rem;">Loading...</small></center>
+      </div>`;
+  });
 
-    if (card.dexId) {
-      const cacheKey = `dex_${card.dexId}`;
-      cardPrice = getCachedData(cacheKey);
+  const cacheKey = 'justtcg_batch_prices';
+  let batchData = getCachedData(cacheKey);
 
-      if (!cardPrice) {
-        try {
-          // API TCGdex é publica e permite CORS. Não precisa de proxy.
-          const url = `https://api.tcgdex.net/v2/en/cards/${card.dexId}`;
-          const response = await fetch(url);
+  if (!batchData) {
+    try {
+      // Batch Request (Um pedido para todas as cartas)
+      const requestBody = myCards
+        .filter((c) => c.tcgId)
+        .map((c) => ({ tcgplayerId: c.tcgId }));
 
-          if (response.ok) {
-            const data = await response.json();
+      const response = await fetchViaProxy('https://api.justtcg.com/v1/cards', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': JUSTTCG_KEY,
+        },
+        body: JSON.stringify(requestBody),
+      });
 
-            // Tenta encontrar preços do Cardmarket (Euros)
-            if (data.cardmarket && data.cardmarket.prices) {
-              // avg7 = Média 7 dias, avg30 = Média 30 dias
-              const euros =
-                data.cardmarket.prices.avg7 ||
-                data.cardmarket.prices.avg30 ||
-                0;
-              if (euros > 0) {
-                cardPrice = euros;
-                setCachedData(cacheKey, cardPrice);
-              }
-            }
-          }
-        } catch (e) {
-          console.warn(`Erro Dex ${card.name}`);
-        }
+      if (response && response.data) {
+        batchData = response.data;
+        setCachedData(cacheKey, batchData);
+      }
+    } catch (e) {
+      console.log('Erro JustTCG Batch', e);
+    }
+  }
+
+  // Preenche preços
+  myCards.forEach((card, index) => {
+    const priceEl = document.getElementById(`price-${index}`);
+    if (!batchData) {
+      priceEl.innerText = 'N/A';
+      return;
+    }
+
+    const apiCard = batchData.find((c) => c.tcgplayerId === card.tcgId);
+    let finalPrice = 0;
+
+    if (apiCard && apiCard.variants) {
+      // Tenta variante Near Mint (Foil ou Normal)
+      const bestVariant =
+        apiCard.variants.find(
+          (v) =>
+            v.condition === 'Near Mint' &&
+            (v.printing === 'Holofoil' || v.printing === 'Normal')
+        ) || apiCard.variants[0];
+
+      if (bestVariant && bestVariant.price) {
+        finalPrice = bestVariant.price * rates.usdToEur;
       }
     }
 
-    const displayPrice = cardPrice ? `€${cardPrice.toFixed(2)}` : 'N/A';
+    priceEl.innerText =
+      finalPrice > 0 ? `Est: €${finalPrice.toFixed(2)}` : 'N/A';
+  });
+}
 
-    let badgeColor = '#555';
-    if (card.grade.includes('10') || card.grade.includes('9.5'))
-      badgeColor = '#d4af37';
-    else if (card.grade.includes('9')) badgeColor = '#c0c0c0';
+// --- 5. CS2 SKINS (Render Manual) ---
+function renderCS2() {
+  const container = document.getElementById('cs2-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  for (const skin of mySkins) {
+    const rarityClass = `rarity-${skin.rarity || 'restricted'}`;
+    // Imagem genérica se o link estiver quebrado, substitui pelo link real se quiseres
+    const imgUrl =
+      skin.img ||
+      'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f';
 
     const cardHtml = `
-      <div class="poke-card" style="position: relative; display: inline-block;">
-        <div style="position: absolute; top: -10px; right: -10px; background: ${badgeColor}; color: white; padding: 4px 8px; border-radius: 12px; font-weight: bold; font-size: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.5); z-index: 10;">
-          ${card.grade}
+      <div class="cs2-card ${rarityClass}">
+        <div class="cs2-img-container">
+          <img src="${imgUrl}" alt="${skin.name}" class="cs2-img">
         </div>
-        <a href="${card.manualImg}" target="_blank">
-          <img src="${card.manualImg}" alt="${card.name}" style="border-radius: 10px; width: 100%;">
-        </a>
-        <center>
-          <small style="opacity: 0.9; font-weight: bold; margin-top: 5px; display: block; min-height: 40px;">${card.name}</small>
-          <small style="opacity: 0.6; font-size: 0.75rem;">${displayPrice}</small>
-        </center>
+        <div class="cs2-info">
+          <div class="cs2-weapon">${skin.weapon}</div>
+          <div class="cs2-name">${skin.name}</div>
+          <div class="cs2-meta">
+            <span>${skin.wear}</span>
+            <span>${skin.float}</span>
+          </div>
+          <div style="margin-top: 8px; display: flex; justify-content: space-between; align-items: center;">
+             <span class="cs2-price">€${skin.price}</span>
+          </div>
+        </div>
       </div>
     `;
     container.innerHTML += cardHtml;
@@ -321,4 +433,5 @@ document.addEventListener('DOMContentLoaded', async () => {
   fetchStocks(rates);
   fetchCrypto();
   fetchPokemon(rates);
+  renderCS2();
 });

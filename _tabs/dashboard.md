@@ -85,23 +85,89 @@ title: Dashboard
 <hr>
 
 ## 🔫 CS2 Inventory
+> Destaques da coleção (Preços de mercado estimados).
 
-<div class="table-responsive">
-  <table class="stock-table">
-    <thead>
-      <tr>
-        <th>Weapon</th>
-        <th>Skin</th>
-        <th>Condition</th>
-        <th style="text-align: right;">Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td><strong>AWP</strong></td><td>Desert Hydra</td><td>FN</td><td style="text-align: right;">1.800€</td></tr>
-      <tr><td><strong>AK-47</strong></td><td>Gold Arabesque</td><td>MW</td><td style="text-align: right;">1.200€</td></tr>
-      <tr><td><strong>Knife</strong></td><td>Butterfly Fade</td><td>FN</td><td style="text-align: right;">2.500€</td></tr>
-    </tbody>
-  </table>
+<div id="cs2-container" class="cs2-grid">
+  <p>A carregar inventário...</p>
 </div>
+
+<style>
+  .cs2-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 2rem;
+  }
+
+  .cs2-card {
+    background: linear-gradient(135deg, #1e1e1e 0%, #252525 100%);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-bottom: 4px solid #555; /* Cor padrão (fallback) */
+  }
+
+  .cs2-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  }
+
+  /* Rarity Colors (Barras em baixo) */
+  .rarity-covert { border-color: #eb4b4b; }      /* Vermelho */
+  .rarity-classified { border-color: #d32ce6; }  /* Rosa */
+  .rarity-restricted { border-color: #8847ff; }  /* Roxo */
+  .rarity-knife { border-color: #caab05; }       /* Ouro/Faca */
+
+  .cs2-img-container {
+    padding: 10px;
+    background: radial-gradient(circle at center, #3a3a3a 0%, #1e1e1e 70%);
+    text-align: center;
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cs2-img {
+    max-width: 100%;
+    max-height: 100%;
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5));
+  }
+
+  .cs2-info {
+    padding: 12px;
+    text-align: left;
+  }
+
+  .cs2-weapon {
+    font-size: 0.8rem;
+    color: #888;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+
+  .cs2-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #fff;
+    margin: 2px 0;
+  }
+
+  .cs2-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-top: 8px;
+    font-family: monospace;
+  }
+
+  .cs2-price {
+    color: #85bb65; /* Verde Dinheiro */
+    font-weight: bold;
+  }
+</style>
 
 <script src="/assets/js/dashboard.js"></script>

@@ -73,6 +73,19 @@ tagline: Software Developer
     margin-top: 5px;
     font-weight: 600;
   }
+
+  .company-link {
+    color: var(--link-color); /* Usa a cor azul/destaque do tema */
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .company-link:hover {
+    text-decoration: underline;
+    color: var(--link-hover-color);
+    opacity: 0.8;
+  }
 </style>
 
 <div class="intro-text">
@@ -93,7 +106,16 @@ tagline: Software Developer
   <div class="experience-header">
     <div>
       <span class="experience-role">Developer</span>
-      <span class="experience-company">@ Deloitte</span>
+      <span class="experience-company">
+        @
+        <a
+          href="https://www.deloitte.com/pt/pt.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="company-link"
+          >Deloitte</a
+        >
+      </span>
     </div>
     <span class="experience-date">2022 - Present</span>
   </div>
@@ -107,7 +129,16 @@ tagline: Software Developer
   <div class="experience-header">
     <div>
       <span class="experience-role">Student</span>
-      <span class="experience-company">@ IPCA</span>
+      <span class="experience-company">
+        @
+        <a
+          href="https://ipca.pt"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="company-link"
+          >IPCA</a
+        >
+      </span>
     </div>
     <span class="experience-date">2024 - Present</span>
   </div>
