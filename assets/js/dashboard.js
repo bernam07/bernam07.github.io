@@ -2,8 +2,6 @@
 
 // CONFIGURAÇÃO
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
-const PPT_KEY =
-  'pokeprice_free_4c2909800fdb7087bc8b1ea9d0f35dc9f98ecb8a5b41a13c';
 const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos
 
 // --- 1. STOCKS ---
@@ -12,7 +10,7 @@ const myStocks = [
     ticker: 'VUSA.L',
     avgPrice: 100.9381,
     shares: 15.288,
-    fallbackPrice: 105.1,
+    fallbackPrice: 106.5,
   },
   { ticker: 'NVDA', avgPrice: 115.84, shares: 5.206 },
   { ticker: 'PLTR', avgPrice: 35.84, shares: 6.389 },
@@ -31,69 +29,62 @@ const myCrypto = [
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 },
 ];
 
-// --- 3. POKEMON CARDS ---
+// --- 3. POKEMON CARDS (Mapeamento TCGdex) ---
+// Usamos IDs Ingleses equivalentes para ter preços do Cardmarket (Europa)
 const myCards = [
   {
     name: 'Pikachu Grey Felt Hat',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/svp/85_hires.png',
-    query: 'Pikachu Grey Felt Hat',
-    lang: 'english',
+    dexId: 'svp-85',
   },
   {
     name: 'Mew ex (JP sv4a)',
     grade: 'PSA 10',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg',
-    query: 'Mew ex 348',
-    lang: 'japanese',
+    dexId: 'sv4.5-232', // Paldean Fates
   },
   {
     name: 'Pikachu (JP Dream League)',
     grade: 'CCC 9',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/574914_in_1000x1000.jpg',
-    query: 'Pikachu 054',
-    lang: 'japanese',
+    dexId: 'sm12-241', // Cosmic Eclipse
   },
   {
     name: "Team Rocket's Nidoking",
     grade: 'Ungraded',
     manualImg:
       'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SV10/SV10_EN_233.png',
-    query: 'Nidoking 233',
-    lang: 'english',
+    dexId: null, // Carta demasiado recente, sem dados estáveis
   },
   {
     name: 'Leafeon VSTAR (JP)',
     grade: 'PSA 10',
     manualImg:
       'https://den-cards.pokellector.com/357/Leafeon-VSTAR.S12A.210.45960.png',
-    query: 'Leafeon VSTAR 210',
-    lang: 'japanese',
+    dexId: 'swsh12.5-gg35', // Crown Zenith Galarian Gallery
   },
   {
     name: 'Charizard V (JP SAR)',
     grade: 'CGC 9.5',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/cqvwd3dhpbt4giji/1600.jpg',
-    query: 'Charizard V 211',
-    lang: 'japanese',
+    dexId: 'swsh12.5-18', // Crown Zenith
   },
   {
     name: 'Iono (SIR)',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
-    query: 'Iono 237',
-    lang: 'english',
+    dexId: 'sv4.5-237', // Paldean Fates
   },
   {
     name: "N's Zoroark EX",
     grade: 'Ungraded',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/615003_in_600x600.jpg',
-    query: 'Zoroark 102',
-    lang: 'japanese',
+    dexId: 'bw3-102', // Noble Victories (Era BW)
   },
 ];
 
@@ -113,14 +104,14 @@ function setCachedData(key, data) {
   );
 }
 
-// --- PROXY RAW (PARA VUSA) ---
+// --- PROXY RAW (Exclusivo para VUSA) ---
 async function fetchViaRawProxy(targetUrl) {
   try {
     const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
       targetUrl
     )}`;
     const response = await fetch(proxyUrl);
-    if (!response.ok) throw new Error(`Proxy Error`);
+    if (!response.ok) throw new Error('Proxy Error');
     return await response.json();
   } catch (error) {
     return null;
@@ -255,7 +246,7 @@ async function fetchCrypto() {
   });
 }
 
-// --- 4. POKEMON (COM CORSPROXY PARA RESOLVER ERRO) ---
+// --- 4. POKEMON (TCGdex - Sem Proxy, Sem Erros) ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
@@ -263,70 +254,40 @@ async function fetchPokemon(rates) {
 
   for (const card of myCards) {
     let cardPrice = null;
-    const cacheKey = `ppt_${card.query.replace(/\s/g, '')}`;
-    cardPrice = getCachedData(cacheKey);
 
-    if (!cardPrice) {
-      try {
-        const encodedQuery = encodeURIComponent(card.query);
-        const lang = card.lang || 'english';
+    if (card.dexId) {
+      const cacheKey = `dex_${card.dexId}`;
+      cardPrice = getCachedData(cacheKey);
 
-        // 1. URL da API
-        const targetUrl = `https://www.pokemonpricetracker.com/api/v2/cards?search=${encodedQuery}&language=${lang}&includeEbay=true`;
+      if (!cardPrice) {
+        try {
+          // API TCGdex é publica e permite CORS. Não precisa de proxy.
+          const url = `https://api.tcgdex.net/v2/en/cards/${card.dexId}`;
+          const response = await fetch(url);
 
-        // 2. Envolvemos no corsproxy.io para o browser não bloquear
-        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(
-          targetUrl
-        )}`;
+          if (response.ok) {
+            const data = await response.json();
 
-        const response = await fetch(proxyUrl, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${PPT_KEY}`, // A Key passa pelo Proxy
-          },
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-
-          if (Array.isArray(data) && data.length > 0) {
-            const bestMatch = data[0];
-            let usd = 0;
-
-            // Lógica de Grade
-            if (
-              card.grade !== 'Ungraded' &&
-              bestMatch.ebay &&
-              bestMatch.ebay.graded
-            ) {
-              const gradeKey = card.grade.toLowerCase().replace(/ /g, ''); // ex: psa10
-              const gradeObj = bestMatch.ebay.graded[gradeKey]; // Tenta 'psa10'
-
-              if (gradeObj) usd = gradeObj.average || gradeObj.price;
-
-              // Se não deu, tenta key maiuscula "PSA 10" (algumas apis variam)
-              if (usd === 0 && bestMatch.ebay.graded[card.grade]) {
-                usd = bestMatch.ebay.graded[card.grade].average;
+            // Tenta encontrar preços do Cardmarket (Euros)
+            if (data.cardmarket && data.cardmarket.prices) {
+              // avg7 = Média 7 dias, avg30 = Média 30 dias
+              const euros =
+                data.cardmarket.prices.avg7 ||
+                data.cardmarket.prices.avg30 ||
+                0;
+              if (euros > 0) {
+                cardPrice = euros;
+                setCachedData(cacheKey, cardPrice);
               }
             }
-
-            // Fallback
-            if (!usd || usd === 0) {
-              usd = bestMatch.price || bestMatch.tcgPlayer?.price || 0;
-            }
-
-            if (usd > 0) {
-              cardPrice = usd * rates.usdToEur;
-              setCachedData(cacheKey, cardPrice);
-            }
           }
+        } catch (e) {
+          console.warn(`Erro Dex ${card.name}`);
         }
-      } catch (e) {
-        console.log(`Erro API PPT ${card.name}`, e);
       }
     }
 
-    const displayPrice = cardPrice ? `€${cardPrice.toFixed(0)}` : 'N/A';
+    const displayPrice = cardPrice ? `€${cardPrice.toFixed(2)}` : 'N/A';
 
     let badgeColor = '#555';
     if (card.grade.includes('10') || card.grade.includes('9.5'))
