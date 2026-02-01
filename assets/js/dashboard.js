@@ -31,72 +31,72 @@ const myCrypto = [
 ];
 
 // --- 3. POKEMON CARDS (JustTCG API) ---
-// IDs baseados no TCGPlayer (usando equivalentes EN para JP quando necessário para obter preços)
 const myCards = [
   {
     name: 'Pikachu Grey Felt Hat',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/svp/85_hires.png',
-    tcgId: '518861', // SVP Promo 085
+    tcgId: '518861',
   },
   {
     name: 'Mew ex (JP sv4a)',
     grade: 'PSA 10',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg',
-    tcgId: '534919', // Paldean Fates 232 (Equivalente EN para preço)
+    tcgId: '534919',
   },
   {
     name: 'Pikachu (JP Dream League)',
     grade: 'CCC 9',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/574914_in_1000x1000.jpg',
-    tcgId: '201352', // Cosmic Eclipse 241
+    tcgId: '201352',
   },
   {
     name: "Team Rocket's Nidoking",
     grade: 'Ungraded',
     manualImg:
       'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SV10/SV10_EN_233.png',
-    tcgId: '633033', // SV10 Destined Rivals
+    tcgId: '633033',
   },
   {
     name: 'Leafeon VSTAR (JP)',
     grade: 'PSA 10',
     manualImg:
       'https://den-cards.pokellector.com/357/Leafeon-VSTAR.S12A.210.45960.png',
-    tcgId: '477060', // Crown Zenith GG35
+    tcgId: '477060',
   },
   {
     name: 'Charizard V (JP SAR)',
     grade: 'CGC 9.5',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/cqvwd3dhpbt4giji/1600.jpg',
-    tcgId: '285384', // SWSH Promo 260 (Art correspondente)
+    tcgId: '285384',
   },
   {
     name: 'Iono (SIR)',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
-    tcgId: '535101', // Paldean Fates 237
+    tcgId: '535101',
   },
   {
     name: "N's Zoroark EX",
     grade: 'Ungraded',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/615003_in_600x600.jpg',
-    tcgId: '623612', // Journey Together 185
+    tcgId: '623612',
   },
 ];
 
-// --- 5. CS2 INVENTORY (Do teu CSV) ---
+// --- 5. CS2 INVENTORY (A tua seleção) ---
 const mySkins = [
   {
     weapon: '★ Huntsman Knife',
     name: 'Gamma Doppler (Emerald)',
     wear: 'FN',
-    float: '0.03', // Factory New
-    price: 1100, // Valor Estimado (Emerald é rara)
+    float: '0.0091',
+    pattern: '991',
+    price: 700,
     rarity: 'knife',
     img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
   },
@@ -104,8 +104,9 @@ const mySkins = [
     weapon: '★ Flip Knife',
     name: 'Doppler (Phase 1)',
     wear: 'FN',
-    float: '0.02',
-    price: 550,
+    float: '0.0071',
+    pattern: '429',
+    price: 300,
     rarity: 'knife',
     img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
   },
@@ -113,36 +114,38 @@ const mySkins = [
     weapon: '★ Broken Fang Gloves',
     name: 'Unhinged',
     wear: 'FT',
-    float: '0.25', // Field-Tested
+    float: '0.1664',
     price: 80,
-    rarity: 'knife', // Luvas (Ouro)
+    rarity: 'knife',
     img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
   },
   {
-    weapon: 'AWP',
-    name: 'Chrome Cannon',
-    wear: 'MW',
-    float: '0.10', // Minimal Wear
-    price: 130,
-    rarity: 'covert', // Vermelho
+    weapon: '★ Specialist Gloves',
+    name: 'Lt. Commander',
+    wear: 'FT',
+    float: '0.1820',
+    price: 180,
+    rarity: 'knife',
     img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
   },
   {
-    weapon: 'M4A1-S',
+    weapon: 'M4A1-S (Souvenir)',
     name: 'Master Piece',
     wear: 'FT',
-    float: '0.20', // Field-Tested
-    price: 140,
-    rarity: 'classified', // Rosa
+    float: '0.200',
+    price: 250,
+    rarity: 'classified',
+    desc: 'DreamEaters vs G2 (shox gold)',
     img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
   },
   {
-    weapon: 'Desert Eagle',
-    name: 'Kumicho Dragon',
+    weapon: 'AK-47',
+    name: 'B the Monster',
     wear: 'FT',
-    float: '0.22',
-    price: 25,
-    rarity: 'classified',
+    float: '0.1512',
+    price: 350,
+    rarity: 'covert',
+    desc: 'Renamed (Jaguar Craft)',
     img: 'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f',
   },
 ];
@@ -177,10 +180,11 @@ async function fetchViaProxy(targetUrl, options = {}) {
 
 async function fetchViaRawProxy(targetUrl) {
   try {
-    // Usamos corsproxy.io para passar o pedido POST com headers
-    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`;
-    const response = await fetch(proxyUrl, options);
-    if (!response.ok) return null;
+    const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(
+      targetUrl
+    )}`;
+    const response = await fetch(proxyUrl);
+    if (!response.ok) throw new Error('Proxy Error');
     return await response.json();
   } catch (error) {
     return null;
@@ -208,7 +212,7 @@ async function getExchangeRates() {
   return rates;
 }
 
-// --- 2. STOCKS (Mantido) ---
+// --- 2. STOCKS ---
 async function fetchStocks(rates) {
   const tableBody = document.getElementById('stock-rows');
   if (!tableBody) return;
@@ -268,7 +272,7 @@ async function fetchStocks(rates) {
   }
 }
 
-// --- 3. CRYPTO (Mantido) ---
+// --- 3. CRYPTO ---
 async function fetchCrypto() {
   const cacheKey = 'crypto_prices';
   let prices = getCachedData(cacheKey);
@@ -335,11 +339,9 @@ async function fetchPokemon(rates) {
 
   if (!batchData) {
     try {
-      // Batch Request (Um pedido para todas as cartas)
       const requestBody = myCards
         .filter((c) => c.tcgId)
         .map((c) => ({ tcgplayerId: c.tcgId }));
-
       const response = await fetchViaProxy('https://api.justtcg.com/v1/cards', {
         method: 'POST',
         headers: {
@@ -348,7 +350,6 @@ async function fetchPokemon(rates) {
         },
         body: JSON.stringify(requestBody),
       });
-
       if (response && response.data) {
         batchData = response.data;
         setCachedData(cacheKey, batchData);
@@ -358,31 +359,24 @@ async function fetchPokemon(rates) {
     }
   }
 
-  // Preenche preços
   myCards.forEach((card, index) => {
     const priceEl = document.getElementById(`price-${index}`);
     if (!batchData) {
       priceEl.innerText = 'N/A';
       return;
     }
-
     const apiCard = batchData.find((c) => c.tcgplayerId === card.tcgId);
     let finalPrice = 0;
-
     if (apiCard && apiCard.variants) {
-      // Tenta variante Near Mint (Foil ou Normal)
       const bestVariant =
         apiCard.variants.find(
           (v) =>
             v.condition === 'Near Mint' &&
             (v.printing === 'Holofoil' || v.printing === 'Normal')
         ) || apiCard.variants[0];
-
-      if (bestVariant && bestVariant.price) {
+      if (bestVariant && bestVariant.price)
         finalPrice = bestVariant.price * rates.usdToEur;
-      }
     }
-
     priceEl.innerText =
       finalPrice > 0 ? `Est: €${finalPrice.toFixed(2)}` : 'N/A';
   });
@@ -396,10 +390,15 @@ function renderCS2() {
 
   for (const skin of mySkins) {
     const rarityClass = `rarity-${skin.rarity || 'restricted'}`;
-    // Imagem genérica se o link estiver quebrado, substitui pelo link real se quiseres
     const imgUrl =
       skin.img ||
-      'https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRv3sxJjIEg8gIQ1U4r_1IFM0h_z3fT8SuImJz4i02aCta-6ClDkBu50ojOvA8Nym2wS3-kE_MWv1IY-WclI/360fx360f';
+      'https://community.cloudflare.steamstatic.com/economy/image/default_placeholder.png';
+    const patternHtml = skin.pattern
+      ? `<span style="margin-left:8px; color:#aaa;">P:${skin.pattern}</span>`
+      : '';
+    const descHtml = skin.desc
+      ? `<div style="font-size:0.7rem; color:#f0ad4e; margin-top:4px;">${skin.desc}</div>`
+      : '';
 
     const cardHtml = `
       <div class="cs2-card ${rarityClass}">
@@ -411,8 +410,10 @@ function renderCS2() {
           <div class="cs2-name">${skin.name}</div>
           <div class="cs2-meta">
             <span>${skin.wear}</span>
-            <span>${skin.float}</span>
+            <span>Float: ${skin.float}</span>
+            ${patternHtml}
           </div>
+          ${descHtml}
           <div style="margin-top: 8px; display: flex; justify-content: space-between; align-items: center;">
              <span class="cs2-price">€${skin.price}</span>
           </div>
