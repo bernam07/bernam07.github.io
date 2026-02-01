@@ -3,7 +3,6 @@
 // CONFIGURAÇÃO
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
 const JUSTTCG_KEY = 'tcg_958179cf4f9147f392943be40a28779f';
-const JUSTTCG_KEY = 'tcg_958179cf4f9147f392943be40a28779f';
 const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos
 
 // --- 1. STOCKS ---
@@ -253,7 +252,6 @@ async function fetchStocks(rates) {
       currentPrice = stock.fallbackPrice;
 
     const cleanTicker = stock.ticker.replace('.L', '').replace('.AS', '');
-    const priceDisplay = currentPrice ? `€${currentPrice.toFixed(2)}` : 'N/A';
     const priceDisplay = currentPrice ? `€${currentPrice.toFixed(2)}` : 'N/A';
     let plCell = '<td style="text-align:right">-</td>';
     if (currentPrice) {
