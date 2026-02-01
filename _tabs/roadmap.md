@@ -25,7 +25,7 @@ A timeline of my academic and professional milestones, balancing full-time work 
     <div class="timeline-content">
       <span class="timeline-date">September 2024</span>
       <h3 class="timeline-title"><i class="fas fa-university"></i> Enrolled in BSc Degree</h3>
-      <p>Admitted to the Licenciatura in <strong>Engenharia de Sistemas Informáticos</strong> at IPCA, continuing my academic specialization.</p>
+      <p>Admitted to the Bachelor's Degree in <strong>Computer Systems Engineering</strong> at IPCA, continuing my academic specialization.</p>
     </div>
   </div>
 
@@ -42,9 +42,9 @@ A timeline of my academic and professional milestones, balancing full-time work 
   <div class="timeline-item">
     <div class="timeline-marker work"></div>
     <div class="timeline-content">
-      <span class="timeline-date">Late 2022</span>
+      <span class="timeline-date">October 2022</span>
       <h3 class="timeline-title"><i class="fas fa-briefcase"></i> Joined Deloitte</h3>
-      <p>Started working as a <strong>Software Developer</strong>. Balancing professional responsibilities with academic studies from day one.</p>
+      <p>Started working as a <strong>Developer</strong>. Balancing professional responsibilities with academic studies from day one.</p>
     </div>
   </div>
 
