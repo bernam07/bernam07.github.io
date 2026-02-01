@@ -2,6 +2,7 @@
 
 // CONFIGURAÇÃO
 const FINNHUB_KEY = 'd5ttd2pr01qtjet18pb0d5ttd2pr01qtjet18pbg';
+const WORKER_URL = 'https://justtcg-proxy.bernamartins07.workers.dev';
 const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos
 
 // --- 1. STOCKS ---
@@ -29,66 +30,65 @@ const myCrypto = [
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 },
 ];
 
-// --- 3. POKEMON CARDS ---
-// SearchID = ID da carta em Inglês
+// --- 3. POKEMON CARDS (Via Teu Worker) ---
 const myCards = [
   {
     name: 'Pikachu with Grey Felt Hat',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/svp/85_hires.png',
-    searchId: 'svp-085',
+    tcgId: '518861',
   },
   {
     name: 'Mew ex (JP sv4a)',
     grade: 'PSA 10',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg',
-    searchId: 'sv4pt5-232',
+    tcgId: '534919',
   },
   {
     name: 'Pikachu (JP Dream League)',
     grade: 'CCC 9',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/574914_in_1000x1000.jpg',
-    searchId: 'sm12-241',
+    tcgId: '201352',
   },
   {
     name: "Team Rocket's Nidoking",
     grade: 'Ungraded',
     manualImg:
       'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SV10/SV10_EN_233.png',
-    searchId: null,
+    tcgId: '633033',
   },
   {
     name: 'Leafeon VSTAR (JP)',
     grade: 'PSA 10',
     manualImg:
       'https://den-cards.pokellector.com/357/Leafeon-VSTAR.S12A.210.45960.png',
-    searchId: 'swsh12pt5-gg35',
+    tcgId: '477060',
   },
   {
     name: 'Charizard V (JP SAR)',
     grade: 'CGC 9.5',
     manualImg:
       'https://storage.googleapis.com/images.pricecharting.com/cqvwd3dhpbt4giji/1600.jpg',
-    searchId: 'swsh12pt5-18',
+    tcgId: '285384',
   },
   {
     name: 'Iono (SIR)',
     grade: 'PSA 9',
     manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
-    searchId: 'sv4pt5-237',
+    tcgId: '535101',
   },
   {
     name: "N's Zoroark EX",
     grade: 'Ungraded',
     manualImg:
       'https://tcgplayer-cdn.tcgplayer.com/product/615003_in_600x600.jpg',
-    searchId: 'bw3-102',
+    tcgId: '623612',
   },
 ];
 
-// --- 5. CS2 INVENTORY ---
+// --- 4. CS2 INVENTORY ---
 const mySkins = [
   {
     weapon: '★ Huntsman Knife',
@@ -168,7 +168,6 @@ function setCachedData(key, data) {
 async function getExchangeRates() {
   const cached = getCachedData('rates');
   if (cached) return cached;
-
   let rates = { usdToEur: 0.95, gbpToEur: 1.19 };
   try {
     const response = await fetch(
@@ -185,7 +184,7 @@ async function getExchangeRates() {
   return rates;
 }
 
-// --- 2. STOCKS (VUSA Fix) ---
+// --- 2. STOCKS ---
 async function fetchStocks(rates) {
   const tableBody = document.getElementById('stock-rows');
   if (!tableBody) return;
@@ -198,7 +197,6 @@ async function fetchStocks(rates) {
     else {
       try {
         if (stock.ticker === 'VUSA.L') {
-          // Usa AllOrigins apenas para GET simples do Yahoo (funciona melhor que CORSProxy)
           const url = `https://query1.finance.yahoo.com/v8/finance/chart/${stock.ticker}?interval=1d`;
           const res = await fetch(
             `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
@@ -282,9 +280,8 @@ async function fetchPokemon(rates) {
   if (!container) return;
   container.innerHTML = '';
 
-  for (const [index, card] of myCards.entries()) {
-    // Setup HTML
-    const html = `
+  myCards.forEach((card, index) => {
+    container.innerHTML += `
       <div id="card-${index}" class="poke-card" style="position: relative; display: inline-block;">
         <div style="position: absolute; top: -10px; right: -10px; background: ${
           card.grade.includes('10') || card.grade.includes('9.5')
@@ -302,41 +299,59 @@ async function fetchPokemon(rates) {
           card.name
         }</small><small id="price-${index}" style="opacity: 0.6; font-size: 0.75rem;">Loading...</small></center>
       </div>`;
-    container.innerHTML += html;
+  });
 
-    // Fetch Price
-    const cacheKey = `poke_api_${card.searchId}`;
-    let price = getCachedData(cacheKey);
+  const cacheKey = 'justtcg_worker_prices';
+  let batchData = getCachedData(cacheKey);
 
-    if (!price && card.searchId) {
-      try {
-        const res = await fetch(
-          `https://api.pokemontcg.io/v2/cards/${card.searchId}`
-        );
-        const data = await res.json();
-        if (data.data && data.data.tcgplayer && data.data.tcgplayer.prices) {
-          const prices = data.data.tcgplayer.prices;
-          const usd =
-            prices.holofoil?.market ||
-            prices.normal?.market ||
-            prices.reverseHolofoil?.market ||
-            0;
-          if (usd > 0) {
-            price = usd * rates.usdToEur;
-            setCachedData(cacheKey, price);
-          }
-        }
-      } catch (e) {
-        console.log('Erro API Pokemon', e);
+  if (!batchData) {
+    try {
+      if (WORKER_URL.includes('SEU-NOME')) {
+        console.warn('Define o WORKER_URL no dashboard.js!');
+        return;
       }
+
+      const requestBody = myCards
+        .filter((c) => c.tcgId)
+        .map((c) => ({ tcgplayerId: c.tcgId }));
+      // CHAMADA AO TEU WORKER (Sem chaves expostas, sem CORS)
+      const response = await fetch(WORKER_URL, {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+      });
+      if (response.ok) {
+        const result = await response.json();
+        if (result && result.data) {
+          batchData = result.data;
+          setCachedData(cacheKey, batchData);
+        }
+      }
+    } catch (e) {
+      console.log('Erro Worker', e);
     }
-
-    // Fallback
-    if (!price && card.fallbackPrice) price = card.fallbackPrice;
-
-    const priceEl = document.getElementById(`price-${index}`);
-    priceEl.innerText = price ? `Est: €${price.toFixed(0)}` : 'N/A';
   }
+
+  myCards.forEach((card, index) => {
+    const priceEl = document.getElementById(`price-${index}`);
+    if (!batchData) {
+      priceEl.innerText = 'N/A';
+      return;
+    }
+    const apiCard = batchData.find((c) => c.tcgplayerId === card.tcgId);
+    let finalPrice = 0;
+    if (apiCard && apiCard.variants) {
+      const bestVariant =
+        apiCard.variants.find(
+          (v) =>
+            v.condition === 'Near Mint' &&
+            (v.printing === 'Holofoil' || v.printing === 'Normal')
+        ) || apiCard.variants[0];
+      if (bestVariant && bestVariant.price)
+        finalPrice = bestVariant.price * rates.usdToEur;
+    }
+    priceEl.innerText =
+      finalPrice > 0 ? `Est: €${finalPrice.toFixed(2)}` : 'N/A';
+  });
 }
 
 // --- 5. CS2 (Render) ---
@@ -360,7 +375,7 @@ function renderCS2() {
     const cardHtml = `
       <div class="cs2-card ${rarityClass}">
         <div class="cs2-img-container">
-          <img src="${imgUrl}" alt="${skin.name}" class="cs2-img">
+          <img src="${imgUrl}" alt="${skin.name}" class="cs2-img" onerror="this.style.display='none'">
         </div>
         <div class="cs2-info">
           <div class="cs2-weapon">${skin.weapon}</div>
