@@ -5,24 +5,57 @@ tagline: ""
 ---
 
 <style>
-  /* Minimalist custom styles */
+  /* --- ESTILOS GERAIS --- */
   .intro-container {
     text-align: center;
     margin-bottom: 2rem;
     margin-top: -1rem;
+    /* Cria um contexto para posicionamento */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  /* Estilo para a nova imagem (Banner Técnico) */
-  .tech-banner {
-    width: 100%;
-    max-width: 600px;
+  /* --- NOVA FOTO DE PERFIL (Recortada e Sem Clique) --- */
+  .profile-crop {
+    /* Define o tamanho da "janela" redonda */
+    width: 200px; /* Podes aumentar se quiseres maior (ex: 250px) */
+    height: 200px;
+    
+    /* Torna a imagem redonda */
+    border-radius: 50%;
+    
+    /* RECORTAR: Foca na parte de cima (cara/ombros) e preenche o círculo */
+    object-fit: cover;
+    object-position: top center; /* Ajusta o foco para o topo */
+    
+    /* Estilo visual */
+    border: 4px solid var(--card-bg); /* Moldura subtil */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2); /* Sombra para destaque */
+    margin-bottom: 1.5rem;
+    
+    /* --- O TRUQUE: DESABILITA CLIQUES --- */
+    pointer-events: none;
+    user-select: none; /* Impede selecionar a imagem */
+  }
+
+  /* --- TEXTO ANIMADO (Sem Clique) --- */
+  .typing-container {
+    /* --- O TRUQUE: DESABILITA CLIQUES NESTE LINK TAMBÉM --- */
+    pointer-events: none;
+    user-select: none;
+    display: inline-block; /* Garante que o link não ocupa a largura toda */
+  }
+  
+  .typing-svg {
+    max-width: 100%;
     height: auto;
-    border-radius: 12px;
-    opacity: 0.95;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    /* Filtro opcional para suavizar o azul se quiseres: filter: brightness(0.9); */
   }
 
+
+  /* --- RESTO DO CSS (Intro, Botões, etc.) --- */
   .intro-text {
     font-size: 1.15rem;
     line-height: 1.6;
@@ -137,10 +170,10 @@ tagline: ""
 </style>
 
 <div class="intro-container">
-  <img src="/assets/img/image.jpg" alt="Tech Banner" class="tech-banner">
+  <img src="/assets/img/image.jpg" alt="Bernardo Martins" class="profile-crop">
   
-  <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=22&pause=1000&color=82AAFF&center=true&vCenter=true&width=600&lines=Software+Developer;Student+%40+IPCA+%7C+Developer+%40+Deloitte;Based+in+Portugal+%F0%9F%87%B5%F0%9F%87%B9;Backend+%26+Efficiency+Enthusiast" alt="Typing SVG" style="max-width: 100%;" />
+  <a href="https://git.io/typing-svg" class="typing-container">
+    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=22&pause=1000&color=82AAFF&center=true&vCenter=true&width=600&lines=Software+Developer;Student+%40+IPCA+%7C+Developer+%40+Deloitte;Based+in+Portugal+%F0%9F%87%B5%F0%9F%87%B9;Backend+%26+Efficiency+Enthusiast" alt="Typing SVG" class="typing-svg" />
   </a>
 </div>
 
