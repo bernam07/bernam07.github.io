@@ -1,43 +1,53 @@
-<footer class="footer mt-auto py-3 text-center">
+<footer class="footer">
   <div class="container">
-    <p class="text-muted mb-0">
-      © 2026 <strong>Bernardo Martins</strong>.
-      <span class="d-none d-sm-inline">Powered by Jekyll & Chirpy.</span>
-    </p>
+    <div class="d-flex justify-content-center align-items-center flex-wrap text-muted">
+      <span>
+        &copy; {{ site.time | date: '%Y' }}
+        <a href="{{ '/' | relative_url }}">{{ site.social.name | default: site.title }}</a>.
+      </span>
+
+      <span class="ms-1">
+        <a href="https://creativecommons.org/licenses/by-sa/4.0/" 
+           target="_blank" rel="noopener"
+           data-bs-toggle="tooltip" 
+           data-bs-placement="top" 
+           title="Except where otherwise noted, content on this site is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License.">
+          Some rights reserved.
+        </a>
+      </span>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center flex-wrap text-muted mt-2">
+      <span>
+        Powered by 
+        <a href="https://jekyllrb.com/" target="_blank" rel="noopener">Jekyll</a> 
+        & 
+        <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a>
+      </span>
+    </div>
   </div>
 </footer>
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    // Lista de IDs que compõem a barra de pesquisa no Chirpy
-    const targetIds = [
-      'search',                // O contentor principal que encontraste no Inspect
-      'search-wrapper',        // Versões mobile
-      'search-trigger',        // O botão da lupa na sidebar
-      'search-result-wrapper', // O popup de resultados
-      'search-input'           // O campo de texto
-    ];
-
-    // 1. Remover por ID (Arranca o elemento do HTML)
+    // Lista de elementos da pesquisa a remover
+    const targetIds = ['search', 'search-wrapper', 'search-trigger', 'search-result-wrapper', 'search-input'];
+    
     targetIds.forEach(id => {
       const el = document.getElementById(id);
       if (el) {
-        el.remove(); // Remove do DOM completamente
-        // Backup: Se remover falhar, esconde visualmente
-        el.style.display = 'none !important';
-        el.style.visibility = 'hidden';
+        el.remove(); // Remove do HTML
+        el.style.display = 'none'; // Garante que fica invisível
       }
     });
 
-    // 2. Remover ícones soltos da lupa (caso sobrem)
-    const icons = document.querySelectorAll('.fa-search');
-    icons.forEach(icon => icon.remove());
+    // Remove ícones soltos
+    document.querySelectorAll('.fa-search').forEach(icon => icon.remove());
     
-    // 3. Remover a etiqueta <search> (HTML5)
+    // Remove tags <search>
     const searchTags = document.getElementsByTagName('search');
     for (let i = 0; i < searchTags.length; i++) {
         searchTags[i].style.display = 'none';
-        searchTags[i].innerHTML = '';
     }
   });
 </script>
