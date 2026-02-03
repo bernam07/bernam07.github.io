@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 
 # --- CONFIGURAÇÃO ---
-STOCKS = ['NVDA', 'PLTR', 'NVO', 'SOFI', 'META', 'AMZN', 'O', 'ORCL'] 
+STOCKS = ['VUSA.L', 'NVDA', 'PLTR', 'NVO', 'SOFI', 'META', 'AMZN', 'O', 'ORCL'] 
 
 CRYPTOS = ['ondo-finance', 'avalanche-2', 'cardano']
 
