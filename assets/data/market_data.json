@@ -2,66 +2,66 @@
   "stocks": [
     {
       "symbol": "VUSA.L",
-      "price": 0,
-      "percent": 0
+      "price": 96.69249725341797,
+      "percent": -0.23217035871040712
     },
     {
       "symbol": "NVDA",
-      "price": 183.81,
-      "percent": -0.9698
+      "price": 181.22000122070312,
+      "percent": -2.679769496427089
     },
     {
       "symbol": "PLTR",
-      "price": 157.87,
-      "percent": 6.8422
+      "price": 155.6300048828125,
+      "percent": -0.8283917142595468
     },
     {
       "symbol": "NVO",
-      "price": 58.33,
-      "percent": -1.0182
+      "price": 58.14500045776367,
+      "percent": -1.3488285412899998
     },
     {
       "symbol": "SOFI",
-      "price": 22.64,
-      "percent": 2.5362
+      "price": 22.15999984741211,
+      "percent": -6.88573514292006e-07
     },
     {
       "symbol": "META",
-      "price": 712.01,
-      "percent": 0.7927
+      "price": 703.7150268554688,
+      "percent": -0.47589709007909864
     },
     {
       "symbol": "AMZN",
-      "price": 243.34,
-      "percent": 0.1564
+      "price": 240.69000244140625,
+      "percent": -1.3322938257742674
     },
     {
       "symbol": "O",
-      "price": 60.84,
-      "percent": 0.5121
+      "price": 61.17499923706055,
+      "percent": 0.9488436255124513
     },
     {
       "symbol": "ORCL",
-      "price": 158.26,
-      "percent": -1.1246
+      "price": 155.02000427246094,
+      "percent": -2.8087747508081895
     }
   ],
   "crypto": [
     {
       "id": "ondo-finance",
-      "price": 0.285569,
-      "percent": 0.3538575615717776
+      "price": 0.282634,
+      "percent": -0.3412703794110451
     },
     {
       "id": "avalanche-2",
-      "price": 10.1,
-      "percent": -0.6285867130613343
+      "price": 9.95,
+      "percent": -1.983681056014785
     },
     {
       "id": "cardano",
-      "price": 0.298927,
-      "percent": -0.47910597099314783
+      "price": 0.294815,
+      "percent": -1.315765276776264
     }
   ],
-  "last_updated": "03/02/2026 14:39"
+  "last_updated": "03/02/2026 15:01"
 }
