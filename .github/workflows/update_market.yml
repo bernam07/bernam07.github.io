@@ -2,9 +2,9 @@ name: Update Market Data
 
 on:
   schedule:
-    # Corre a cada 6 horas (podes ajustar, mas cuidado com limites da API)
+    # Corre a cada 6 horas
     - cron: '0 */6 * * *'
-  workflow_dispatch: # Permite correr manualmente o botão no GitHub
+  workflow_dispatch: # Permite correr manualmente
 
 permissions:
   contents: write
@@ -25,11 +25,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install requests
+        pip install requests yfinance
+        # ADICIONEI 'yfinance' AQUI EM CIMA 👆
 
     - name: Fetch Data
       env:
-        FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+        FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }} 
       run: python scripts/fetch_data.py
 
     - name: Commit and Push changes
