@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Bernardo Martins
-tagline: Software Developer
+title: ""
+tagline: ""
 ---
 
 <style>
@@ -9,15 +9,18 @@ tagline: Software Developer
   .intro-container {
     text-align: center;
     margin-bottom: 2rem;
+    margin-top: -1rem;
   }
 
-  .profile-img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 4px solid var(--sidebar-active-color);
+  /* Estilo para a nova imagem (Banner Técnico) */
+  .tech-banner {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 12px;
+    opacity: 0.95;
     margin-bottom: 1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
   }
 
   .intro-text {
@@ -25,7 +28,7 @@ tagline: Software Developer
     line-height: 1.6;
     margin-bottom: 2rem;
     color: var(--text-color);
-    text-align: left; /* Mantém o texto alinhado à esquerda para leitura */
+    text-align: left;
   }
 
   .section-title {
@@ -96,7 +99,7 @@ tagline: Software Developer
     opacity: 0.8;
   }
 
-  /* NOVOS BOTÕES DE NAVEGAÇÃO */
+  /* BOTÕES DE NAVEGAÇÃO */
   .nav-buttons {
     display: flex;
     gap: 15px;
@@ -117,34 +120,34 @@ tagline: Software Developer
     text-decoration: none;
     font-weight: bold;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   }
 
   .btn-shine:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
     border-color: var(--link-color);
     color: var(--link-color);
     text-decoration: none;
   }
-
+  
   .btn-shine i {
     color: var(--link-color);
   }
 </style>
 
 <div class="intro-container">
-  <img
-    src="https://github.com/bernam07.png"
-    alt="Bernardo Martins"
-    class="profile-img"
-  />
+  <img src="/assets/img/image.png" alt="Tech Banner" class="tech-banner">
+  
+  <a href="https://git.io/typing-svg">
+    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=22&pause=1000&color=82AAFF&center=true&vCenter=true&width=600&lines=Software+Developer;Student+%40+IPCA+%7C+Developer+%40+Deloitte;Based+in+Portugal+%F0%9F%87%B5%F0%9F%87%B9;Backend+%26+Efficiency+Enthusiast" alt="Typing SVG" style="max-width: 100%;" />
+  </a>
 </div>
 
 <div class="intro-text">
   <p>
     Hello. I'm <strong>Bernardo</strong>, a 22-year-old software developer based
-    in Portugal.
+    in Portugal 🇵🇹.
   </p>
   <p>
     I enjoy building efficient systems and exploring financial markets.
@@ -154,17 +157,17 @@ tagline: Software Developer
 </div>
 
 <div class="nav-buttons">
-  <a href="/roadmap/" class="btn-shine">
-    <i class="fas fa-map-signs"></i> Roadmap
-  </a> 
-  <a href="/setup/" class="btn-shine">
-    <i class="fas fa-desktop"></i> Setup
-  </a>
   <a href="/projects/" class="btn-shine">
     <i class="fas fa-code-branch"></i> Projects
   </a>
+  <a href="/roadmap/" class="btn-shine">
+    <i class="fas fa-map-signs"></i> Journey
+  </a>
   <a href="/dashboard/" class="btn-shine">
     <i class="fas fa-chart-line"></i> Dashboard
+  </a>
+  <a href="/setup/" class="btn-shine">
+    <i class="fas fa-desktop"></i> Setup
   </a>
 </div>
 
@@ -230,7 +233,5 @@ tagline: Software Developer
 
 <p>
   <a href="https://github.com/bernam07" target="_blank">GitHub</a> •
-  <a href="https://www.linkedin.com/in/bernardomfm/" target="_blank"
-    >LinkedIn</a
-  >
+  <a href="https://www.linkedin.com/in/bernardomfm/" target="_blank">LinkedIn</a>
 </p>
