@@ -1,0 +1,22 @@
+---
+---
+
+/* 1. Importar todo o design original do tema primeiro */
+@import "jekyll-theme-chirpy";
+
+/* 2. As nossas regras para esconder a pesquisa */
+
+/* Remove a lupa da barra lateral (Desktop) */
+#search-trigger {
+  display: none !important;
+}
+
+/* Remove a barra de pesquisa no telemóvel (Mobile) */
+#search-wrapper {
+  display: none !important;
+}
+
+/* Remove resultados de pesquisa se alguém tentar aceder */
+#search-result-wrapper {
+  display: none !important;
+}
