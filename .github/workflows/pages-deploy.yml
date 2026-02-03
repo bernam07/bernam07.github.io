@@ -1,5 +1,6 @@
 name: "Build and Deploy"
 on:
+  # 1. Trigger normal
   push:
     branches:
       - main
@@ -9,8 +10,14 @@ on:
       - README.md
       - LICENSE
 
-  # Allows you to run this workflow manually from the Actions tab
+  # 2. Trigger manual (botão no GitHub)
   workflow_dispatch:
+
+  # 3. Trigger workflow automático
+  workflow_run:
+    workflows: ["Update Market Data"]
+    types:
+      - completed
 
 permissions:
   contents: read
