@@ -1,0 +1,52 @@
+<footer class="footer mt-auto py-3 text-center">
+  <div class="container">
+    <p class="text-muted mb-0">
+      © 2026 <strong>Bernardo Martins</strong>.
+      <span class="d-none d-sm-inline">Powered by Jekyll & Chirpy.</span>
+    </p>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Lista de IDs que compõem a barra de pesquisa no Chirpy
+    const targetIds = [
+      'search',                // O contentor principal que encontraste no Inspect
+      'search-wrapper',        // Versões mobile
+      'search-trigger',        // O botão da lupa na sidebar
+      'search-result-wrapper', // O popup de resultados
+      'search-input'           // O campo de texto
+    ];
+
+    // 1. Remover por ID (Arranca o elemento do HTML)
+    targetIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.remove(); // Remove do DOM completamente
+        // Backup: Se remover falhar, esconde visualmente
+        el.style.display = 'none !important';
+        el.style.visibility = 'hidden';
+      }
+    });
+
+    // 2. Remover ícones soltos da lupa (caso sobrem)
+    const icons = document.querySelectorAll('.fa-search');
+    icons.forEach(icon => icon.remove());
+    
+    // 3. Remover a etiqueta <search> (HTML5)
+    const searchTags = document.getElementsByTagName('search');
+    for (let i = 0; i < searchTags.length; i++) {
+        searchTags[i].style.display = 'none';
+        searchTags[i].innerHTML = '';
+    }
+  });
+</script>
+
+<style>
+  #search, #search-trigger, #search-wrapper, search {
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    visibility: hidden !important;
+  }
+</style>
