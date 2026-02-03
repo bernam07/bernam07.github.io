@@ -52,7 +52,7 @@ webmaster_verifications:
 # -----------------------------------------------------------------------------
 search:
   enabled: false
-  provider: # google | lunr (default)
+  provider: lunr
 
 # Web Analytics Settings
 analytics:
