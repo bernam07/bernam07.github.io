@@ -1,0 +1,16 @@
+/* Forçar a lupa e a barra a desaparecerem */
+#search-trigger, 
+#search-wrapper, 
+#search-result-wrapper {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Ajuste para o mobile não ficar com espaço em branco */
+#topbar-wrapper {
+  padding-right: 0 !important;
+}
