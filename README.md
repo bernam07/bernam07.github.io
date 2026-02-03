@@ -1,43 +1,86 @@
-# Chirpy Starter
+# Bernardo Martins - Portfolio 🚀
 
-[![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy)][gem]&nbsp;
-[![GitHub license](https://img.shields.io/github/license/cotes2020/chirpy-starter.svg?color=blue)][mit]
+[![Portfolio Status](https://img.shields.io/website?label=bernam07.github.io&style=flat-square&url=https%3A%2F%2Fbernam07.github.io)](https://bernam07.github.io)
+[![GitHub](https://img.shields.io/badge/GitHub-bernam07-181717?style=flat-square&logo=github)](https://github.com/bernam07)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Bernardo%20Martins-0077B5?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/bernardomfm/)
 
-When installing the [**Chirpy**][chirpy] theme through [RubyGems.org][gem], Jekyll can only read files in the folders
-`_data`, `_layouts`, `_includes`, `_sass` and `assets`, as well as a small part of options of the `_config.yml` file
-from the theme's gem. If you have ever installed this theme gem, you can use the command
-`bundle info --path jekyll-theme-chirpy` to locate these files.
+> **A personal portfolio showcasing my journey as a Software Developer, featuring real-time financial tracking and professional milestones.**
 
-The Jekyll team claims that this is to leave the ball in the user’s court, but this also results in users not being
-able to enjoy the out-of-the-box experience when using feature-rich themes.
+---
 
-To fully use all the features of **Chirpy**, you need to copy the other critical files from the theme's gem to your
-Jekyll site. The following is a list of targets:
+## 🌐 Live Demo
+Check out the live website here: **[bernam07.github.io](https://bernam07.github.io)**
 
-```shell
+---
+
+## 🛠️ About The Project
+
+This portfolio was built to go beyond a simple resume. It serves as a central hub for my professional identity, technical projects, and personal interests.
+
+### Key Features:
+* **Professional Roadmap:** A visual timeline of my academic path (IPCA) and career at Deloitte.
+* **Real-time Dashboard:** Fetches live data for Stocks & Crypto using APIs (Finnhub, CoinGecko).
+* **CS2 Inventory:** Displays my Counter-Strike 2 item collection dynamically via custom JavaScript logic.
+* **Project Showcase:** A clean grid layout highlighting my work in C#, Python, and .NET.
+* **Setup Tour:** A detailed look at my hardware and development environment.
+
+---
+
+## 💻 Tech Stack
+
+This site is built with **Jekyll** and hosted on **GitHub Pages**, customized heavily from the *Chirpy* theme.
+
+| Category | Technologies |
+| :--- | :--- |
+| **Core** | ![Jekyll](https://img.shields.io/badge/Jekyll-CC0000?style=flat-square&logo=jekyll&logoColor=white) ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) ![Sass](https://img.shields.io/badge/Sass-CC6699?style=flat-square&logo=sass&logoColor=white) |
+| **Scripting** | ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) |
+| **APIs Used** | Finnhub (Stocks), CoinGecko (Crypto), PokemonTCG |
+| **Deploy** | ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=github-actions&logoColor=white) |
+
+---
+
+## 📂 Project Structure
+
+A quick look at how the code is organized based on my repository:
+
+```text
 .
-├── _config.yml
-├── _plugins
-├── _tabs
-└── index.html
+├── _tabs/              # Content pages (Projects, Roadmap, Dashboard, Setup)
+├── _includes/          # Custom HTML components (Footer, Head overrides)
+├── _layouts/           # Page templates
+├── _sass/              # Custom CSS styling (in 'addon' folder)
+├── assets/
+│   ├── img/            # Profile pictures and site images
+│   └── css/            # Generated styles
+├── .github/workflows/  # CI/CD configuration
+└── _config.yml         # Main site configuration (SEO, CSP, Plugins)
 ```
 
-To save you time, and also in case you lose some files while copying, we extract those files/configurations of the
-latest version of the **Chirpy** theme and the [CD][CD] workflow to here, so that you can start writing in minutes.
+## 🚀 Getting Started (Local Development)
 
-## Usage
+If you want to run this locally to test changes:
 
-Check out the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy/wiki).
+1.  **Clone the repo**
+    ```sh
+    git clone [https://github.com/bernam07/bernam07.github.io.git](https://github.com/bernam07/bernam07.github.io.git)
+    ```
+2.  **Install dependencies**
+    ```sh
+    bundle install
+    ```
+3.  **Run the server**
+    ```sh
+    bundle exec jekyll serve
+    ```
 
-## Contributing
+---
 
-This repository is automatically updated with new releases from the theme repository. If you encounter any issues or want to contribute to its improvement, please visit the [theme repository][chirpy] to provide feedback.
+## 📜 License
 
-## License
+Distributed under the MIT License. See `LICENSE` for more information.
 
-This work is published under [MIT][mit] License.
+---
 
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[chirpy]: https://github.com/cotes2020/jekyll-theme-chirpy/
-[CD]: https://en.wikipedia.org/wiki/Continuous_deployment
-[mit]: https://github.com/cotes2020/chirpy-starter/blob/master/LICENSE
+<p align="center">
+  Built with ❤️ by <a href="https://github.com/bernam07">Bernardo Martins</a>
+</p>
