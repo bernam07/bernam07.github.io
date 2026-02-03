@@ -1,0 +1,67 @@
+{
+  "stocks": [
+    {
+      "symbol": "VUSA.L",
+      "price": 0,
+      "percent": 0
+    },
+    {
+      "symbol": "NVDA",
+      "price": 183.81,
+      "percent": -0.9698
+    },
+    {
+      "symbol": "PLTR",
+      "price": 157.87,
+      "percent": 6.8422
+    },
+    {
+      "symbol": "NVO",
+      "price": 58.33,
+      "percent": -1.0182
+    },
+    {
+      "symbol": "SOFI",
+      "price": 22.64,
+      "percent": 2.5362
+    },
+    {
+      "symbol": "META",
+      "price": 712.01,
+      "percent": 0.7927
+    },
+    {
+      "symbol": "AMZN",
+      "price": 243.34,
+      "percent": 0.1564
+    },
+    {
+      "symbol": "O",
+      "price": 60.84,
+      "percent": 0.5121
+    },
+    {
+      "symbol": "ORCL",
+      "price": 158.26,
+      "percent": -1.1246
+    }
+  ],
+  "crypto": [
+    {
+      "id": "ondo-finance",
+      "price": 0.285569,
+      "percent": 0.3538575615717776
+    },
+    {
+      "id": "avalanche-2",
+      "price": 10.1,
+      "percent": -0.6285867130613343
+    },
+    {
+      "id": "cardano",
+      "price": 0.298927,
+      "percent": -0.47910597099314783
+    }
+  ],
+  "last_updated": "03/02/2026 14:39"
+}
