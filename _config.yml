@@ -47,6 +47,13 @@ webmaster_verifications:
 # ↑ --------------------------
 # The end of `jekyll-seo-tag` settings
 
+# -----------------------------------------------------------------------------
+# Search
+# -----------------------------------------------------------------------------
+search:
+  enabled: false
+  provider: # google | lunr (default)
+
 # Web Analytics Settings
 analytics:
   google:
