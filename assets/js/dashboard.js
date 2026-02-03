@@ -58,7 +58,7 @@ function setCachedData(key, data) {
   localStorage.setItem(key, JSON.stringify({ timestamp: Date.now(), data: data }));
 }
 
-// --- 1. RATES (Mantido local para converter USD -> EUR) ---
+// --- 1. RATES (USD -> EUR) ---
 async function getExchangeRates() {
   const cached = getCachedData('rates');
   if (cached) return cached;
@@ -79,7 +79,7 @@ async function fetchMarketData(rates) {
   try {
     // Tenta carregar o ficheiro gerado pelo Python
     const response = await fetch('/assets/data/market_data.json');
-    if (!response.ok) throw new Error('Dados não encontrados');
+    if (!response.ok) throw new Error('Data not found');
     const data = await response.json();
 
     // Atualizar Stocks
@@ -88,13 +88,13 @@ async function fetchMarketData(rates) {
     // Atualizar Crypto
     updateCryptoUI(data.crypto, rates);
 
-    // Atualizar Timestamp (Opcional)
+    // Atualizar Timestamp
     if(data.last_updated) {
-       console.log("Dados atualizados em:", data.last_updated);
+       console.log("Data updated on:", data.last_updated);
     }
 
   } catch (error) {
-    console.error("Erro ao carregar market_data.json:", error);
+    console.error("Error loading market_data.json:", error);
   }
 }
 
