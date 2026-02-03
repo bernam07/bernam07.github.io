@@ -7,7 +7,7 @@ title: Roadmap
 
 > "It's not about the destination, it's about the journey." 🚀
 
-A timeline of my academic and professional milestones, balancing full-time work with higher education.
+A timeline of my academic milestones, professional growth, and technical certifications.
 
 <div class="timeline">
 
@@ -21,11 +21,30 @@ A timeline of my academic and professional milestones, balancing full-time work 
   </div>
 
   <div class="timeline-item">
+    <div class="timeline-marker cert"></div>
+    <div class="timeline-content">
+      <span class="timeline-date">June 2025</span>
+      <h3 class="timeline-title"><i class="fab fa-github"></i> GitHub Foundations</h3>
+      <p>Certified in core GitHub concepts, collaboration, and workflow optimization.</p>
+      <div class="highlight-badge cert-badge">Expires: June 2028</div>
+    </div>
+  </div>
+
+  <div class="timeline-item">
     <div class="timeline-marker current"></div>
     <div class="timeline-content">
       <span class="timeline-date">September 2024</span>
       <h3 class="timeline-title"><i class="fas fa-university"></i> Enrolled in BSc Degree</h3>
-      <p>Admitted to the Bachelor's Degree in <strong>Computer Systems Engineering</strong> at IPCA, continuing my academic specialization.</p>
+      <p>Admitted to the Bachelor's Degree in <strong>Computer Systems Engineering</strong> at IPCA.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-marker cert"></div>
+    <div class="timeline-content">
+      <span class="timeline-date">August 2024</span>
+      <h3 class="timeline-title"><i class="fas fa-brain"></i> Azure AI Fundamentals</h3>
+      <p>Microsoft Certified (AI-900). Validated knowledge in Machine Learning and AI workloads on Azure.</p>
     </div>
   </div>
 
@@ -34,8 +53,26 @@ A timeline of my academic and professional milestones, balancing full-time work 
     <div class="timeline-content">
       <span class="timeline-date">July 2024</span>
       <h3 class="timeline-title"><i class="fas fa-certificate"></i> CTeSP Completion</h3>
-      <p>Finished the Higher Professional Technical Course in <strong>Tecnologia e Inovação Informática</strong>.</p>
+      <p>Finished the course in <strong>Tecnologia e Inovação Informática</strong>.</p>
       <div class="highlight-badge"><i class="fas fa-star"></i> Final Grade: 16/20</div>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-marker cert"></div>
+    <div class="timeline-content">
+      <span class="timeline-date">June 2023</span>
+      <h3 class="timeline-title"><i class="fas fa-shield-alt"></i> Security, Compliance & Identity</h3>
+      <p>Microsoft Certified (SC-900). Focus on cloud security operations and identity management.</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-marker cert"></div>
+    <div class="timeline-content">
+      <span class="timeline-date">April 2023</span>
+      <h3 class="timeline-title"><i class="fas fa-cloud"></i> Azure Fundamentals</h3>
+      <p>Microsoft Certified (AZ-900). Foundational knowledge of cloud services and Azure architecture.</p>
     </div>
   </div>
 
@@ -44,7 +81,7 @@ A timeline of my academic and professional milestones, balancing full-time work 
     <div class="timeline-content">
       <span class="timeline-date">October 2022</span>
       <h3 class="timeline-title"><i class="fas fa-briefcase"></i> Joined Deloitte</h3>
-      <p>Started working as a <strong>Developer</strong>. Balancing professional responsibilities with academic studies from day one.</p>
+      <p>Started working as a <strong>Developer</strong> as part of the Brightstart Program. Balancing professional responsibilities with academic studies.</p>
     </div>
   </div>
 
@@ -53,7 +90,7 @@ A timeline of my academic and professional milestones, balancing full-time work 
     <div class="timeline-content">
       <span class="timeline-date">October 2022</span>
       <h3 class="timeline-title"><i class="fas fa-school"></i> Started Academic Journey</h3>
-      <p>Enrolled in the CTeSP program at <strong>IPCA</strong> (Instituto Politécnico do Cávado e do Ave).</p>
+      <p>Enrolled in the CTeSP program at <strong>IPCA</strong>.</p>
     </div>
   </div>
 
@@ -85,7 +122,7 @@ A timeline of my academic and professional milestones, balancing full-time work 
     padding-left: 35px;
   }
 
-  /* Bolinha (Marker) */
+  /* Bolinha (Marker) Base */
   .timeline-marker {
     position: absolute;
     left: 0;
@@ -94,25 +131,37 @@ A timeline of my academic and professional milestones, balancing full-time work 
     height: 15px;
     border-radius: 50%;
     background: var(--card-bg);
-    border: 3px solid var(--link-color);
+    border: 3px solid var(--text-muted);
     z-index: 1;
   }
 
-  /* Estilos Especiais para os Markers */
+  /* --- CORES DOS MARKERS --- */
+  
+  /* Atual / IPCA */
   .timeline-marker.current {
+    border-color: var(--link-color);
     background: var(--link-color);
     box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.2);
   }
 
+  /* Trabalho (Dourado) */
   .timeline-marker.work {
-    border-color: #d4af37; /* Dourado para Trabalho */
+    border-color: #d4af37; 
+    background: #d4af37;
   }
 
+  /* Certificações (Azul Ciano) */
+  .timeline-marker.cert {
+    border-color: #00bcd4;
+    background: var(--card-bg);
+  }
+
+  /* Futuro (Tracejado) */
   .timeline-item.future .timeline-marker {
     border-color: var(--text-muted);
     border-style: dashed;
+    background: transparent;
   }
-
   .timeline-item.future .timeline-content {
     opacity: 0.7;
   }
@@ -144,11 +193,11 @@ A timeline of my academic and professional milestones, balancing full-time work 
 
   .timeline-title {
     margin: 0 0 10px 0;
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     color: var(--heading-color);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
 
   .timeline-title i {
@@ -162,6 +211,7 @@ A timeline of my academic and professional milestones, balancing full-time work 
     line-height: 1.5;
   }
 
+  /* Badges Especiais */
   .highlight-badge {
     display: inline-block;
     margin-top: 10px;
@@ -170,7 +220,13 @@ A timeline of my academic and professional milestones, balancing full-time work 
     color: #2ea44f;
     border-radius: 12px;
     font-weight: bold;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     border: 1px solid rgba(0, 128, 0, 0.2);
+  }
+
+  .cert-badge {
+    background: rgba(0, 188, 212, 0.1);
+    color: #00bcd4;
+    border-color: rgba(0, 188, 212, 0.2);
   }
 </style>
