@@ -47,7 +47,7 @@ title: Dashboard
       </tr>
     </thead>
     <tbody id="stock-rows">
-      <tr><td colspan="4">A atualizar...</td></tr>
+      <tr><td colspan="4">Loading...</td></tr>
     </tbody>
   </table>
 </div>
@@ -80,7 +80,7 @@ title: Dashboard
 > Top 8 (Grades PSA/CGC/CCC).
 
 <div class="poke-grid" id="poke-container">
-  <p>A carregar coleção...</p>
+  <p>Loading collection...</p>
 </div>
 <hr>
 
@@ -88,7 +88,7 @@ title: Dashboard
 > Inventory highlights (Estimated market prices).
 
 <div id="cs2-container" class="cs2-grid">
-  <p>A carregar inventário...</p>
+  <p>Loading inventory...</p>
 </div>
 
 <style>
@@ -105,7 +105,7 @@ title: Dashboard
     overflow: hidden;
     position: relative;
     transition: transform 0.2s, box-shadow 0.2s;
-    border-bottom: 4px solid #555; /* Cor padrão (fallback) */
+    border-bottom: 4px solid #555;
   }
 
   .cs2-card:hover {
