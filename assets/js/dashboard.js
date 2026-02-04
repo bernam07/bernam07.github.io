@@ -1,10 +1,8 @@
 // assets/js/dashboard.js
 
-// CONFIGURAÇÃO
 const WORKER_URL = 'https://justtcg-proxy.bernamartins07.workers.dev';
-const CACHE_DURATION = 1000 * 60 * 15; // 15 Minutos
+const CACHE_DURATION = 1000 * 60 * 15;
 
-// --- 1. PORTFOLIO DE STOCKS ---
 const myStocks = [
   { ticker: 'VUSA.L', avgPrice: 100.9381, shares: 15.288 },
   { ticker: 'NVDA', avgPrice: 115.84, shares: 5.206 },
@@ -17,14 +15,12 @@ const myStocks = [
   { ticker: 'ORCL', avgPrice: 166.78, shares: 2.419 },
 ];
 
-// --- 2. PORTFOLIO DE CRYPTO ---
 const myCrypto = [
   { id: 'ondo-finance', symbol: 'ONDO', avgPrice: 0.799, holdings: 1278.461 },
   { id: 'avalanche-2', symbol: 'AVAX', avgPrice: 11.76, holdings: 7.237 },
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 },
 ];
 
-// --- 3. POKEMON CARDS ---
 const myCards = [
   { name: 'Pikachu with Grey Felt Hat', grade: 'PSA 9', manualImg: 'https://images.pokemontcg.io/svp/85_hires.png', tcgId: '518861' },
   { name: 'Mew ex (sv4a #347)', grade: 'PSA 10', manualImg: 'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg', tcgId: '534919' },
@@ -36,7 +32,6 @@ const myCards = [
   { name: "N's Zoroark EX (sv9 #127)", grade: 'Ungraded', manualImg: 'https://tcgplayer-cdn.tcgplayer.com/product/615003_in_600x600.jpg', tcgId: '623612' },
 ];
 
-// --- 4. CS2 INVENTORY ---
 const mySkins = [
   { weapon: '★ Huntsman Knife', name: 'Gamma Doppler (Emerald)', wear: 'FN', float: '0.0091', pattern: '991', price: 700, rarity: 'knife', img: 'https://community.fastly.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1P7vG6YadsLM-SA1iVzOtkse1tcCSyhx8rtjSfn4vGLSLANkI-A5d0Q7EI4BPqwdHlNe3m4Q3Zj4IQnn6s2ilJ6y5i5r4AU_cg-qaBiBaBb-MAj17m6g/330x192?allow_animated=1' },
   { weapon: '★ Flip Knife', name: 'Doppler (Phase 1)', wear: 'FN', float: '0.0071', pattern: '429', price: 300, rarity: 'knife', img: 'https://community.fastly.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL6kJ_m-B1d4_u-V6VgH_ScHnecxPxJoOloXCziqhEutDWR1Nf6JHmfPw4kDsQkEeBbtRTsw9CyMu_nslPeg4wRmH2qhy9K7nxp4ukcEf1yIYwwFPU/330x192?allow_animated=1' },
@@ -46,7 +41,6 @@ const mySkins = [
   { weapon: 'AK-47', name: 'B the Monster', wear: 'FT', float: '0.1512', price: 350, rarity: 'covert', img: 'https://community.fastly.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyLwlcK3wiFO0P24bbZ9IeOAMWqfz_1itfNWTiLnwiIqtjmMj4K3IC-Xb1d2WZUmEbMN4xDrmoDlPujktgONjY1HmH_4jCJJ7C454LsHAL1lpPMPrvuW_g/330x192?allow_animated=1' },
 ];
 
-// --- HELPERS ---
 function getCachedData(key) {
   const cached = localStorage.getItem(key);
   if (!cached) return null;
@@ -58,7 +52,6 @@ function setCachedData(key, data) {
   localStorage.setItem(key, JSON.stringify({ timestamp: Date.now(), data: data }));
 }
 
-// --- 1. RATES (USD -> EUR) ---
 async function getExchangeRates() {
   const cached = getCachedData('rates');
   if (cached) return cached;
@@ -77,18 +70,14 @@ async function getExchangeRates() {
 
 async function fetchMarketData(rates) {
   try {
-    // Tenta carregar o ficheiro gerado pelo Python
     const response = await fetch('/assets/data/market_data.json');
     if (!response.ok) throw new Error('Data not found');
     const data = await response.json();
 
-    // Atualizar Stocks
     updateStocksUI(data.stocks, rates);
     
-    // Atualizar Crypto
     updateCryptoUI(data.crypto, rates);
 
-    // Atualizar Timestamp
     if(data.last_updated) {
        console.log("Data updated on:", data.last_updated);
     }
@@ -98,14 +87,12 @@ async function fetchMarketData(rates) {
   }
 }
 
-// --- RENDER STOCKS (Com dados do JSON) ---
 function updateStocksUI(stockData, rates) {
   const tableBody = document.getElementById('stock-rows');
   if (!tableBody) return;
   tableBody.innerHTML = '';
 
   for (const myStock of myStocks) {
-    // Procura o stock correspondente no JSON
     const apiData = stockData.find(s => s.symbol === myStock.ticker);
     
     let currentPriceEur = null;
@@ -114,11 +101,9 @@ function updateStocksUI(stockData, rates) {
       let price = apiData.price;
       
       if (myStock.ticker.includes('.L')) {
-        // Converter Pence para Libras se necessário
         if (price > 1000) price = price / 100;
         currentPriceEur = price * rates.gbpToEur;
       } else {
-        // Stocks US vêm em Dólares
         currentPriceEur = price * rates.usdToEur;
       }
     } else if (myStock.fallbackPrice) {
@@ -128,7 +113,6 @@ function updateStocksUI(stockData, rates) {
     const cleanTicker = myStock.ticker.replace('.L', '').replace('.AS', '');
     const priceDisplay = currentPriceEur ? `€${currentPriceEur.toFixed(2)}` : 'N/A';
     
-    // Calcular Variação
     let plCell = '<td style="text-align:right">-</td>';
     if (currentPriceEur) {
         const diff = currentPriceEur - myStock.avgPrice;
@@ -148,17 +132,14 @@ function updateStocksUI(stockData, rates) {
   }
 }
 
-// --- RENDER CRYPTO ---
 function updateCryptoUI(cryptoData, rates) {
   myCrypto.forEach((coin) => {
     const priceEl = document.getElementById(`price-${coin.symbol.toLowerCase()}`);
     if (!priceEl) return;
 
-    // Procura a coin no JSON
     const apiData = cryptoData.find(c => c.id === coin.id);
 
     if (apiData) {
-      // O Python guarda o preço em USD, convertemos para EUR
       const currentPriceEur = apiData.price * rates.usdToEur;
       
       const diff = currentPriceEur - coin.avgPrice;
@@ -173,7 +154,6 @@ function updateCryptoUI(cryptoData, rates) {
   });
 }
 
-// --- 4. POKEMON ---
 async function fetchPokemon(rates) {
   const container = document.getElementById('poke-container');
   if (!container) return;
@@ -221,7 +201,6 @@ async function fetchPokemon(rates) {
   });
 }
 
-// --- 5. CS2 ---
 function renderCS2() {
   const container = document.getElementById('cs2-container');
   if (!container) return;
@@ -245,19 +224,15 @@ function renderCS2() {
   }
 }
 
-// --- ARRANQUE ---
 let loaded = false;
 document.addEventListener('DOMContentLoaded', async () => {
   if (loaded) return;
   loaded = true;
   
-  // 1. Vai buscar taxas de câmbio (USD->EUR)
   const rates = await getExchangeRates();
   
-  // 2. Vai buscar os dados de Mercado (Stocks/Crypto) do ficheiro JSON
   await fetchMarketData(rates);
   
-  // 3. Renderiza o resto
   fetchPokemon(rates);
   renderCS2();
 });
