@@ -113,11 +113,10 @@ title: Dashboard
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
   }
 
-  /* Rarity Colors (Barras em baixo) */
-  .rarity-covert { border-color: #eb4b4b; }      /* Vermelho */
-  .rarity-classified { border-color: #d32ce6; }  /* Rosa */
-  .rarity-restricted { border-color: #8847ff; }  /* Roxo */
-  .rarity-knife { border-color: #caab05; }       /* Ouro/Faca */
+  .rarity-covert { border-color: #eb4b4b; }
+  .rarity-classified { border-color: #d32ce6; }
+  .rarity-restricted { border-color: #8847ff; }
+  .rarity-knife { border-color: #caab05; }
 
   .cs2-img-container {
     padding: 10px;
@@ -165,7 +164,7 @@ title: Dashboard
   }
 
   .cs2-price {
-    color: #85bb65; /* Verde Dinheiro */
+    color: #85bb65;
     font-weight: bold;
   }
 </style>
