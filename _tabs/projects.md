@@ -83,7 +83,7 @@ Here are some of the projects I've worked on, ranging from university assignment
   }
 
   .project-card {
-    background: var(--card-bg); /* Adapta-se ao tema Dark/Light */
+    background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 20px;
