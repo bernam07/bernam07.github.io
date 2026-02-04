@@ -104,7 +104,6 @@ A timeline of my academic milestones, professional growth, and technical certifi
     padding-left: 20px;
   }
 
-  /* Linha Vertical */
   .timeline::before {
     content: '';
     position: absolute;
@@ -122,7 +121,6 @@ A timeline of my academic milestones, professional growth, and technical certifi
     padding-left: 35px;
   }
 
-  /* Bolinha (Marker) Base */
   .timeline-marker {
     position: absolute;
     left: 0;
@@ -135,28 +133,22 @@ A timeline of my academic milestones, professional growth, and technical certifi
     z-index: 1;
   }
 
-  /* --- CORES DOS MARKERS --- */
-  
-  /* Atual / IPCA */
   .timeline-marker.current {
     border-color: var(--link-color);
     background: var(--link-color);
     box-shadow: 0 0 0 4px rgba(0, 120, 212, 0.2);
   }
 
-  /* Trabalho (Dourado) */
   .timeline-marker.work {
     border-color: #d4af37; 
     background: #d4af37;
   }
 
-  /* Certificações (Azul Ciano) */
   .timeline-marker.cert {
     border-color: #00bcd4;
     background: var(--card-bg);
   }
 
-  /* Futuro (Tracejado) */
   .timeline-item.future .timeline-marker {
     border-color: var(--text-muted);
     border-style: dashed;
@@ -166,7 +158,6 @@ A timeline of my academic milestones, professional growth, and technical certifi
     opacity: 0.7;
   }
 
-  /* Conteúdo */
   .timeline-content {
     background: var(--card-bg);
     padding: 15px 20px;
@@ -211,7 +202,6 @@ A timeline of my academic milestones, professional growth, and technical certifi
     line-height: 1.5;
   }
 
-  /* Badges Especiais */
   .highlight-badge {
     display: inline-block;
     margin-top: 10px;
