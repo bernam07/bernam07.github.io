@@ -48,16 +48,16 @@ Here are some of the projects I've worked on, ranging from university assignment
   <div class="project-card">
     <div class="card-header">
       <i class="fas fa-robot card-icon"></i>
-      <h3>Auto Scraper</h3>
+      <h3>G-Maps Lead Extractor</h3>
     </div>
-    <p>Python script to automate data extraction from websites. Used to track specific data points and generate automated reports/alerts.</p>
+    <p>Automated bot to scrape local business data for lead generation. Features infinite scrolling handling and CSV export for marketing integration.</p>
     <div class="tech-stack">
       <span class="badge">Python</span>
       <span class="badge">Selenium</span>
       <span class="badge">Pandas</span>
     </div>
     <div class="card-links">
-      <a href="#" target="_blank"><i class="fab fa-github"></i> View Code</a>
+      <a href="https://github.com/bernam07/gmaps-biz-scraper" target="_blank"><i class="fab fa-github"></i> View Code</a>
     </div>
   </div>
 
