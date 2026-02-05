@@ -19,10 +19,8 @@
 
     <div class="d-flex justify-content-center align-items-center flex-wrap text-muted mt-2">
       <span>
-        Powered by 
-        <a href="https://jekyllrb.com/" target="_blank" rel="noopener">Jekyll</a> 
-        & 
-        <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a>
+        Built with <i class="fas fa-heart text-danger"></i> & <i class="fas fa-coffee"></i> by 
+        <a href="https://github.com/bernam07" target="_blank">Bernardo Martins</a>
       </span>
     </div>
   </div>
@@ -30,21 +28,15 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    // Lista de elementos da pesquisa a remover
     const targetIds = ['search', 'search-wrapper', 'search-trigger', 'search-result-wrapper', 'search-input'];
-    
     targetIds.forEach(id => {
       const el = document.getElementById(id);
       if (el) {
-        el.remove(); // Remove do HTML
-        el.style.display = 'none'; // Garante que fica invisível
+        el.remove();
+        el.style.display = 'none';
       }
     });
-
-    // Remove ícones soltos
     document.querySelectorAll('.fa-search').forEach(icon => icon.remove());
-    
-    // Remove tags <search>
     const searchTags = document.getElementsByTagName('search');
     for (let i = 0; i < searchTags.length; i++) {
         searchTags[i].style.display = 'none';
