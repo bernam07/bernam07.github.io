@@ -84,7 +84,13 @@ title: Dashboard
 </div>
 <hr>
 
-## 🔫 CS2 Inventory
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+  <h2 style="margin: 0;">🔫 CS2 Inventory</h2>
+  <a href="https://steamcommunity.com/id/bernam/" target="_blank" style="font-size: 0.95rem; text-decoration: none; color: var(--link-color); border: 1px solid var(--border-color); padding: 5px 10px; border-radius: 5px;">
+    <i class="fab fa-steam"></i> View Profile
+  </a>
+</div>
+
 > Inventory highlights (Estimated market prices).
 
 <div id="cs2-container" class="cs2-grid">
