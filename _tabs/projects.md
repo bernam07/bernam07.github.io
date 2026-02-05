@@ -24,7 +24,7 @@ Here are some of the projects I've worked on, ranging from university assignment
       <span class="badge">SQL Server</span>
     </div>
     <div class="card-links">
-      <a href="https://github.com/joseegomes555/G7-LojaSas" target="_blank"><i class="fab fa-github"></i> View Code</a>
+      <a href="https://github.com/joseegomes555/G7-LojaSas" target="_blank"><i class="fab fa-github"></i> Repository</a>
     </div>
   </div>
 
@@ -57,7 +57,7 @@ Here are some of the projects I've worked on, ranging from university assignment
       <span class="badge">Pandas</span>
     </div>
     <div class="card-links">
-      <a href="https://github.com/bernam07/gmaps-biz-scraper" target="_blank"><i class="fab fa-github"></i> View Code</a>
+      <a href="https://github.com/bernam07/gmaps-biz-scraper" target="_blank"><i class="fab fa-github"></i> Repository</a>
     </div>
   </div>
 
