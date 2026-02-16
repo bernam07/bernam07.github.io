@@ -2,8 +2,8 @@
   "stocks": [
     {
       "symbol": "VUSA.L",
-      "price": 95.4000015258789,
-      "percent": -0.19093293659518193
+      "price": 95.37750244140625,
+      "percent": -0.026198367384280146
     },
     {
       "symbol": "NVDA",
@@ -49,19 +49,19 @@
   "crypto": [
     {
       "id": "ondo-finance",
-      "price": 0.276014,
-      "percent": -5.255624783032401
+      "price": 0.281571,
+      "percent": 0.5301632380992717
     },
     {
       "id": "avalanche-2",
-      "price": 9.25,
-      "percent": -4.046214368877832
+      "price": 9.38,
+      "percent": 0.17985395680535174
     },
     {
       "id": "cardano",
-      "price": 0.27974,
-      "percent": -5.992848099729365
+      "price": 0.28813,
+      "percent": 1.1682265134839964
     }
   ],
-  "last_updated": "16/02/2026 07:06"
+  "last_updated": "16/02/2026 13:08"
 }
