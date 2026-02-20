@@ -157,3 +157,7 @@ Here are some of the projects I've worked on, ranging from university assignment
     text-decoration: underline;
   }
 </style>
+
+<br>
+
+> *Last updated: February 2026*

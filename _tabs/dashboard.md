@@ -175,4 +175,8 @@ title: Dashboard
   }
 </style>
 
+<br>
+
+> *Last updated: February 2026*
+
 <script src="/assets/js/dashboard.js"></script>

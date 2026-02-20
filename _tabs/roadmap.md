@@ -220,3 +220,7 @@ A timeline of my academic milestones, professional growth, and technical certifi
     border-color: rgba(0, 188, 212, 0.2);
   }
 </style>
+
+<br>
+
+> *Last updated: February 2026*
