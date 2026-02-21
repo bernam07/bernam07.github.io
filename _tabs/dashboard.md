@@ -57,8 +57,8 @@ title: Dashboard
 <div class="dashboard-grid">
   <div class="asset-card">
     <h3>ONDO Finance</h3>
-    <p>Holdings: 1278</p>
-    <p>Avg Buy: €0.799</p>
+    <p>Holdings: 1402.51</p>
+    <p>Avg Buy: €0.748</p>
     <p>Live: <span id="price-ondo">Loading...</span></p>
   </div>
   <div class="asset-card">
@@ -69,7 +69,7 @@ title: Dashboard
   </div>
   <div class="asset-card">
     <h3>Cardano (ADA)</h3>
-    <p>Holdings: 148</p>
+    <p>Holdings: 148.18</p>
     <p>Avg Buy: €0.337</p>
     <p>Live: <span id="price-ada">Loading...</span></p>
   </div>
