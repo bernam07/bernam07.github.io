@@ -103,35 +103,41 @@ def get_crypto_data():
 
 def get_cs2_data():
     results = []
-    print("\n🔫 A obter dados de CS2 via CSFloat...")
+    print("\nA obter dados de CS2 via CSFloat...")
+    
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
     
     for item in CS2_INVENTORY:
         url = "https://csfloat.com/api/v1/listings"
         params = {"market_hash_name": item["market_hash"], "limit": 1}
         
+        item_data = item.copy()
+        
         try:
-            response = requests.get(url, params=params, timeout=10)
+            response = requests.get(url, params=params, headers=headers, timeout=10)
+            
             if response.status_code == 200:
                 data = response.json()
                 if data and len(data) > 0:
                     price = data[0].get("price", 0) / 100
-                    
-                    item_data = item.copy()
                     item_data["price"] = round(price, 2)
-                    results.append(item_data)
                     print(f"Sucesso: {item['name']} -> €{price:.2f}")
                 else:
                     print(f"Sem listagens para: {item['name']}")
-                    item_data = item.copy()
-                    item_data["price"] = 0
-                    results.append(item_data)
+                    item_data["price"] = "N/A"
             else:
                 print(f"Erro API CSFloat ({response.status_code}) para {item['name']}")
-                
-            time.sleep(0.5)
+                item_data["price"] = "N/A"
                 
         except Exception as e:
-            print(f"  ❌ Erro ao buscar CS2 {item['name']}: {e}")
+            print(f"Erro de conexão para {item['name']}: {e}")
+            item_data["price"] = "N/A"
+            
+        results.append(item_data)
+        
+        time.sleep(1) 
             
     return results
 
