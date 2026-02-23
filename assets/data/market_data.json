@@ -49,20 +49,69 @@
   "crypto": [
     {
       "id": "ondo-finance",
-      "price": 0.260782,
-      "percent": -1.9277213917211902
+      "price": 0.26029,
+      "percent": -1.9168710435431118
     },
     {
       "id": "avalanche-2",
-      "price": 8.84,
-      "percent": -2.2967695700844915
+      "price": 8.83,
+      "percent": -2.387195520927682
     },
     {
       "id": "cardano",
-      "price": 0.270195,
-      "percent": -2.9596424919534208
+      "price": 0.269728,
+      "percent": -3.126378998501287
     }
   ],
-  "cs2": [],
-  "last_updated": "23/02/2026 00:35"
+  "cs2": [
+    {
+      "name": "★ Huntsman Knife | Gamma Doppler (Emerald)",
+      "condition": "FN",
+      "float": 0.0091,
+      "image": "huntsman_emerald.png",
+      "market_hash": "★ Huntsman Knife | Gamma Doppler (Factory New)",
+      "price": "N/A"
+    },
+    {
+      "name": "★ Flip Knife | Doppler (Phase 1)",
+      "condition": "FN",
+      "float": 0.0071,
+      "image": "flip_doppler.png",
+      "market_hash": "★ Flip Knife | Doppler (Factory New)",
+      "price": "N/A"
+    },
+    {
+      "name": "★ Broken Fang Gloves | Unhinged",
+      "condition": "FT",
+      "float": 0.1664,
+      "image": "gloves_unhinged.png",
+      "market_hash": "★ Broken Fang Gloves | Unhinged (Field-Tested)",
+      "price": "N/A"
+    },
+    {
+      "name": "★ Specialist Gloves | Lt. Commander",
+      "condition": "FT",
+      "float": 0.182,
+      "image": "gloves_commander.png",
+      "market_hash": "★ Specialist Gloves | Lt. Commander (Field-Tested)",
+      "price": "N/A"
+    },
+    {
+      "name": "M4A1-S | Master Piece (Souvenir)",
+      "condition": "FT",
+      "float": 0.2,
+      "image": "m4a1s_masterpiece.png",
+      "market_hash": "Souvenir M4A1-S | Master Piece (Field-Tested)",
+      "price": "N/A"
+    },
+    {
+      "name": "AK-47 | B The Monster",
+      "condition": "FT",
+      "float": 0.1512,
+      "image": "ak47_monster.png",
+      "market_hash": "AK-47 | B The Monster (Field-Tested)",
+      "price": "N/A"
+    }
+  ],
+  "last_updated": "23/02/2026 00:44"
 }
