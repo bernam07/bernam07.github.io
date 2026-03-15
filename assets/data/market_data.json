@@ -46,23 +46,7 @@
       "percent": -1.8787951604557502
     }
   ],
-  "crypto": [
-    {
-      "id": "ondo-finance",
-      "price": 0.263733,
-      "percent": 1.3387356689285879
-    },
-    {
-      "id": "avalanche-2",
-      "price": 9.7,
-      "percent": 0.8222927693510351
-    },
-    {
-      "id": "cardano",
-      "price": 0.264048,
-      "percent": 0.5868600593116754
-    }
-  ],
+  "crypto": [],
   "cs2": [
     {
       "name": "★ Huntsman Knife | Gamma Doppler (Emerald)",
@@ -113,5 +97,5 @@
       "price": "N/A"
     }
   ],
-  "last_updated": "15/03/2026 07:00"
+  "last_updated": "15/03/2026 12:57"
 }
