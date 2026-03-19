@@ -5,11 +5,11 @@ order: 3
 title: Setup
 ---
 
-> "Build your own tools, but don't forget to use them." 🛠️
+> "Build your own tools, but don't forget to use them."
 
 Here is the hardware and software configuration I use daily for software development, university tasks, and competitive gaming.
 
-## 🖥️ The Battlestation (Desktop)
+## The Battlestation (Desktop)
 My main workhorse for heavy projects, code compilation and CS2 sessions.
 
 | Component | Specs |
@@ -24,7 +24,7 @@ My main workhorse for heavy projects, code compilation and CS2 sessions.
 
 <br>
 
-## 💻 On The Go (Laptop)
+## On The Go (Laptop)
 The portable machine for classes at IPCA, casual gaming and side projects.
 
 * **Model:** HP Omen Laptop 16-c0007np
@@ -33,7 +33,7 @@ The portable machine for classes at IPCA, casual gaming and side projects.
 
 <br>
 
-## ⌨️ Peripherals & Audio
+## Peripherals & Audio
 * **Keyboard:** Razer Blackwidow V3 Tenkeyless
 * **Mouse:** Steelseries Rival 650 Wireless
 * **Headset:** Sony WH-1000XM4
@@ -41,7 +41,7 @@ The portable machine for classes at IPCA, casual gaming and side projects.
 
 ---
 
-## ⚡ Tech Stack & Software
+## Tech Stack & Software
 
 My toolset of choice for maintaining productivity and code quality.
 

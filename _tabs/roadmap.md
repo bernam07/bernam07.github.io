@@ -5,7 +5,7 @@ order: 2
 title: Roadmap
 ---
 
-> "It's not about the destination, it's about the journey." 🚀
+> "It's not about the destination, it's about the journey."
 
 A timeline of my academic milestones, professional growth, and technical certifications.
 

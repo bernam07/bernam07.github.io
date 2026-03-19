@@ -82,7 +82,6 @@ title: Dashboard
 <div class="poke-grid" id="poke-container">
   <p>Loading collection...</p>
 </div>
-<hr>
 
 <br>
 
