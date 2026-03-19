@@ -2,116 +2,66 @@
   "stocks": [
     {
       "symbol": "VUSA.L",
-      "price": 93.71250915527344,
-      "percent": -1.4926529415500969
+      "price": 93.3375015258789,
+      "percent": -1.8275029967090157
     },
     {
       "symbol": "NVDA",
-      "price": 180.39999389648438,
-      "percent": 0.0887671418577263
+      "price": 178.89999389648438,
+      "percent": -0.743456559873299
     },
     {
       "symbol": "PLTR",
-      "price": 152.77000427246094,
-      "percent": 0.3086042498101944
+      "price": 154.85000610351562,
+      "percent": 1.6743309937725632
     },
     {
       "symbol": "NVO",
-      "price": 37.45000076293945,
-      "percent": 0.29459229496371103
+      "price": 36.89500045776367,
+      "percent": -1.1917502470174919
     },
     {
       "symbol": "SOFI",
-      "price": 17.18000030517578,
-      "percent": 0.3270281778543709
+      "price": 17.040000915527344,
+      "percent": -0.4905342470956262
     },
     {
       "symbol": "META",
-      "price": 615.6799926757812,
-      "percent": 0.02924332669069862
+      "price": 605.3099975585938,
+      "percent": -1.6555649782950852
     },
     {
       "symbol": "AMZN",
-      "price": 209.8699951171875,
-      "percent": 0.033362782262863974
+      "price": 207.9897003173828,
+      "percent": -0.8628692481492845
     },
     {
       "symbol": "O",
-      "price": 63.040000915527344,
-      "percent": -0.09508571231799948
+      "price": 62.70000076293945,
+      "percent": -0.6339132124572873
     },
     {
       "symbol": "ORCL",
-      "price": 152.89999389648438,
-      "percent": 0.42692538356937604
+      "price": 155.09010314941406,
+      "percent": 1.8654207877924878
     }
   ],
   "crypto": [
     {
       "id": "ondo-finance",
-      "price": 0.256514,
-      "percent": -4.836625345903489
+      "price": 0.254442,
+      "percent": -3.7628130169214784
     },
     {
       "id": "avalanche-2",
-      "price": 9.43,
-      "percent": -3.8949147765108423
+      "price": 9.45,
+      "percent": -1.6002869914641
     },
     {
       "id": "cardano",
-      "price": 0.264963,
-      "percent": -4.271681762628172
+      "price": 0.265251,
+      "percent": -2.469584585263533
     }
   ],
-  "cs2": [
-    {
-      "name": "★ Huntsman Knife | Gamma Doppler (Emerald)",
-      "condition": "FN",
-      "float": 0.0091,
-      "image": "huntsman_emerald.png",
-      "market_hash": "★ Huntsman Knife | Gamma Doppler (Factory New)",
-      "price": "N/A"
-    },
-    {
-      "name": "★ Flip Knife | Doppler (Phase 1)",
-      "condition": "FN",
-      "float": 0.0071,
-      "image": "flip_doppler.png",
-      "market_hash": "★ Flip Knife | Doppler (Factory New)",
-      "price": "N/A"
-    },
-    {
-      "name": "★ Broken Fang Gloves | Unhinged",
-      "condition": "FT",
-      "float": 0.1664,
-      "image": "gloves_unhinged.png",
-      "market_hash": "★ Broken Fang Gloves | Unhinged (Field-Tested)",
-      "price": "N/A"
-    },
-    {
-      "name": "★ Specialist Gloves | Lt. Commander",
-      "condition": "FT",
-      "float": 0.182,
-      "image": "gloves_commander.png",
-      "market_hash": "★ Specialist Gloves | Lt. Commander (Field-Tested)",
-      "price": "N/A"
-    },
-    {
-      "name": "M4A1-S | Master Piece (Souvenir)",
-      "condition": "FT",
-      "float": 0.2,
-      "image": "m4a1s_masterpiece.png",
-      "market_hash": "Souvenir M4A1-S | Master Piece (Field-Tested)",
-      "price": "N/A"
-    },
-    {
-      "name": "AK-47 | B The Monster",
-      "condition": "FT",
-      "float": 0.1512,
-      "image": "ak47_monster.png",
-      "market_hash": "AK-47 | B The Monster (Field-Tested)",
-      "price": "N/A"
-    }
-  ],
-  "last_updated": "19/03/2026 13:09"
+  "last_updated": "19/03/2026 19:01"
 }
