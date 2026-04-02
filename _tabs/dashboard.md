@@ -57,8 +57,8 @@ title: Dashboard
 <div class="dashboard-grid">
   <div class="asset-card">
     <h3>ONDO Finance</h3>
-    <p>Holdings: 1402.51</p>
-    <p>Avg Buy: €0.748</p>
+    <p>Holdings: 1436.45</p>
+    <p>Avg Buy: €0.735</p>
     <p>Live: <span id="price-ondo">Loading...</span></p>
   </div>
   <div class="asset-card">
@@ -85,6 +85,6 @@ title: Dashboard
 
 <br>
 
-> *Last updated: March 2026*
+> *Last updated: April 2026*
 
 <script src="/assets/js/dashboard.js"></script>
