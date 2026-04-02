@@ -4,19 +4,19 @@ const WORKER_URL = 'https://justtcg-proxy.bernamartins07.workers.dev';
 const CACHE_DURATION = 1000 * 60 * 15;
 
 const myStocks = [
-  { ticker: 'VUSA.L', avgPrice: 100.9381, shares: 15.288 },
-  { ticker: 'NVDA', avgPrice: 115.84, shares: 5.206 },
-  { ticker: 'PLTR', avgPrice: 35.84, shares: 6.389 },
-  { ticker: 'NVO', avgPrice: 70.02, shares: 12.48 },
-  { ticker: 'SOFI', avgPrice: 14.24, shares: 30.184 },
-  { ticker: 'META', avgPrice: 530.52, shares: 0.981 },
-  { ticker: 'AMZN', avgPrice: 176.12, shares: 2.713 },
-  { ticker: 'O', avgPrice: 49.72, shares: 8.756 },
-  { ticker: 'ORCL', avgPrice: 166.78, shares: 2.419 },
+  { ticker: 'VUSA.L', avgPrice: 101.3436, shares: 16.072 },
+  { ticker: 'NVDA', avgPrice: 117.55, shares: 5.467 },
+  { ticker: 'PLTR', avgPrice: 38.67, shares: 6.643 },
+  { ticker: 'NVO', avgPrice: 67.63, shares: 13.335 },
+  { ticker: 'SOFI', avgPrice: 14.31, shares: 34.834 },
+  { ticker: 'META', avgPrice: 528.94, shares: 1.09 },
+  { ticker: 'AMZN', avgPrice: 176.46, shares: 3.026 },
+  { ticker: 'O', avgPrice: 50.22, shares: 9.825 },
+  { ticker: 'ORCL', avgPrice: 160.14, shares: 2.847 },
 ];
 
 const myCrypto = [
-  { id: 'ondo-finance', symbol: 'ONDO', avgPrice: 0.748, holdings: 1402.511 },
+  { id: 'ondo-finance', symbol: 'ONDO', avgPrice: 0.735, holdings: 1436.45 },
   { id: 'avalanche-2', symbol: 'AVAX', avgPrice: 11.76, holdings: 7.237 },
   { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 },
 ];
@@ -88,7 +88,7 @@ function getCachedData(key) {
 function setCachedData(key, data) {
   localStorage.setItem(
     key,
-    JSON.stringify({ timestamp: Date.now(), data: data })
+    JSON.stringify({ timestamp: Date.now(), data: data }),
   );
 }
 
@@ -98,7 +98,7 @@ async function getExchangeRates() {
   let rates = { usdToEur: 0.95, gbpToEur: 1.19 };
   try {
     const response = await fetch(
-      'https://api.coingecko.com/api/v3/simple/price?ids=tether,british-pound-sterling&vs_currencies=eur'
+      'https://api.coingecko.com/api/v3/simple/price?ids=tether,british-pound-sterling&vs_currencies=eur',
     );
     if (response.ok) {
       const data = await response.json();
@@ -164,7 +164,7 @@ function updateStocksUI(stockData, rates) {
       const colorClass = diff >= 0 ? 'text-green' : 'text-red';
       const sign = diff >= 0 ? '+' : '';
       plCell = `<td class="${colorClass}" style="text-align:right; font-weight:bold;">${sign}${percent.toFixed(
-        1
+        1,
       )}%</td>`;
     }
 
@@ -181,7 +181,7 @@ function updateStocksUI(stockData, rates) {
 function updateCryptoUI(cryptoData, rates) {
   myCrypto.forEach((coin) => {
     const priceEl = document.getElementById(
-      `price-${coin.symbol.toLowerCase()}`
+      `price-${coin.symbol.toLowerCase()}`,
     );
     if (!priceEl) return;
 
@@ -196,9 +196,9 @@ function updateCryptoUI(cryptoData, rates) {
       const sign = diff >= 0 ? '+' : '';
 
       priceEl.innerHTML = `€${currentPriceEur.toFixed(
-        2
+        2,
       )} <span class="${colorClass}" style="font-size: 0.8em;">(${sign}${percent.toFixed(
-        1
+        1,
       )}%)</span>`;
     } else {
       priceEl.innerText = 'N/A';
@@ -218,14 +218,14 @@ async function fetchPokemon(rates) {
           card.grade.includes('10') || card.grade.includes('9.5')
             ? '#d4af37'
             : card.grade.includes('9')
-            ? '#c0c0c0'
-            : '#555'
+              ? '#c0c0c0'
+              : '#555'
         }; color: white; padding: 4px 8px; border-radius: 12px; font-weight: bold; font-size: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.5); z-index: 10;">${
-      card.grade
-    }</div>
+          card.grade
+        }</div>
         <a href="${card.manualImg}" target="_blank"><img src="${
-      card.manualImg
-    }" alt="${card.name}" style="border-radius: 10px; width: 100%;"></a>
+          card.manualImg
+        }" alt="${card.name}" style="border-radius: 10px; width: 100%;"></a>
         <center><small style="opacity: 0.9; font-weight: bold; margin-top: 5px; display: block; min-height: 40px;">${
           card.name
         }</small><small id="price-${index}" style="opacity: 0.6; font-size: 0.75rem;">Loading...</small></center>
@@ -273,7 +273,7 @@ async function fetchPokemon(rates) {
         apiCard.variants.find(
           (v) =>
             v.condition === 'Near Mint' &&
-            (v.printing === 'Holofoil' || v.printing === 'Normal')
+            (v.printing === 'Holofoil' || v.printing === 'Normal'),
         ) || apiCard.variants[0];
       if (bestVariant && bestVariant.price)
         finalPrice = bestVariant.price * rates.usdToEur;
