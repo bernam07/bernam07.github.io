@@ -9,27 +9,18 @@ title: Setup
 
 Here is the hardware and software configuration I use daily for software development, university tasks, and competitive gaming.
 
-## The Battlestation (Desktop)
-My main workhorse for heavy projects, code compilation and CS2 sessions.
+## The Battlestation
+My main workhorse for heavy projects, code compilation and gaming sessions.
 
-| Component | Specs |
-| :--- | :--- |
-| **CPU** | AMD Ryzen 7 5800X |
-| **GPU** | NVIDIA RTX 3070 |
-| **RAM** | 16GB DDR4 3600MHz |
-| **Storage** | 500GB NVMe Gen4 |
-| **Case** | NOX Infinity SIGMA |
+| Component     | Specs                     |
+| :------------ | :------------------------ |
+| **CPU**       | AMD Ryzen 7 5800X         |
+| **GPU**       | NVIDIA RTX 3070           |
+| **RAM**       | 16GB DDR4 3600MHz         |
+| **Storage**   | 500GB NVMe Gen4           |
+| **Case**      | NOX Infinity SIGMA        |
 | **Monitor 1** | AOC AG251FZ2E 24.5" 240Hz |
-| **Monitor 2** | AOC 27G2U5 27" 75Hz |
-
-<br>
-
-## On The Go (Laptop)
-The portable machine for classes at IPCA, casual gaming and side projects.
-
-* **Model:** HP Omen Laptop 16-c0007np
-* **Specs:** AMD Ryzen 7 5800H - NVIDIA RTX 3070 - 16 GB DDR4 - 512 GB SSD 
-* **OS:** Windows 11
+| **Monitor 2** | AOC 27G2U5 27" 75Hz       |
 
 <br>
 
@@ -62,9 +53,9 @@ My toolset of choice for maintaining productivity and code quality.
 
 ### Productivity
 * **Browser:** Opera
-* **Notes:** Obsidian / Notion
+* **Notes:** Notion
 * **Communication:** Discord / Microsoft Teams
 
 <br>
 
-> *Last updated: February 2026*
+> *Last updated: April 2026*
