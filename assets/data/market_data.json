@@ -2,8 +2,8 @@
   "stocks": [
     {
       "symbol": "VUSA.L",
-      "price": 99.405,
-      "percent": -0.33087682358249193
+      "price": 99.86000061035156,
+      "percent": 0.40721811054294776
     },
     {
       "symbol": "NVDA",
@@ -13,7 +13,7 @@
     {
       "symbol": "PLTR",
       "price": 145.88999938964844,
-      "percent": -0.415498984190014
+      "percent": -0.3921096201269326
     },
     {
       "symbol": "NVO",
@@ -28,7 +28,7 @@
     {
       "symbol": "META",
       "price": 670.9099731445312,
-      "percent": -2.3136465553031798
+      "percent": -2.3146137372045605
     },
     {
       "symbol": "AMZN",
@@ -49,19 +49,19 @@
   "crypto": [
     {
       "id": "ondo-finance",
-      "price": 0.255716,
-      "percent": 1.006703276237626
+      "price": 0.257966,
+      "percent": 2.058853737847509
     },
     {
       "id": "avalanche-2",
-      "price": 9.3,
-      "percent": 1.9086420165972247
+      "price": 9.36,
+      "percent": 1.6622958558632779
     },
     {
       "id": "cardano",
-      "price": 0.247789,
-      "percent": 1.1584553861451916
+      "price": 0.2497,
+      "percent": 1.5836101338417914
     }
   ],
-  "last_updated": "21/04/2026 02:45"
+  "last_updated": "21/04/2026 07:54"
 }
