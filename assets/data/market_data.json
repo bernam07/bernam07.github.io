@@ -49,19 +49,19 @@
   "crypto": [
     {
       "id": "ondo-finance",
-      "price": 0.269442,
-      "percent": 2.8767647470642705
+      "price": 0.268706,
+      "percent": 3.7826881266131998
     },
     {
       "id": "avalanche-2",
-      "price": 9.44,
-      "percent": 0.31295681473691567
+      "price": 9.49,
+      "percent": 1.7595203570464755
     },
     {
       "id": "cardano",
-      "price": 0.252722,
-      "percent": 0.15001230033104992
+      "price": 0.252704,
+      "percent": 1.4855631829620974
     }
   ],
-  "last_updated": "26/04/2026 13:11"
+  "last_updated": "26/04/2026 18:57"
 }
