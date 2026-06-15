@@ -14,11 +14,11 @@ My main workhorse for heavy projects, code compilation and gaming sessions.
 
 | Component     | Specs                     |
 | :------------ | :------------------------ |
-| **CPU**       | AMD Ryzen 7 5800X         |
-| **GPU**       | NVIDIA RTX 3070           |
-| **RAM**       | 16GB DDR4 3600MHz         |
-| **Storage**   | 500GB NVMe Gen4           |
-| **Case**      | NOX Infinity SIGMA        |
+| **CPU** | AMD Ryzen 7 5800X         |
+| **GPU** | NVIDIA RTX 3070           |
+| **RAM** | 16GB DDR4 3600MHz         |
+| **Storage** | 500GB NVMe Gen4           |
+| **Case** | NOX Infinity SIGMA        |
 | **Monitor 1** | AOC AG251FZ2E 24.5" 240Hz |
 | **Monitor 2** | AOC 27G2U5 27" 75Hz       |
 
@@ -41,9 +41,16 @@ My toolset of choice for maintaining productivity and code quality.
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
   <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white" alt="C#">
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin">
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
+  <img src="https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js">
+  <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
+  <img src="https://img.shields.io/badge/Electron-191970?style=for-the-badge&logo=electron&logoColor=white" alt="Electron">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
   <img src="https://img.shields.io/badge/SQL-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white" alt="SQL">
-  <img src="https://img.shields.io/badge/Jekyll-CC0000?style=for-the-badge&logo=jekyll&logoColor=white" alt="Jekyll">
   <img src="https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white" alt="Selenium">
+  <img src="https://img.shields.io/badge/Jekyll-CC0000?style=for-the-badge&logo=jekyll&logoColor=white" alt="Jekyll">
 </div>
 
 ### Dev Tools & Environment
@@ -58,4 +65,4 @@ My toolset of choice for maintaining productivity and code quality.
 
 <br>
 
-> *Last updated: April 2026*
+> *Last updated: June 2026*

@@ -26,6 +26,15 @@ tagline: ""
     margin-bottom: 1.5rem;
     pointer-events: none;
     user-select: none;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .profile-crop:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 25px rgba(82, 170, 255, 0.2); /* Cor do tema */
+    border-color: var(--link-color);
   }
 
   .typing-container {
@@ -105,10 +114,17 @@ tagline: ""
   .tech-item {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    padding: 4px 10px;
-    border-radius: 4px;
+    padding: 5px 12px;
+    border-radius: 20px;
     font-size: 0.85rem;
     font-family: monospace;
+    transition: all 0.2s;
+  }
+
+  .tech-item:hover {
+    border-color: var(--link-color);
+    color: var(--link-color);
+    transform: translateY(-2px);
   }
 
   .company-link {
@@ -169,7 +185,7 @@ tagline: ""
 
   <a href="https://git.io/typing-svg" class="typing-container">
     <img
-      src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=22&pause=1000&color=82AAFF&center=true&vCenter=true&width=600&lines=Software+Developer;Student+%40+IPCA+%7C+Developer+%40+Deloitte;Based+in+Portugal;Backend+%26+Efficiency+Enthusiast"
+      src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=22&pause=1000&color=82AAFF&center=true&vCenter=true&width=600&lines=Software+Developer;Student+%40+IPCA+%7C+Developer+%40+Deloitte;Based+in+Portugal;Full-Stack+%26+Efficiency+Enthusiast"
       alt="Typing SVG"
       class="typing-svg"
     />
@@ -184,7 +200,7 @@ tagline: ""
   <p>
     I enjoy building efficient systems and exploring financial markets.
     Currently, I balance my academic studies with professional development,
-    focusing on backend efficiency and modern software architecture.
+    focusing on modern software architecture and scalable solutions.
   </p>
 </div>
 
@@ -258,20 +274,29 @@ tagline: ""
 
 <ul class="tech-list">
   <li class="tech-item">Python</li>
-  <li class="tech-item">C / C++ / C#</li>
-  <li class="tech-item">Java</li>
+  <li class="tech-item">TypeScript</li>
   <li class="tech-item">JavaScript</li>
+  <li class="tech-item">React / Next.js</li>
+  <li class="tech-item">Node.js</li>
+  <li class="tech-item">C#</li>
   <li class="tech-item">Kotlin</li>
+  <li class="tech-item">Electron</li>
+  <li class="tech-item">Tailwind CSS</li>
   <li class="tech-item">Git</li>
-  <li class="tech-item">Linux</li>
   <li class="tech-item">Docker</li>
 </ul>
 
 <div class="section-title">Connect</div>
 
 <p>
-  <a href="https://github.com/bernam07" target="_blank">GitHub</a> •
-  <a href="https://www.linkedin.com/in/bernardomfm/" target="_blank"
+  <a href="https://github.com/bernam07" target="_blank" class="company-link"
+    >GitHub</a
+  >
+  •
+  <a
+    href="https://www.linkedin.com/in/bernardomfm/"
+    target="_blank"
+    class="company-link"
     >LinkedIn</a
   >
 </p>

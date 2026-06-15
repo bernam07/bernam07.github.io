@@ -1,81 +1,15 @@
-// assets/js/dashboard.js
-
-const WORKER_URL = 'https://justtcg-proxy.bernamartins07.workers.dev';
 const CACHE_DURATION = 1000 * 60 * 15;
 
 const myStocks = [
-  { ticker: 'VUSA.L', avgPrice: 101.3436, shares: 16.072 },
-  { ticker: 'NVDA', avgPrice: 117.55, shares: 5.467 },
-  { ticker: 'PLTR', avgPrice: 38.67, shares: 6.643 },
-  { ticker: 'NVO', avgPrice: 67.63, shares: 13.335 },
-  { ticker: 'SOFI', avgPrice: 14.31, shares: 34.834 },
-  { ticker: 'META', avgPrice: 528.94, shares: 1.09 },
-  { ticker: 'AMZN', avgPrice: 176.46, shares: 3.026 },
-  { ticker: 'O', avgPrice: 50.22, shares: 9.825 },
-  { ticker: 'ORCL', avgPrice: 160.14, shares: 2.847 },
-];
-
-const myCrypto = [
-  { id: 'ondo-finance', symbol: 'ONDO', avgPrice: 0.735, holdings: 1436.45 },
-  { id: 'avalanche-2', symbol: 'AVAX', avgPrice: 11.76, holdings: 7.237 },
-  { id: 'cardano', symbol: 'ADA', avgPrice: 0.337, holdings: 148.181 },
-];
-
-const myCards = [
-  {
-    name: 'Pikachu with Grey Felt Hat',
-    grade: 'PSA 9',
-    manualImg: 'https://images.pokemontcg.io/svp/85_hires.png',
-    tcgId: '518861',
-  },
-  {
-    name: 'Mew ex (sv4a #347)',
-    grade: 'PSA 10',
-    manualImg:
-      'https://storage.googleapis.com/images.pricecharting.com/3re7lj6h6aqxecm4/1600.jpg',
-    tcgId: '534919',
-  },
-  {
-    name: 'Pikachu (sm11b #054)',
-    grade: 'CCC 9',
-    manualImg:
-      'https://tcgplayer-cdn.tcgplayer.com/product/574914_in_1000x1000.jpg',
-    tcgId: '201352',
-  },
-  {
-    name: "Team Rocket's Nidoking",
-    grade: 'Ungraded',
-    manualImg:
-      'https://assets.pokemon.com/static-assets/content-assets/cms2/img/cards/web/SV10/SV10_EN_233.png',
-    tcgId: '633033',
-  },
-  {
-    name: 'Leafeon VSTAR (s12a #210)',
-    grade: 'PSA 10',
-    manualImg:
-      'https://den-cards.pokellector.com/357/Leafeon-VSTAR.S12A.210.45960.png',
-    tcgId: '477060',
-  },
-  {
-    name: 'Charizard V (s12a #211)',
-    grade: 'CGC 9.5',
-    manualImg:
-      'https://storage.googleapis.com/images.pricecharting.com/cqvwd3dhpbt4giji/1600.jpg',
-    tcgId: '285384',
-  },
-  {
-    name: 'Iono',
-    grade: 'PSA 9',
-    manualImg: 'https://images.pokemontcg.io/sv4pt5/237_hires.png',
-    tcgId: '535101',
-  },
-  {
-    name: "N's Zoroark EX (sv9 #127)",
-    grade: 'Ungraded',
-    manualImg:
-      'https://tcgplayer-cdn.tcgplayer.com/product/615003_in_600x600.jpg',
-    tcgId: '623612',
-  },
+  { ticker: 'VUSA.L', avgPrice: 102.25 },
+  { ticker: 'NVDA', avgPrice: 117.62 },
+  { ticker: 'PLTR', avgPrice: 41.76 },
+  { ticker: 'NVO', avgPrice: 61.9 },
+  { ticker: 'SOFI', avgPrice: 14.35 },
+  { ticker: 'META', avgPrice: 529.08 },
+  { ticker: 'AMZN', avgPrice: 178.7 },
+  { ticker: 'O', avgPrice: 50.51 },
+  { ticker: 'ORCL', avgPrice: 158.16 },
 ];
 
 function getCachedData(key) {
@@ -85,6 +19,7 @@ function getCachedData(key) {
   if (Date.now() - parsed.timestamp > CACHE_DURATION) return null;
   return parsed.data;
 }
+
 function setCachedData(key, data) {
   localStorage.setItem(
     key,
@@ -92,9 +27,11 @@ function setCachedData(key, data) {
   );
 }
 
+// Continuamos a precisar das taxas para converter USD e GBP para EUR
 async function getExchangeRates() {
   const cached = getCachedData('rates');
   if (cached) return cached;
+
   let rates = { usdToEur: 0.95, gbpToEur: 1.19 };
   try {
     const response = await fetch(
@@ -107,7 +44,9 @@ async function getExchangeRates() {
         rates.gbpToEur = data['british-pound-sterling'].eur;
       setCachedData('rates', rates);
     }
-  } catch (e) {}
+  } catch (e) {
+    console.error('Erro a carregar taxas de câmbio:', e);
+  }
   return rates;
 }
 
@@ -119,13 +58,11 @@ async function fetchMarketData(rates) {
 
     updateStocksUI(data.stocks, rates);
 
-    updateCryptoUI(data.crypto, rates);
-
     if (data.last_updated) {
-      console.log('Data updated on:', data.last_updated);
+      console.log('Dados atualizados em:', data.last_updated);
     }
   } catch (error) {
-    console.error('Error loading market_data.json:', error);
+    console.error('Erro a carregar market_data.json:', error);
   }
 }
 
@@ -136,14 +73,13 @@ function updateStocksUI(stockData, rates) {
 
   for (const myStock of myStocks) {
     const apiData = stockData.find((s) => s.symbol === myStock.ticker);
-
     let currentPriceEur = null;
 
     if (apiData) {
       let price = apiData.price;
 
       if (myStock.ticker.includes('.L')) {
-        if (price > 1000) price = price / 100;
+        if (price > 1000) price = price / 100; // Converte GBX para GBP
         currentPriceEur = price * rates.gbpToEur;
       } else {
         currentPriceEur = price * rates.usdToEur;
@@ -163,9 +99,7 @@ function updateStocksUI(stockData, rates) {
       const percent = (diff / myStock.avgPrice) * 100;
       const colorClass = diff >= 0 ? 'text-green' : 'text-red';
       const sign = diff >= 0 ? '+' : '';
-      plCell = `<td class="${colorClass}" style="text-align:right; font-weight:bold;">${sign}${percent.toFixed(
-        1,
-      )}%</td>`;
+      plCell = `<td class="${colorClass}" style="text-align:right; font-weight:bold;">${sign}${percent.toFixed(1)}%</td>`;
     }
 
     tableBody.innerHTML += `
@@ -178,120 +112,11 @@ function updateStocksUI(stockData, rates) {
   }
 }
 
-function updateCryptoUI(cryptoData, rates) {
-  myCrypto.forEach((coin) => {
-    const priceEl = document.getElementById(
-      `price-${coin.symbol.toLowerCase()}`,
-    );
-    if (!priceEl) return;
-
-    const apiData = cryptoData.find((c) => c.id === coin.id);
-
-    if (apiData) {
-      const currentPriceEur = apiData.price * rates.usdToEur;
-
-      const diff = currentPriceEur - coin.avgPrice;
-      const percent = (diff / coin.avgPrice) * 100;
-      const colorClass = diff >= 0 ? 'text-green' : 'text-red';
-      const sign = diff >= 0 ? '+' : '';
-
-      priceEl.innerHTML = `€${currentPriceEur.toFixed(
-        2,
-      )} <span class="${colorClass}" style="font-size: 0.8em;">(${sign}${percent.toFixed(
-        1,
-      )}%)</span>`;
-    } else {
-      priceEl.innerText = 'N/A';
-    }
-  });
-}
-
-async function fetchPokemon(rates) {
-  const container = document.getElementById('poke-container');
-  if (!container) return;
-  container.innerHTML = '';
-
-  myCards.forEach((card, index) => {
-    container.innerHTML += `
-      <div id="card-${index}" class="poke-card" style="position: relative; display: inline-block;">
-        <div style="position: absolute; top: -10px; right: -10px; background: ${
-          card.grade.includes('10') || card.grade.includes('9.5')
-            ? '#d4af37'
-            : card.grade.includes('9')
-              ? '#c0c0c0'
-              : '#555'
-        }; color: white; padding: 4px 8px; border-radius: 12px; font-weight: bold; font-size: 0.8rem; box-shadow: 0 2px 4px rgba(0,0,0,0.5); z-index: 10;">${
-          card.grade
-        }</div>
-        <a href="${card.manualImg}" target="_blank"><img src="${
-          card.manualImg
-        }" alt="${card.name}" style="border-radius: 10px; width: 100%;"></a>
-        <center><small style="opacity: 0.9; font-weight: bold; margin-top: 5px; display: block; min-height: 40px;">${
-          card.name
-        }</small><small id="price-${index}" style="opacity: 0.6; font-size: 0.75rem;">Loading...</small></center>
-      </div>`;
-  });
-
-  const cacheKey = 'justtcg_worker_prices';
-  let batchData = getCachedData(cacheKey);
-
-  if (!batchData) {
-    try {
-      if (WORKER_URL.includes('SEU-NOME')) {
-        console.warn('Define o WORKER_URL!');
-        return;
-      }
-      const requestBody = myCards
-        .filter((c) => c.tcgId)
-        .map((c) => ({ tcgplayerId: c.tcgId }));
-      const response = await fetch(WORKER_URL, {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-      });
-      if (response.ok) {
-        const result = await response.json();
-        if (result && result.data) {
-          batchData = result.data;
-          setCachedData(cacheKey, batchData);
-        }
-      }
-    } catch (e) {
-      console.log('Erro Worker', e);
-    }
-  }
-
-  myCards.forEach((card, index) => {
-    const priceEl = document.getElementById(`price-${index}`);
-    if (!batchData) {
-      priceEl.innerText = 'N/A';
-      return;
-    }
-    const apiCard = batchData.find((c) => c.tcgplayerId === card.tcgId);
-    let finalPrice = 0;
-    if (apiCard && apiCard.variants) {
-      const bestVariant =
-        apiCard.variants.find(
-          (v) =>
-            v.condition === 'Near Mint' &&
-            (v.printing === 'Holofoil' || v.printing === 'Normal'),
-        ) || apiCard.variants[0];
-      if (bestVariant && bestVariant.price)
-        finalPrice = bestVariant.price * rates.usdToEur;
-    }
-    priceEl.innerText =
-      finalPrice > 0 ? `Est: €${finalPrice.toFixed(2)}` : 'N/A';
-  });
-}
-
 let loaded = false;
 document.addEventListener('DOMContentLoaded', async () => {
   if (loaded) return;
   loaded = true;
 
   const rates = await getExchangeRates();
-
   await fetchMarketData(rates);
-
-  fetchPokemon(rates);
-  renderCS2();
 });

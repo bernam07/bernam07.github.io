@@ -16,7 +16,7 @@ Here are some of the projects I've worked on, ranging from university assignment
       <i class="fas fa-shopping-cart card-icon"></i>
       <h3>Loja Social SAS</h3>
     </div>
-    <p>A social store management platform developed for IPCA's Social Services. Features inventory management, user requests, and admin dashboards. Built as a team project for university.</p>
+    <p>A web-based platform developed for IPCA's Social Services to manage their social store. It includes comprehensive inventory tracking, user request handling, and dedicated administrator dashboards.</p>
     <div class="tech-stack">
       <span class="badge">C#</span>
       <span class="badge">ASP.NET Core</span>
@@ -33,12 +33,12 @@ Here are some of the projects I've worked on, ranging from university assignment
       <i class="fas fa-laptop-code card-icon"></i>
       <h3>Personal Dashboard</h3>
     </div>
-    <p>This portfolio website! A static site featuring a real-time financial dashboard (Stocks/Crypto) and CS2 inventory showcase built with JavaScript and APIs.</p>
+    <p>The source code for this portfolio! A static website generated with Jekyll, featuring a completely automated, real-time stock market tracker powered by Python scripts via GitHub Actions.</p>
     <div class="tech-stack">
       <span class="badge">JavaScript</span>
+      <span class="badge">Python</span>
       <span class="badge">Jekyll</span>
-      <span class="badge">APIs</span>
-      <span class="badge">GitHub Pages</span>
+      <span class="badge">GitHub Actions</span>
     </div>
     <div class="card-links">
       <a href="https://github.com/bernam07/bernam07.github.io" target="_blank"><i class="fab fa-github"></i> Repository</a>
@@ -50,7 +50,7 @@ Here are some of the projects I've worked on, ranging from university assignment
       <i class="fas fa-robot card-icon"></i>
       <h3>MT5 Trading Bot</h3>
     </div>
-    <p>An advanced algorithmic trading bot for MetaTrader 5 (MT5) that uses Machine Learning (XGBoost) focused on stationary mathematical data (ATR, Returns) to predict short-term market direction.</p>
+    <p>An algorithmic trading bot for MetaTrader 5 (MT5). It leverages Machine Learning models (XGBoost) trained on stationary mathematical indicators (like ATR and Returns) to predict short-term market movements.</p>
     <div class="tech-stack">
       <span class="badge">Python</span>
       <span class="badge">XGBoost</span>
@@ -61,14 +61,20 @@ Here are some of the projects I've worked on, ranging from university assignment
     </div>
   </div>
 
-  <div class="project-card" style="opacity: 0.7; border-style: dashed;">
+  <div class="project-card">
     <div class="card-header">
-      <i class="fas fa-flask card-icon"></i>
-      <h3>Work in Progress</h3>
+      <i class="fas fa-music card-icon"></i>
+      <h3>Eclipse Player</h3>
     </div>
-    <p>Currently developing a new tool related to system optimization. Stay tuned for updates!</p>
+    <p>A minimalist, standalone local music player built with Electron, Vite, and TypeScript. Features a sleek dark/neon theme, a dynamic vinyl with a real-time audio visualizer, and automatic lyrics fetching.</p>
     <div class="tech-stack">
-      <span class="badge">Coming Soon</span>
+      <span class="badge">Electron</span>
+      <span class="badge">TypeScript</span>
+      <span class="badge">Vite</span>
+      <span class="badge">CSS</span>
+    </div>
+    <div class="card-links">
+      <a href="https://github.com/bernam07/eclipse-player" target="_blank"><i class="fab fa-github"></i> Repository</a>
     </div>
   </div>
 
@@ -160,4 +166,4 @@ Here are some of the projects I've worked on, ranging from university assignment
 
 <br>
 
-> *Last updated: February 2026*
+> *Last updated: June 2026*
