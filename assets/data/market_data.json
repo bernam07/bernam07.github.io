@@ -2,8 +2,8 @@
   "stocks": [
     {
       "symbol": "VUSA.L",
-      "price": 107.0625,
-      "percent": 0.5045763905186522
+      "price": 107.063,
+      "percent": 0.5050457639051834
     },
     {
       "symbol": "NVDA",
@@ -46,5 +46,5 @@
       "percent": -0.561164794618896
     }
   ],
-  "last_updated": "18/06/2026 20:27"
+  "last_updated": "19/06/2026 04:26"
 }
