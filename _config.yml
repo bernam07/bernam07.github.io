@@ -48,85 +48,22 @@ webmaster_verifications:
 # The end of `jekyll-seo-tag` settings
 
 # -----------------------------------------------------------------------------
-# Search
+# Search — kept disabled; the jekyll-theme-chirpy search-index generator plugin
+# reads this flag directly, so it stays even though the site has no search UI.
 # -----------------------------------------------------------------------------
 search:
   enabled: false
-  provider: lunr
 
-# Web Analytics Settings
-analytics:
-  google:
-    id:
-  goatcounter:
-    id:
-  umami:
-    id:
-    domain:
-  matomo:
-    id:
-    domain:
-  cloudflare:
-    id:
-  fathom:
-    id:
-
-# Page views settings
-pageviews:
-  provider:
-
-# Color scheme (Forced Dark Mode)
-theme_mode: dark
-
-# The CDN endpoint for media resources.
-cdn:
-
-# Avatar on sidebar
-avatar: https://github.com/bernam07.png
+# Google Analytics is wired directly in _includes/footer.html (gtag), not via
+# a Chirpy analytics.* config key — the custom layout doesn't read this block.
 
 social_preview_image:
 
-# Table of Contents
-toc: true
-
-comments:
-  provider:
-
-# Self-hosted static assets
-assets:
-  self_host:
-    enabled:
-    env:
-
+# PWA — disabled. Keep just the flag: the theme's PWA asset generator reads it,
+# and a previous enabled build is what left a stale service worker in visitors'
+# browsers (see assets/js/main.js, which cleans that up).
 pwa:
   enabled: false
-  cache:
-    enabled: true
-    deny_paths:
-
-# Content Security Policy (CSP) - CRITICAL FOR DASHBOARD
-csp:
-  enabled: true
-  policy:
-    default-src: "'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net"
-    
-    # PERMISSÕES DE LIGAÇÃO (APIs)
-    # Adicionado api.pokemontcg.io para corrigir o erro de CORS
-    connect-src: >-
-      'self'
-      https://finnhub.io
-      https://api.coingecko.com
-      https://api.pokemontcg.io
-      https://*.workers.dev
-      https://api.allorigins.win
-      https://query1.finance.yahoo.com
-
-    # PERMISSÕES DE IMAGENS (Wildcard para aceitar Steam/Pokemon/Etc)
-    img-src: "'self' data: https://* http://*"
-    
-    # Scripts e Estilos
-    script-src: "'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net"
-    style-src: "'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net"
 
 # The base URL of your site
 baseurl: ""
@@ -184,19 +121,6 @@ compress_html:
 exclude:
   - "*.gem"
   - "*.gemspec"
-  - docs
   - tools
   - README.md
   - LICENSE
-  - purgecss.js
-  - "*.config.js"
-  - "package*.json"
-
-jekyll-archives:
-  enabled: [categories, tags]
-  layouts:
-    category: category
-    tag: tag
-  permalinks:
-    tag: /tags/:name/
-    category: /categories/:name/

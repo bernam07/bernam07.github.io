@@ -892,6 +892,12 @@ main {
   margin-bottom: 16px;
 }
 
+.card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
 .card-links a {
   font-weight: 700;
   font-size: 0.86rem;

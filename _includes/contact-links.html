@@ -1,0 +1,7 @@
+{% for entry in site.data.contact %}
+  {% if entry.type == 'email' %}
+    <a href="javascript:void(location.href = 'mailto:' + ['bernardomartins.dev','gmail.com'].join('@'))" aria-label="Email"><i class="{{ entry.icon }}"></i></a>
+  {% else %}
+    <a href="{{ entry.url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ entry.type | capitalize }}"><i class="{{ entry.icon }}"></i></a>
+  {% endif %}
+{% endfor %}

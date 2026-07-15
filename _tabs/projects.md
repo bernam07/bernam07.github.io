@@ -14,6 +14,24 @@ title: Projects
 
     <div class="card project-card reveal">
       <div class="card-header">
+        <i class="fas fa-gamepad card-icon"></i>
+        <h3>Agonis</h3>
+      </div>
+      <p>A social network for gamers &mdash; think Letterboxd meets Facebook. Search a massive IGDB-powered game database, track and rate your library, write reviews, follow friends, and share what you're playing in a real-time social feed.</p>
+      <div class="tech-stack">
+        <span class="badge">React</span>
+        <span class="badge">TypeScript</span>
+        <span class="badge">Supabase</span>
+        <span class="badge">Tailwind CSS</span>
+      </div>
+      <div class="card-links">
+        <a href="https://agonis.xyz" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Visit Site</a>
+        <a href="https://github.com/bernam07/Agonis" target="_blank"><i class="fab fa-github"></i> Repository</a>
+      </div>
+    </div>
+
+    <div class="card project-card reveal">
+      <div class="card-header">
         <i class="fas fa-shopping-cart card-icon"></i>
         <h3>Loja Social SAS</h3>
       </div>

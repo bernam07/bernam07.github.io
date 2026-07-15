@@ -13,9 +13,7 @@
     <span>&copy; {{ site.time | date: '%Y' }} {{ site.social.name | default: site.title }}. Built with Jekyll.</span>
 
     <div class="site-footer__socials">
-      <a href="https://github.com/bernam07" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
-      <a href="https://www.linkedin.com/in/bernardomfm/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-      <a href="javascript:void(location.href = 'mailto:' + ['bernardomartins.dev','gmail.com'].join('@'))" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      {% include contact-links.html %}
     </div>
   </div>
 </footer>

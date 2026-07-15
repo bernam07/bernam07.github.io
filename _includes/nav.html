@@ -12,9 +12,7 @@
       <a href="{{ '/dashboard/' | relative_url }}" class="site-nav__link{% if page.url == '/dashboard/' %} is-active{% endif %}">Dashboard</a>
 
       <div class="site-nav__socials">
-        <a href="https://github.com/bernam07" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/bernardomfm/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-        <a href="javascript:void(location.href = 'mailto:' + ['bernardomartins.dev','gmail.com'].join('@'))" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        {% include contact-links.html %}
       </div>
     </div>
 
