@@ -1,4 +1,23 @@
 (function () {
+  // Clean up a service worker registered by a previous PWA-enabled build.
+  // It was intercepting fetches and serving stale cached pages even after
+  // fresh deploys (hard refresh doesn't touch an active service worker).
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function (registrations) {
+      registrations.forEach(function (registration) {
+        registration.unregister();
+      });
+    });
+
+    if ('caches' in window) {
+      caches.keys().then(function (keys) {
+        keys.forEach(function (key) {
+          caches.delete(key);
+        });
+      });
+    }
+  }
+
   var nav = document.getElementById('site-nav');
   var toggle = document.getElementById('site-nav-toggle');
 
