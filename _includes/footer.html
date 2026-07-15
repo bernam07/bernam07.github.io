@@ -5,62 +5,17 @@
     dataLayer.push(arguments);
   }
   gtag('js', new Date());
-
   gtag('config', 'G-XVSMLXD487');
 </script>
 
-<footer class="footer">
-  <div class="container">
-    <div
-      class="d-flex justify-content-center align-items-center flex-wrap text-muted"
-    >
-      <span>
-        &copy; {{ site.time | date: '%Y' }}
-        <a href="{{ '/' | relative_url }}">{{ site.social.name | default: site.title }}</a>.
-      </span>
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <span>&copy; {{ site.time | date: '%Y' }} {{ site.social.name | default: site.title }}. Built with Jekyll.</span>
 
-      <span class="ms-1">
-        <a
-          href="https://creativecommons.org/licenses/by-sa/4.0/"
-          target="_blank"
-          rel="noopener"
-          data-bs-toggle="tooltip"
-          data-bs-placement="top"
-          title="Except where otherwise noted, content on this site is licensed under the Creative Commons Attribution-ShareAlike 4.0 International License."
-        >
-          Some rights reserved.
-        </a>
-      </span>
+    <div class="site-footer__socials">
+      <a href="https://github.com/bernam07" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/bernardomfm/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="javascript:void(location.href = 'mailto:' + ['bernardomartins.dev','gmail.com'].join('@'))" aria-label="Email"><i class="fas fa-envelope"></i></a>
     </div>
   </div>
 </footer>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const targetIds = ['search', 'search-wrapper', 'search-trigger', 'search-result-wrapper', 'search-input'];
-    targetIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.remove();
-        el.style.display = 'none';
-      }
-    });
-    document.querySelectorAll('.fa-search').forEach((icon) => icon.remove());
-    const searchTags = document.getElementsByTagName('search');
-    for (let i = 0; i < searchTags.length; i++) {
-      searchTags[i].style.display = 'none';
-    }
-  });
-</script>
-
-<style>
-  #search,
-  #search-trigger,
-  #search-wrapper,
-  search {
-    display: none !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    visibility: hidden !important;
-  }
-</style>

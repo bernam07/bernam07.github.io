@@ -1,0 +1,25 @@
+<nav class="site-nav" id="site-nav">
+  <div class="site-nav__inner">
+    <a href="{{ '/' | relative_url }}" class="site-nav__brand">
+      bernardo<span class="dot">.</span>dev
+    </a>
+
+    <div class="site-nav__links" id="site-nav-links">
+      <a href="{{ '/' | relative_url }}" class="site-nav__link{% if page.url == '/' %} is-active{% endif %}"><span class="num">01.</span>Home</a>
+      <a href="{{ '/projects/' | relative_url }}" class="site-nav__link{% if page.url == '/projects/' %} is-active{% endif %}"><span class="num">02.</span>Projects</a>
+      <a href="{{ '/roadmap/' | relative_url }}" class="site-nav__link{% if page.url == '/roadmap/' %} is-active{% endif %}"><span class="num">03.</span>Roadmap</a>
+      <a href="{{ '/setup/' | relative_url }}" class="site-nav__link{% if page.url == '/setup/' %} is-active{% endif %}"><span class="num">04.</span>Setup</a>
+      <a href="{{ '/dashboard/' | relative_url }}" class="site-nav__link{% if page.url == '/dashboard/' %} is-active{% endif %}"><span class="num">05.</span>Dashboard</a>
+
+      <div class="site-nav__socials">
+        <a href="https://github.com/bernam07" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/bernardomfm/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="javascript:void(location.href = 'mailto:' + ['bernardomartins.dev','gmail.com'].join('@'))" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+
+    <button type="button" class="site-nav__toggle" id="site-nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+</nav>

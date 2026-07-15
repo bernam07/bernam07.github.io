@@ -1,15 +1,20 @@
 ---
 layout: page
-icon: fas fa-desktop
-order: 3
 title: Setup
 ---
 
-> "Build your own tools, but don't forget to use them."
+<div class="page-hero wrap reveal">
+  <div class="page-hero__icon"><i class="fas fa-desktop"></i></div>
+  <h1>Setup</h1>
+  <p>&ldquo;Build your own tools, but don't forget to use them.&rdquo;</p>
+</div>
+
+<div class="section wrap prose reveal" markdown="1">
 
 Here is the hardware and software configuration I use daily for software development, university tasks, and competitive gaming.
 
 ## The Battlestation
+
 My main workhorse for heavy projects, code compilation and gaming sessions.
 
 | Component     | Specs                     |
@@ -22,22 +27,20 @@ My main workhorse for heavy projects, code compilation and gaming sessions.
 | **Monitor 1** | AOC AG251FZ2E 24.5" 240Hz |
 | **Monitor 2** | AOC 27G2U5 27" 75Hz       |
 
-<br>
-
 ## Peripherals & Audio
+
 * **Keyboard:** Razer Blackwidow V3 Tenkeyless
 * **Mouse:** Steelseries Rival 650 Wireless
 * **Headset:** Sony WH-1000XM4
 * **Microphone:** Logitech G Yeti GX
-
----
 
 ## Tech Stack & Software
 
 My toolset of choice for maintaining productivity and code quality.
 
 ### Languages & Frameworks
-<div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+
+<div class="badge-row">
   <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
   <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white" alt="C#">
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
@@ -54,15 +57,19 @@ My toolset of choice for maintaining productivity and code quality.
 </div>
 
 ### Dev Tools & Environment
+
 * ![VSCode](https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=flat&logo=visual%20studio%20code&logoColor=white) **VS Code** (Theme: Tokyo Night)
 * ![Terminal](https://img.shields.io/badge/Terminal-Windows_Terminal-4D4D4D?style=flat&logo=windows-terminal&logoColor=white) **Windows Terminal** + PowerShell 7
 * ![Git](https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white) **Git & GitHub Actions**
 
 ### Productivity
+
 * **Browser:** Opera
 * **Notes:** Notion
 * **Communication:** Discord / Microsoft Teams
 
-<br>
+<p style="text-align: center; color: var(--text-dim); font-family: var(--font-mono); font-size: 0.82rem; margin-top: 3rem;" markdown="0">
+  Last updated: June 2026
+</p>
 
-> *Last updated: June 2026*
+</div>
