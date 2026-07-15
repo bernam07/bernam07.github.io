@@ -5,14 +5,6 @@ order: 5
 title: Dashboard
 ---
 
-<style>
-  .text-green { color: #00ff00; font-weight: bold; }
-  .text-red { color: #ff4d4d; font-weight: bold; }
-  .stock-table { width:100%; border-collapse: collapse; font-family: monospace; }
-  .stock-table th { text-align: left; padding: 10px; border-bottom: 2px solid #555; }
-  .stock-table td { padding: 10px; border-bottom: 1px solid #333; }
-</style>
-
 ## Stock Market Positions
 
 Live view of my current positions in the traditional stock market.

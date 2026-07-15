@@ -4,178 +4,6 @@ title: ""
 tagline: ""
 ---
 
-<style>
-  .intro-container {
-    text-align: center;
-    margin-bottom: 2rem;
-    margin-top: -1rem;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .profile-crop {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    object-fit: cover;
-    object-position: center;
-    border: 4px solid var(--card-bg);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    margin-bottom: 1.5rem;
-    pointer-events: none;
-    user-select: none;
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
-  }
-
-  .profile-crop:hover {
-    transform: scale(1.02);
-    box-shadow: 0 12px 25px rgba(82, 170, 255, 0.2); /* Cor do tema */
-    border-color: var(--link-color);
-  }
-
-  .typing-container {
-    pointer-events: none;
-    user-select: none;
-    display: inline-block;
-  }
-
-  .typing-svg {
-    max-width: 100%;
-    height: auto;
-  }
-
-  .intro-text {
-    font-size: 1.15rem;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-    color: var(--text-color);
-    text-align: left;
-  }
-
-  .section-title {
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--text-muted-color);
-    margin-top: 3rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 5px;
-  }
-
-  .experience-item {
-    margin-bottom: 1.5rem;
-  }
-
-  .experience-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-  }
-
-  .experience-subheader {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-top: 1rem;
-    font-weight: bold;
-    color: var(--heading-color);
-  }
-
-  .experience-role {
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: var(--heading-color);
-  }
-
-  .experience-company {
-    color: var(--link-color);
-  }
-
-  .experience-date {
-    font-size: 0.9rem;
-    color: var(--text-muted-color);
-    font-family: monospace;
-  }
-
-  .tech-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    list-style: none;
-    padding: 0;
-  }
-
-  .tech-item {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-family: monospace;
-    transition: all 0.2s;
-  }
-
-  .tech-item:hover {
-    border-color: var(--link-color);
-    color: var(--link-color);
-    transform: translateY(-2px);
-  }
-
-  .company-link {
-    color: var(--link-color);
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.2s ease-in-out;
-  }
-
-  .company-link:hover {
-    text-decoration: underline;
-    color: var(--link-hover-color);
-    opacity: 0.8;
-  }
-
-  .nav-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 2rem 0;
-  }
-
-  .btn-shine {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 25px;
-    color: var(--heading-color);
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-
-  .btn-shine:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-    border-color: var(--link-color);
-    color: var(--link-color);
-    text-decoration: none;
-  }
-
-  .btn-shine i {
-    color: var(--link-color);
-  }
-</style>
-
 <div class="intro-container">
   <img
     src="/assets/img/image.jpg"
@@ -183,13 +11,11 @@ tagline: ""
     class="profile-crop"
   />
 
-  <a href="https://git.io/typing-svg" class="typing-container">
-    <img
-      src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=22&pause=1000&color=82AAFF&center=true&vCenter=true&width=600&lines=Software+Developer;Student+%40+IPCA+%7C+Developer+%40+Deloitte;Based+in+Portugal;Full-Stack+%26+Efficiency+Enthusiast"
-      alt="Typing SVG"
-      class="typing-svg"
-    />
-  </a>
+  <p class="hero-eyebrow">whoami<span class="cursor"></span></p>
+  <h1 class="hero-name">Bernardo Martins</h1>
+  <p class="hero-tagline">
+    Software Developer @ Deloitte &middot; Student @ IPCA &middot; Based in Portugal
+  </p>
 </div>
 
 <div class="intro-text">
@@ -212,7 +38,7 @@ tagline: ""
   <a href="/projects/" class="btn-shine">
     <i class="fas fa-code-branch"></i> Projects
   </a>
-  <a href="/dashboard/" class="btn-shine">
+  <a href="/dashboard/" class="btn-shine btn-primary">
     <i class="fas fa-chart-line"></i> Dashboard
   </a>
 </div>
@@ -292,7 +118,7 @@ tagline: ""
   <a href="https://github.com/bernam07" target="_blank" class="company-link"
     >GitHub</a
   >
-  •
+  &bull;
   <a
     href="https://www.linkedin.com/in/bernardomfm/"
     target="_blank"
