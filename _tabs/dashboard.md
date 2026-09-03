@@ -25,13 +25,13 @@ title: Dashboard
         </tr>
       </thead>
       <tbody id="stock-rows">
-        <tr><td colspan="4" style="text-align: center; color: var(--text-dim);">Loading market data...</td></tr>
+        <tr><td colspan="4" class="stock-empty">Loading market data&hellip;</td></tr>
       </tbody>
     </table>
   </div>
 
-  <p style="text-align: center; color: var(--text-dim); font-family: var(--font-mono); font-size: 0.82rem; margin-top: 2rem;">
-    Data is automatically fetched via Yahoo Finance API.
+  <p class="last-updated" id="dash-updated">
+    Data is automatically fetched via the Yahoo Finance API.
   </p>
 </div>
 

@@ -16,7 +16,14 @@ title: Roadmap
       <div class="timeline-marker"></div>
       <span class="timeline-date">July 2027 (Expected)</span>
       <h3 class="timeline-title"><i class="fas fa-graduation-cap"></i> BSc Graduation</h3>
-      <p>Expected completion of the Bachelor's Degree in <strong>Computer Systems Engineering</strong> at IPCA.</p>
+      <p>Expected completion of the Bachelor's Degree in <strong>Computer Systems Engineering</strong> at UPCA.</p>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-marker work"></div>
+      <span class="timeline-date">September 2026</span>
+      <h3 class="timeline-title"><i class="fas fa-arrow-trend-up"></i> Promoted to Programmer</h3>
+      <p>Promoted from <strong>Developer</strong> to <strong>Programmer</strong> at Deloitte, taking on greater ownership and technical responsibility.</p>
     </div>
 
     <div class="timeline-item reveal">
@@ -31,7 +38,7 @@ title: Roadmap
       <div class="timeline-marker current"></div>
       <span class="timeline-date">September 2024</span>
       <h3 class="timeline-title"><i class="fas fa-university"></i> Enrolled in BSc Degree</h3>
-      <p>Admitted to the Bachelor's Degree in <strong>Computer Systems Engineering</strong> at IPCA.</p>
+      <p>Admitted to the Bachelor's Degree in <strong>Computer Systems Engineering</strong> at UPCA.</p>
     </div>
 
     <div class="timeline-item reveal">
@@ -74,12 +81,12 @@ title: Roadmap
       <div class="timeline-marker"></div>
       <span class="timeline-date">October 2022</span>
       <h3 class="timeline-title"><i class="fas fa-school"></i> Started Academic Journey</h3>
-      <p>Enrolled in the CTeSP program at <strong>IPCA</strong>.</p>
+      <p>Enrolled in the CTeSP program at <strong>UPCA</strong> (formerly IPCA).</p>
     </div>
 
   </div>
 
-  <p style="text-align: center; color: var(--text-dim); font-family: var(--font-mono); font-size: 0.82rem; margin-top: 3rem;">
-    Last updated: February 2026
+  <p class="last-updated">
+    Last updated: {{ site.time | date: '%B %Y' }}
   </p>
 </div>

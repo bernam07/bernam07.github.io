@@ -35,7 +35,7 @@ title: Projects
         <i class="fas fa-shopping-cart card-icon"></i>
         <h3>Loja Social SAS</h3>
       </div>
-      <p>A web-based platform developed for IPCA's Social Services to manage their social store. It includes comprehensive inventory tracking, user request handling, and dedicated administrator dashboards.</p>
+      <p>A web-based platform developed for UPCA's Social Services to manage their social store. It includes comprehensive inventory tracking, user request handling, and dedicated administrator dashboards.</p>
       <div class="tech-stack">
         <span class="badge">C#</span>
         <span class="badge">ASP.NET Core</span>
@@ -99,7 +99,7 @@ title: Projects
 
   </div>
 
-  <p style="text-align: center; color: var(--text-dim); font-family: var(--font-mono); font-size: 0.82rem; margin-top: 3rem;">
-    Last updated: June 2026
+  <p class="last-updated">
+    Last updated: {{ site.time | date: '%B %Y' }}
   </p>
 </div>

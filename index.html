@@ -5,9 +5,10 @@ title: ""
 
 <section class="hero wrap">
   <div class="reveal">
+    <img src="{{ '/assets/img/image.jpg' | relative_url }}" alt="Bernardo Martins" class="hero-avatar" width="60" height="60">
     <p class="hero-eyebrow">whoami</p>
     <h1>Hi, I'm <span class="accent-text">Bernardo Martins</span></h1>
-    <p class="hero-role">Software Developer @ Deloitte &middot; CS Engineering @ IPCA</p>
+    <p class="hero-role">Programmer @ Deloitte &middot; CS Engineering @ UPCA</p>
     <p class="hero-blurb">
       I'm a 22-year-old developer based in Portugal who enjoys building efficient
       systems and exploring financial markets. I balance professional software
@@ -16,6 +17,7 @@ title: ""
     </p>
     <div class="hero-cta">
       <a href="{{ '/projects/' | relative_url }}" class="btn btn-primary"><i class="fas fa-code-branch"></i> View Projects</a>
+      <a href="{{ '/assets/cv/Bernardo-Martins-CV.pdf' | relative_url }}" class="btn" target="_blank" rel="noopener"><i class="fas fa-file-arrow-down"></i> Download CV</a>
       <a href="{{ '/dashboard/' | relative_url }}" class="btn"><i class="fas fa-chart-line"></i> Live Dashboard</a>
       <a href="javascript:void(location.href = 'mailto:' + ['bernardomartins.dev','gmail.com'].join('@'))" class="btn"><i class="fas fa-envelope"></i> Say Hi</a>
     </div>
@@ -29,9 +31,9 @@ title: ""
       <span class="code-window__title">whoami.ts</span>
     </div>
     <div class="code-window__body"><pre><code><span class="tok-kw">const</span> <span class="tok-var">bernardo</span> <span class="tok-punc">=</span> {
-  role<span class="tok-punc">:</span> <span class="tok-str">"Software Developer"</span>,
+  role<span class="tok-punc">:</span> <span class="tok-str">"Programmer"</span>,
   company<span class="tok-punc">:</span> <span class="tok-str">"Deloitte"</span>,
-  studying<span class="tok-punc">:</span> <span class="tok-str">"CS Engineering @ IPCA"</span>,
+  studying<span class="tok-punc">:</span> <span class="tok-str">"CS Engineering @ UPCA"</span>,
   basedIn<span class="tok-punc">:</span> <span class="tok-str">"Portugal"</span>,
   focus<span class="tok-punc">:</span> [<span class="tok-str">"backend"</span>, <span class="tok-str">"systems"</span>, <span class="tok-str">"markets"</span>],
   currentlyBuilding<span class="tok-punc">:</span> <span class="tok-str">"this site's live dashboard"</span>,
@@ -45,11 +47,11 @@ title: ""
   <div class="info-grid">
     <div class="info-card">
       <div class="info-card__label">Role</div>
-      <div class="info-card__value">Developer @ Deloitte</div>
+      <div class="info-card__value">Programmer @ Deloitte</div>
     </div>
     <div class="info-card">
       <div class="info-card__label">Education</div>
-      <div class="info-card__value">BSc Computer Systems Eng. @ IPCA</div>
+      <div class="info-card__value">BSc Computer Systems Eng. @ UPCA</div>
     </div>
     <div class="info-card">
       <div class="info-card__label">Based in</div>
@@ -70,6 +72,13 @@ title: ""
 
   <div class="timeline">
     <div class="timeline-item reveal">
+      <div class="timeline-marker current"></div>
+      <span class="timeline-date">September 2026</span>
+      <h3 class="timeline-title"><i class="fas fa-arrow-trend-up"></i> Promoted to Programmer</h3>
+      <p>Promoted from <strong>Developer</strong> to <strong>Programmer</strong> at Deloitte.</p>
+    </div>
+
+    <div class="timeline-item reveal">
       <div class="timeline-marker cert"></div>
       <span class="timeline-date">June 2025</span>
       <h3 class="timeline-title"><i class="fab fa-github"></i> GitHub Foundations</h3>
@@ -77,10 +86,10 @@ title: ""
     </div>
 
     <div class="timeline-item reveal">
-      <div class="timeline-marker current"></div>
+      <div class="timeline-marker"></div>
       <span class="timeline-date">September 2024</span>
       <h3 class="timeline-title"><i class="fas fa-university"></i> Enrolled in BSc Degree</h3>
-      <p>Admitted to the Bachelor's Degree in <strong>Computer Systems Engineering</strong> at IPCA.</p>
+      <p>Admitted to the Bachelor's Degree in <strong>Computer Systems Engineering</strong> at UPCA.</p>
     </div>
 
     <div class="timeline-item reveal">
@@ -169,13 +178,13 @@ title: ""
   </div>
 </section>
 
-<section class="section wrap reveal" style="text-align: center;">
+<section class="section wrap reveal contact-cta">
   <p class="section-eyebrow">Get in touch</p>
-  <h2 style="font-size: clamp(1.6rem, 4vw, 2.2rem); color: var(--text-bright); margin: 0 0 1rem;">Let's build something together.</h2>
-  <p style="color: var(--text-dim); max-width: 480px; margin: 0 auto 2rem;">
+  <h2>Let's build something together.</h2>
+  <p>
     Always open to interesting conversations, collaborations, or just talking about code and markets.
   </p>
-  <div class="hero-cta" style="justify-content: center;">
+  <div class="hero-cta">
     <a href="javascript:void(location.href = 'mailto:' + ['bernardomartins.dev','gmail.com'].join('@'))" class="btn btn-primary"><i class="fas fa-envelope"></i> Email Me</a>
     <a href="https://github.com/bernam07" target="_blank" class="btn"><i class="fab fa-github"></i> GitHub</a>
     <a href="https://www.linkedin.com/in/bernardomfm/" target="_blank" class="btn"><i class="fab fa-linkedin"></i> LinkedIn</a>

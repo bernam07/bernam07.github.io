@@ -13,26 +13,34 @@ const myStocks = [
 ];
 
 function getCachedData(key) {
-  const cached = localStorage.getItem(key);
-  if (!cached) return null;
-  const parsed = JSON.parse(cached);
-  if (Date.now() - parsed.timestamp > CACHE_DURATION) return null;
-  return parsed.data;
+  try {
+    const cached = localStorage.getItem(key);
+    if (!cached) return null;
+    const parsed = JSON.parse(cached);
+    if (Date.now() - parsed.timestamp > CACHE_DURATION) return null;
+    return parsed.data;
+  } catch (e) {
+    return null;
+  }
 }
 
 function setCachedData(key, data) {
-  localStorage.setItem(
-    key,
-    JSON.stringify({ timestamp: Date.now(), data: data }),
-  );
+  try {
+    localStorage.setItem(
+      key,
+      JSON.stringify({ timestamp: Date.now(), data: data }),
+    );
+  } catch (e) {
+    /* storage may be unavailable (private mode) — ignore */
+  }
 }
 
-// Continuamos a precisar das taxas para converter USD e GBP para EUR
+// We still need the FX rates to convert USD and GBP holdings into EUR.
 async function getExchangeRates() {
   const cached = getCachedData('rates');
   if (cached) return cached;
 
-  let rates = { usdToEur: 0.95, gbpToEur: 1.19 };
+  const rates = { usdToEur: 0.95, gbpToEur: 1.19 };
   try {
     const response = await fetch(
       'https://api.coingecko.com/api/v3/simple/price?ids=tether,british-pound-sterling&vs_currencies=eur',
@@ -40,75 +48,93 @@ async function getExchangeRates() {
     if (response.ok) {
       const data = await response.json();
       if (data.tether?.eur) rates.usdToEur = data.tether.eur;
-      if (data['british-pound-sterling']?.eur)
+      if (data['british-pound-sterling']?.eur) {
         rates.gbpToEur = data['british-pound-sterling'].eur;
+      }
       setCachedData('rates', rates);
     }
   } catch (e) {
-    console.error('Erro a carregar taxas de câmbio:', e);
+    console.error('Failed to load exchange rates:', e);
   }
   return rates;
 }
 
 async function fetchMarketData(rates) {
+  const tableBody = document.getElementById('stock-rows');
   try {
     const response = await fetch('/assets/data/market_data.json');
     if (!response.ok) throw new Error('Data not found');
     const data = await response.json();
 
     updateStocksUI(data.stocks, rates);
-
-    if (data.last_updated) {
-      console.log('Dados atualizados em:', data.last_updated);
-    }
+    updateTimestamp(data.last_updated);
   } catch (error) {
-    console.error('Erro a carregar market_data.json:', error);
+    console.error('Failed to load market_data.json:', error);
+    if (tableBody) {
+      tableBody.innerHTML =
+        '<tr><td colspan="4" class="stock-empty">Market data is currently unavailable.</td></tr>';
+    }
   }
+}
+
+function priceToEur(ticker, price, rates) {
+  if (ticker.includes('.L')) {
+    // London-listed prices come in pence (GBX); normalise to GBP first.
+    if (price > 1000) price = price / 100;
+    return price * rates.gbpToEur;
+  }
+  return price * rates.usdToEur;
 }
 
 function updateStocksUI(stockData, rates) {
   const tableBody = document.getElementById('stock-rows');
   if (!tableBody) return;
-  tableBody.innerHTML = '';
+
+  const fragment = document.createDocumentFragment();
 
   for (const myStock of myStocks) {
     const apiData = stockData.find((s) => s.symbol === myStock.ticker);
-    let currentPriceEur = null;
-
-    if (apiData) {
-      let price = apiData.price;
-
-      if (myStock.ticker.includes('.L')) {
-        if (price > 1000) price = price / 100; // Converte GBX para GBP
-        currentPriceEur = price * rates.gbpToEur;
-      } else {
-        currentPriceEur = price * rates.usdToEur;
-      }
-    } else if (myStock.fallbackPrice) {
-      currentPriceEur = myStock.fallbackPrice;
-    }
+    const currentPriceEur = apiData
+      ? priceToEur(myStock.ticker, apiData.price, rates)
+      : null;
 
     const cleanTicker = myStock.ticker.replace('.L', '').replace('.AS', '');
-    const priceDisplay = currentPriceEur
+    const row = document.createElement('tr');
+
+    const tickerCell = document.createElement('td');
+    tickerCell.innerHTML = `<strong>${cleanTicker}</strong>`;
+
+    const avgCell = document.createElement('td');
+    avgCell.textContent = `€${myStock.avgPrice.toFixed(2)}`;
+
+    const liveCell = document.createElement('td');
+    liveCell.textContent = currentPriceEur
       ? `€${currentPriceEur.toFixed(2)}`
       : 'N/A';
 
-    let plCell = '<td style="text-align:right">-</td>';
+    const plCell = document.createElement('td');
+    plCell.className = 'pl-cell';
     if (currentPriceEur) {
-      const diff = currentPriceEur - myStock.avgPrice;
-      const percent = (diff / myStock.avgPrice) * 100;
-      const colorClass = diff >= 0 ? 'text-green' : 'text-red';
-      const sign = diff >= 0 ? '+' : '';
-      plCell = `<td class="${colorClass}" style="text-align:right; font-weight:bold;">${sign}${percent.toFixed(1)}%</td>`;
+      const percent =
+        ((currentPriceEur - myStock.avgPrice) / myStock.avgPrice) * 100;
+      const up = percent >= 0;
+      plCell.classList.add(up ? 'text-green' : 'text-red');
+      plCell.textContent = `${up ? '+' : ''}${percent.toFixed(1)}%`;
+    } else {
+      plCell.textContent = '—';
     }
 
-    tableBody.innerHTML += `
-      <tr style="border-bottom: 1px solid #333;">
-        <td><strong>${cleanTicker}</strong></td>
-        <td>€${myStock.avgPrice.toFixed(2)}</td>
-        <td>${priceDisplay}</td>
-        ${plCell}
-      </tr>`;
+    row.append(tickerCell, avgCell, liveCell, plCell);
+    fragment.appendChild(row);
+  }
+
+  tableBody.replaceChildren(fragment);
+}
+
+function updateTimestamp(lastUpdated) {
+  const note = document.getElementById('dash-updated');
+  if (note && lastUpdated) {
+    note.textContent = `Auto-updated via the Yahoo Finance API · Last sync: ${lastUpdated}`;
   }
 }
 
