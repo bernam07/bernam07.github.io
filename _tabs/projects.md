@@ -99,7 +99,7 @@ title: Projects
 
   </div>
 
-  <p style="text-align: center; color: var(--text-dim); font-family: var(--font-mono); font-size: 0.82rem; margin-top: 3rem;">
-    Last updated: June 2026
+  <p class="last-updated">
+    Last updated: {{ site.time | date: '%B %Y' }}
   </p>
 </div>

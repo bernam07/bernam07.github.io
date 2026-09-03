@@ -57,7 +57,7 @@ search:
 # Google Analytics is wired directly in _includes/footer.html (gtag), not via
 # a Chirpy analytics.* config key — the custom layout doesn't read this block.
 
-social_preview_image:
+social_preview_image: /assets/img/og-image.png
 
 # PWA — disabled. Keep just the flag: the theme's PWA asset generator reads it,
 # and a previous enabled build is what left a stale service worker in visitors'
@@ -87,6 +87,10 @@ collections:
     sort_by: order
 
 defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/img/og-image.png
   - scope:
       path: ""
       type: posts

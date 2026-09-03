@@ -68,8 +68,8 @@ My toolset of choice for maintaining productivity and code quality.
 * **Notes:** Notion
 * **Communication:** Discord / Microsoft Teams
 
-<p style="text-align: center; color: var(--text-dim); font-family: var(--font-mono); font-size: 0.82rem; margin-top: 3rem;" markdown="0">
-  Last updated: June 2026
+<p class="last-updated" markdown="0">
+  Last updated: {{ site.time | date: '%B %Y' }}
 </p>
 
 </div>
