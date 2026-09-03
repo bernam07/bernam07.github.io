@@ -4,7 +4,7 @@
 [![GitHub](https://img.shields.io/badge/GitHub-bernam07-181717?style=flat-square&logo=github)](https://github.com/bernam07)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Bernardo%20Martins-0077B5?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/bernardomfm/)
 
-> **A personal portfolio showcasing my journey as a Software Developer, featuring real-time financial tracking and professional milestones.**
+> **A personal portfolio showcasing my journey as a Programmer, featuring real-time financial tracking and professional milestones.**
 
 ---
 
@@ -19,7 +19,7 @@ You can also access it through here: **[bernardomartins.me](https://bernardomart
 This portfolio was built to go beyond a simple resume. It serves as a central hub for my professional identity, technical projects, and personal interests.
 
 ### Key Features:
-* **Professional Roadmap:** A visual timeline of my academic path (IPCA) and career at Deloitte.
+* **Professional Roadmap:** A visual timeline of my academic path (UPCA) and career at Deloitte.
 * **Real-time Dashboard:** Tracks live stock positions. Prices are refreshed by a scheduled GitHub Action (Yahoo Finance) and converted to EUR client-side (CoinGecko FX rates).
 * **Project Showcase:** A clean grid layout highlighting my work in C#, Python, and .NET.
 * **Setup Tour:** A detailed look at my hardware and development environment.
