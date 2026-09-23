@@ -2,49 +2,49 @@
   "stocks": [
     {
       "symbol": "VUSA.L",
-      "price": 110.207,
-      "percent": 0.6686458095455577
+      "price": 110.84750366210938,
+      "percent": 0.5328259064489343
     },
     {
       "symbol": "NVDA",
       "price": 228.87,
-      "percent": 0.6934637020455463
+      "percent": 0.13563178158908046
     },
     {
       "symbol": "PLTR",
       "price": 184.99,
-      "percent": 1.0763850945251878
+      "percent": -0.07562253551557628
     },
     {
       "symbol": "NVO",
       "price": 39.4,
-      "percent": -1.2778752192432925
+      "percent": -0.10141987829614389
     },
     {
       "symbol": "SOFI",
       "price": 17.16,
-      "percent": 0.9411764705882361
+      "percent": -0.3484320557491215
     },
     {
       "symbol": "META",
       "price": 736.595,
-      "percent": -0.46174926893076285
+      "percent": -0.5944669365721961
     },
     {
       "symbol": "AMZN",
       "price": 254.98,
-      "percent": -1.605309871112139
+      "percent": -0.18398903895087057
     },
     {
       "symbol": "O",
       "price": 56.53,
-      "percent": -0.6502636203866388
+      "percent": -0.21182700794350828
     },
     {
       "symbol": "ORCL",
       "price": 149.2,
-      "percent": 0.08049369466056891
+      "percent": 0.06706908115358438
     }
   ],
-  "last_updated": "23/09/2026 03:45"
+  "last_updated": "23/09/2026 10:57"
 }
