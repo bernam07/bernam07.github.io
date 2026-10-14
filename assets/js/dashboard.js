@@ -1,132 +1,138 @@
-const CACHE_DURATION = 1000 * 60 * 15;
+/**
+ * Personal Portfolio — Real-time Stock Dashboard
+ * Powered by GitHub Actions & Yahoo Finance data
+ */
 
-const myStocks = [
-  { ticker: 'VUSA.L', avgPrice: 102.25 },
-  { ticker: 'NVDA', avgPrice: 117.62 },
-  { ticker: 'PLTR', avgPrice: 41.76 },
-  { ticker: 'NVO', avgPrice: 61.9 },
-  { ticker: 'SOFI', avgPrice: 14.35 },
-  { ticker: 'META', avgPrice: 529.08 },
-  { ticker: 'AMZN', avgPrice: 178.7 },
-  { ticker: 'O', avgPrice: 50.51 },
-  { ticker: 'ORCL', avgPrice: 158.16 },
-];
+let allStocks = [];
 
-function getCachedData(key) {
-  try {
-    const cached = localStorage.getItem(key);
-    if (!cached) return null;
-    const parsed = JSON.parse(cached);
-    if (Date.now() - parsed.timestamp > CACHE_DURATION) return null;
-    return parsed.data;
-  } catch (e) {
-    return null;
-  }
-}
-
-function setCachedData(key, data) {
-  try {
-    localStorage.setItem(
-      key,
-      JSON.stringify({ timestamp: Date.now(), data: data }),
-    );
-  } catch (e) {
-    /* storage may be unavailable (private mode) — ignore */
-  }
-}
-
-// We still need the FX rates to convert USD and GBP holdings into EUR.
-async function getExchangeRates() {
-  const cached = getCachedData('rates');
-  if (cached) return cached;
-
-  const rates = { usdToEur: 0.95, gbpToEur: 1.19 };
-  try {
-    const response = await fetch(
-      'https://api.coingecko.com/api/v3/simple/price?ids=tether,british-pound-sterling&vs_currencies=eur',
-    );
-    if (response.ok) {
-      const data = await response.json();
-      if (data.tether?.eur) rates.usdToEur = data.tether.eur;
-      if (data['british-pound-sterling']?.eur) {
-        rates.gbpToEur = data['british-pound-sterling'].eur;
-      }
-      setCachedData('rates', rates);
-    }
-  } catch (e) {
-    console.error('Failed to load exchange rates:', e);
-  }
-  return rates;
-}
-
-async function fetchMarketData(rates) {
+async function fetchMarketData() {
   const tableBody = document.getElementById('stock-rows');
   try {
-    const response = await fetch('/assets/data/market_data.json');
-    if (!response.ok) throw new Error('Data not found');
-    const data = await response.json();
+    // Cache-busting query to guarantee latest deployed data
+    const url = `/assets/data/market_data.json?t=${Date.now()}`;
+    const response = await fetch(url, { cache: 'no-store' });
+    if (!response.ok) throw new Error('Could not fetch market_data.json');
 
-    updateStocksUI(data.stocks, rates);
+    const data = await response.json();
+    allStocks = data.stocks || [];
+
+    updateMetrics(allStocks, data.last_updated);
+    renderStocks(allStocks);
     updateTimestamp(data.last_updated);
   } catch (error) {
-    console.error('Failed to load market_data.json:', error);
+    console.error('Failed to load market data:', error);
     if (tableBody) {
       tableBody.innerHTML =
-        '<tr><td colspan="4" class="stock-empty">Market data is currently unavailable.</td></tr>';
+        '<tr><td colspan="5" class="stock-empty"><i class="fas fa-circle-exclamation"></i> Market data temporarily unavailable.</td></tr>';
     }
   }
 }
 
-function priceToEur(ticker, price, rates) {
-  if (ticker.includes('.L')) {
-    // London-listed prices come in pence (GBX); normalise to GBP first.
-    if (price > 1000) price = price / 100;
-    return price * rates.gbpToEur;
+function updateMetrics(stocks, lastUpdated) {
+  const countEl = document.getElementById('metric-total-count');
+  const topEl = document.getElementById('metric-top-performer');
+  const winEl = document.getElementById('metric-win-ratio');
+  const statusEl = document.getElementById('metric-last-sync');
+
+  if (!stocks || !stocks.length) return;
+
+  if (countEl) {
+    countEl.textContent = `${stocks.length} Positions`;
   }
-  return price * rates.usdToEur;
+
+  // Find top performer by pl_percent
+  const sorted = [...stocks].sort((a, b) => (b.pl_percent || 0) - (a.pl_percent || 0));
+  const top = sorted[0];
+  if (topEl && top) {
+    const cleanSym = top.symbol.replace('.L', '');
+    const sign = (top.pl_percent || 0) >= 0 ? '+' : '';
+    topEl.innerHTML = `<strong>${cleanSym}</strong> <span class="text-green">${sign}${top.pl_percent?.toFixed(1)}%</span>`;
+  }
+
+  // Profitable positions count
+  if (winEl) {
+    const winners = stocks.filter((s) => (s.pl_percent || 0) > 0).length;
+    winEl.textContent = `${winners} of ${stocks.length} in profit`;
+  }
+
+  if (statusEl && lastUpdated) {
+    statusEl.textContent = lastUpdated;
+  }
 }
 
-function updateStocksUI(stockData, rates) {
+function renderStocks(stocks) {
   const tableBody = document.getElementById('stock-rows');
   if (!tableBody) return;
 
+  if (!stocks.length) {
+    tableBody.innerHTML =
+      '<tr><td colspan="5" class="stock-empty">No matching positions found.</td></tr>';
+    return;
+  }
+
   const fragment = document.createDocumentFragment();
 
-  for (const myStock of myStocks) {
-    const apiData = stockData.find((s) => s.symbol === myStock.ticker);
-    const currentPriceEur = apiData
-      ? priceToEur(myStock.ticker, apiData.price, rates)
-      : null;
-
-    const cleanTicker = myStock.ticker.replace('.L', '').replace('.AS', '');
+  stocks.forEach((stock) => {
     const row = document.createElement('tr');
+    const cleanTicker = stock.symbol.replace('.L', '').replace('.AS', '');
+    const priceEur = stock.price_eur || stock.price || 0;
+    const avgPrice = stock.avgPrice || 0;
+    const plPercent =
+      stock.pl_percent !== undefined
+        ? stock.pl_percent
+        : avgPrice > 0
+          ? ((priceEur - avgPrice) / avgPrice) * 100
+          : 0;
+    const isUp = plPercent >= 0;
 
-    const tickerCell = document.createElement('td');
-    tickerCell.innerHTML = `<strong>${cleanTicker}</strong>`;
+    // Asset Column (Ticker + Name)
+    const assetCell = document.createElement('td');
+    assetCell.className = 'stock-asset-col';
+    assetCell.innerHTML = `
+      <div class="stock-asset">
+        <span class="stock-ticker">${cleanTicker}</span>
+        ${stock.name ? `<span class="stock-company">${stock.name}</span>` : ''}
+      </div>
+    `;
 
+    // Avg Buy Price
     const avgCell = document.createElement('td');
-    avgCell.textContent = `€${myStock.avgPrice.toFixed(2)}`;
+    avgCell.textContent = avgPrice > 0 ? `€${avgPrice.toFixed(2)}` : '—';
 
+    // Live EUR Price
     const liveCell = document.createElement('td');
-    liveCell.textContent = currentPriceEur
-      ? `€${currentPriceEur.toFixed(2)}`
-      : 'N/A';
+    const dayChange = stock.percent !== undefined ? stock.percent : 0;
+    const dayUp = dayChange >= 0;
+    liveCell.innerHTML = `
+      <div class="stock-price-box">
+        <span class="stock-price">€${priceEur > 0 ? priceEur.toFixed(2) : 'N/A'}</span>
+        ${
+          stock.percent !== undefined
+            ? `<span class="stock-day ${dayUp ? 'text-green' : 'text-red'}">
+                ${dayUp ? '+' : ''}${dayChange.toFixed(1)}%
+              </span>`
+            : ''
+        }
+      </div>
+    `;
 
+    // P/L Pill Badge
     const plCell = document.createElement('td');
-    plCell.className = 'pl-cell';
-    if (currentPriceEur) {
-      const percent =
-        ((currentPriceEur - myStock.avgPrice) / myStock.avgPrice) * 100;
-      const up = percent >= 0;
-      plCell.classList.add(up ? 'text-green' : 'text-red');
-      plCell.textContent = `${up ? '+' : ''}${percent.toFixed(1)}%`;
+    plCell.className = 'stock-pl-col';
+    if (priceEur > 0 && avgPrice > 0) {
+      plCell.innerHTML = `
+        <span class="pl-pill ${isUp ? 'pl-pill--up' : 'pl-pill--down'}">
+          <i class="fas ${isUp ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down'}"></i>
+          ${isUp ? '+' : ''}${plPercent.toFixed(1)}%
+        </span>
+      `;
     } else {
-      plCell.textContent = '—';
+      plCell.innerHTML = '<span class="pl-pill">—</span>';
     }
 
-    row.append(tickerCell, avgCell, liveCell, plCell);
+    row.append(assetCell, avgCell, liveCell, plCell);
     fragment.appendChild(row);
-  }
+  });
 
   tableBody.replaceChildren(fragment);
 }
@@ -134,15 +140,36 @@ function updateStocksUI(stockData, rates) {
 function updateTimestamp(lastUpdated) {
   const note = document.getElementById('dash-updated');
   if (note && lastUpdated) {
-    note.textContent = `Auto-updated via the Yahoo Finance API · Last sync: ${lastUpdated}`;
+    note.innerHTML = `
+      <span class="sync-indicator"><span class="sync-pulse"></span> Data fetched via Yahoo Finance API</span>
+      <span class="sync-time">Last update: <strong>${lastUpdated}</strong></span>
+    `;
   }
 }
 
-let loaded = false;
-document.addEventListener('DOMContentLoaded', async () => {
-  if (loaded) return;
-  loaded = true;
+// Live Search Filter
+function setupSearchFilter() {
+  const searchInput = document.getElementById('dash-search-input');
+  if (!searchInput) return;
 
-  const rates = await getExchangeRates();
-  await fetchMarketData(rates);
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.trim().toLowerCase();
+    if (!query) {
+      renderStocks(allStocks);
+      return;
+    }
+
+    const filtered = allStocks.filter((s) => {
+      const sym = (s.symbol || '').toLowerCase();
+      const name = (s.name || '').toLowerCase();
+      return sym.includes(query) || name.includes(query);
+    });
+
+    renderStocks(filtered);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  setupSearchFilter();
+  fetchMarketData();
 });

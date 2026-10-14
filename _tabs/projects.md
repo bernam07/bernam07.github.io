@@ -60,7 +60,8 @@ title: Projects
         <span class="badge">GitHub Actions</span>
       </div>
       <div class="card-links">
-        <a href="https://github.com/bernam07/bernam07.github.io" target="_blank"><i class="fab fa-github"></i> Repository</a>
+        <a href="{{ '/dashboard/' | relative_url }}"><i class="fas fa-chart-line"></i> Live View</a>
+        <a href="https://github.com/bernam07/bernam07.github.io" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repository</a>
       </div>
     </div>
 

@@ -1,0 +1,47 @@
+[
+  {
+    "ticker": "VUSA.L",
+    "name": "Vanguard S&P 500 ETF",
+    "avgPrice": 102.25
+  },
+  {
+    "ticker": "NVDA",
+    "name": "NVIDIA Corporation",
+    "avgPrice": 117.62
+  },
+  {
+    "ticker": "PLTR",
+    "name": "Palantir Technologies",
+    "avgPrice": 41.76
+  },
+  {
+    "ticker": "NVO",
+    "name": "Novo Nordisk",
+    "avgPrice": 61.90
+  },
+  {
+    "ticker": "SOFI",
+    "name": "SoFi Technologies",
+    "avgPrice": 14.35
+  },
+  {
+    "ticker": "META",
+    "name": "Meta Platforms",
+    "avgPrice": 529.08
+  },
+  {
+    "ticker": "AMZN",
+    "name": "Amazon.com",
+    "avgPrice": 178.70
+  },
+  {
+    "ticker": "O",
+    "name": "Realty Income Corp",
+    "avgPrice": 50.51
+  },
+  {
+    "ticker": "ORCL",
+    "name": "Oracle Corporation",
+    "avgPrice": 158.16
+  }
+]

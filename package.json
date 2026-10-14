@@ -1,0 +1,11 @@
+{
+  "name": "bernam07.github.io",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bernardo Martins - Personal Portfolio",
+  "scripts": {
+    "dev": "set PATH=C:\\Ruby33-x64\\bin;%PATH% && bundle exec jekyll s -l",
+    "build": "set PATH=C:\\Ruby33-x64\\bin;%PATH% && bundle exec jekyll b",
+    "fetch-data": "python scripts/fetch_data.py"
+  }
+}

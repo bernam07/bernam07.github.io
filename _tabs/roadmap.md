@@ -20,7 +20,7 @@ title: Roadmap
     </div>
 
     <div class="timeline-item reveal">
-      <div class="timeline-marker work"></div>
+      <div class="timeline-marker current"></div>
       <span class="timeline-date">September 2026</span>
       <h3 class="timeline-title"><i class="fas fa-arrow-trend-up"></i> Promoted to Programmer</h3>
       <p>Promoted from <strong>Developer</strong> to <strong>Programmer</strong> at Deloitte, taking on greater ownership and technical responsibility.</p>
@@ -35,7 +35,7 @@ title: Roadmap
     </div>
 
     <div class="timeline-item reveal">
-      <div class="timeline-marker current"></div>
+      <div class="timeline-marker"></div>
       <span class="timeline-date">September 2024</span>
       <h3 class="timeline-title"><i class="fas fa-university"></i> Enrolled in BSc Degree</h3>
       <p>Admitted to the Bachelor's Degree in <strong>Computer Systems Engineering</strong> at UPCA.</p>
