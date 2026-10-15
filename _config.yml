@@ -19,7 +19,7 @@ description: >-
   Programmer at Deloitte & Computer Systems Engineering student based in Portugal.
   Focus on Backend, Efficiency, and Modern Systems. Featuring a real-time asset dashboard.
 
-url: "https://bernam07.github.io"
+url: "https://bernardomartins.me"
 
 github:
   username: bernam07
@@ -128,3 +128,6 @@ exclude:
   - tools
   - README.md
   - LICENSE
+  - package.json
+  - package-lock.json
+  - scripts
