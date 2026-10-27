@@ -14,86 +14,86 @@
       "symbol": "NVDA",
       "name": "NVIDIA Corporation",
       "avgPrice": 117.62,
-      "price": 218.35,
-      "price_eur": 195.97,
+      "price": 217.94,
+      "price_eur": 195.8,
       "currency": "USD",
-      "percent": 0.85,
-      "pl_percent": 66.61
+      "percent": 0.67,
+      "pl_percent": 66.47
     },
     {
       "symbol": "PLTR",
       "name": "Palantir Technologies",
       "avgPrice": 41.76,
-      "price": 199.6,
-      "price_eur": 179.14,
+      "price": 198.73,
+      "price_eur": 178.54,
       "currency": "USD",
-      "percent": 0.48,
-      "pl_percent": 328.98
+      "percent": 0.04,
+      "pl_percent": 327.54
     },
     {
       "symbol": "NVO",
       "name": "Novo Nordisk",
       "avgPrice": 61.9,
-      "price": 38.71,
+      "price": 38.67,
       "price_eur": 34.74,
       "currency": "USD",
-      "percent": -1.16,
+      "percent": -1.25,
       "pl_percent": -43.88
     },
     {
       "symbol": "SOFI",
       "name": "SoFi Technologies",
       "avgPrice": 14.35,
-      "price": 16.58,
-      "price_eur": 14.89,
+      "price": 16.4,
+      "price_eur": 14.73,
       "currency": "USD",
-      "percent": 14.51,
-      "pl_percent": 3.76
+      "percent": 13.23,
+      "pl_percent": 2.65
     },
     {
       "symbol": "META",
       "name": "Meta Platforms",
       "avgPrice": 529.08,
-      "price": 623.7,
-      "price_eur": 559.77,
+      "price": 620.19,
+      "price_eur": 557.18,
       "currency": "USD",
-      "percent": -1.52,
-      "pl_percent": 5.8
+      "percent": -2.07,
+      "pl_percent": 5.31
     },
     {
       "symbol": "AMZN",
       "name": "Amazon.com",
       "avgPrice": 178.7,
-      "price": 253.35,
+      "price": 253.1,
       "price_eur": 227.39,
       "currency": "USD",
-      "percent": 1.57,
+      "percent": 1.46,
       "pl_percent": 27.25
     },
     {
       "symbol": "O",
       "name": "Realty Income Corp",
       "avgPrice": 50.51,
-      "price": 56.89,
-      "price_eur": 51.06,
+      "price": 56.82,
+      "price_eur": 51.05,
       "currency": "USD",
-      "percent": -0.45,
-      "pl_percent": 1.09
+      "percent": -0.57,
+      "pl_percent": 1.07
     },
     {
       "symbol": "ORCL",
       "name": "Oracle Corporation",
       "avgPrice": 158.16,
-      "price": 131.42,
-      "price_eur": 117.95,
+      "price": 130.53,
+      "price_eur": 117.27,
       "currency": "USD",
-      "percent": 3.93,
-      "pl_percent": -25.42
+      "percent": 3.23,
+      "pl_percent": -25.85
     }
   ],
   "rates": {
-    "usdToEur": 0.8975,
+    "usdToEur": 0.8984,
     "gbpToEur": 1.1951
   },
-  "last_updated": "27/10/2026 17:17"
+  "last_updated": "27/10/2026 21:43"
 }
