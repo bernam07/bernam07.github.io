@@ -5,40 +5,40 @@
       "name": "Vanguard S&P 500 ETF",
       "avgPrice": 102.25,
       "price": 109.01,
-      "price_eur": 130.09,
+      "price_eur": 130.13,
       "currency": "GBP",
       "percent": 0.5,
-      "pl_percent": 27.23
+      "pl_percent": 27.27
     },
     {
       "symbol": "NVDA",
       "name": "NVIDIA Corporation",
       "avgPrice": 117.62,
       "price": 216.0,
-      "price_eur": 193.26,
+      "price_eur": 193.3,
       "currency": "USD",
       "percent": 2.31,
-      "pl_percent": 64.31
+      "pl_percent": 64.34
     },
     {
       "symbol": "PLTR",
       "name": "Palantir Technologies",
       "avgPrice": 41.76,
       "price": 198.84,
-      "price_eur": 177.9,
+      "price_eur": 177.94,
       "currency": "USD",
       "percent": 0.71,
-      "pl_percent": 326.01
+      "pl_percent": 326.1
     },
     {
       "symbol": "NVO",
       "name": "Novo Nordisk",
       "avgPrice": 61.9,
       "price": 39.13,
-      "price_eur": 35.01,
+      "price_eur": 35.02,
       "currency": "USD",
       "percent": 0.31,
-      "pl_percent": -43.44
+      "pl_percent": -43.42
     },
     {
       "symbol": "SOFI",
@@ -55,45 +55,45 @@
       "name": "Meta Platforms",
       "avgPrice": 529.08,
       "price": 630.56,
-      "price_eur": 564.16,
+      "price_eur": 564.29,
       "currency": "USD",
       "percent": -1.49,
-      "pl_percent": 6.63
+      "pl_percent": 6.65
     },
     {
       "symbol": "AMZN",
       "name": "Amazon.com",
       "avgPrice": 178.7,
       "price": 249.09,
-      "price_eur": 222.86,
+      "price_eur": 222.91,
       "currency": "USD",
       "percent": 0.12,
-      "pl_percent": 24.71
+      "pl_percent": 24.74
     },
     {
       "symbol": "O",
       "name": "Realty Income Corp",
       "avgPrice": 50.51,
       "price": 57.16,
-      "price_eur": 51.14,
+      "price_eur": 51.15,
       "currency": "USD",
       "percent": 0.44,
-      "pl_percent": 1.25
+      "pl_percent": 1.27
     },
     {
       "symbol": "ORCL",
       "name": "Oracle Corporation",
       "avgPrice": 158.16,
       "price": 126.06,
-      "price_eur": 112.79,
+      "price_eur": 112.81,
       "currency": "USD",
       "percent": -0.05,
-      "pl_percent": -28.69
+      "pl_percent": -28.67
     }
   ],
   "rates": {
-    "usdToEur": 0.8947,
-    "gbpToEur": 1.1934
+    "usdToEur": 0.8949,
+    "gbpToEur": 1.1937
   },
-  "last_updated": "26/10/2026 22:12"
+  "last_updated": "27/10/2026 03:23"
 }
