@@ -1,144 +1,143 @@
 ---
 layout: page
-title: Projects
+title: Systems
+permalink: /projects/
 ---
 
-<div class="page-hero wrap reveal">
-  <div class="page-hero__icon"><i class="fas fa-code-branch"></i></div>
-  <h1>Projects</h1>
-  <p>&ldquo;Talk is cheap. Show me the code.&rdquo; &mdash; Linus Torvalds</p>
-</div>
+<header class="page-hero wrap reveal">
+  <div class="page-hero__meta">INDEX // 01 &mdash; SYSTEMS &amp; ARCHITECTURE</div>
+  <h1 class="serif-display">Engineering Monograph</h1>
+  <p>Production software systems, open-source repositories, and architectural case studies emphasizing strict domain boundaries and deterministic state.</p>
+</header>
 
-<div class="section wrap">
-  <div class="grid-auto">
-
-    <div class="card project-card reveal">
-      <div class="card-header">
-        <i class="fas fa-vault card-icon"></i>
-        <div class="card-header__info">
-          <h3>Strata</h3>
-          <span class="card-tag">Wealth OS</span>
-        </div>
-      </div>
-      <p>A production-grade, ledger-backed financial operating system uniting equities, crypto, alternative assets (Pok&eacute;mon cards, LEGO, luxury watches), and Apple Pay automation into a unified net-worth view.</p>
-      <div class="tech-stack">
-        <span class="badge">React 19</span>
-        <span class="badge">TypeScript</span>
-        <span class="badge">Supabase</span>
-        <span class="badge">Tailwind CSS v4</span>
-        <span class="badge">PostgreSQL</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/bernam07/strata" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repository</a>
-      </div>
+<section class="section section--tight wrap reveal">
+  <div class="sys-ledger sys-ledger--detailed" role="region" aria-label="Complete systems catalog">
+    <div class="sys-ledger__head">
+      <span>REF</span>
+      <span>SYSTEM</span>
+      <span>ARCHITECTURAL THESIS &amp; INVARIANTS</span>
+      <span class="sys-ledger__right">STACK &amp; SOURCE</span>
     </div>
 
-    <div class="card project-card reveal">
-      <div class="card-header">
-        <i class="fas fa-tv card-icon"></i>
-        <div class="card-header__info">
-          <h3>Episodic</h3>
-          <span class="card-tag">PWA &amp; Social</span>
+    <article class="sys-row">
+      <div class="sys-row__ref"><span class="ref-accent">SYS&mdash;01</span></div>
+      <div class="sys-row__title">
+        <h2 class="serif-title">Strata</h2>
+        <span class="sys-row__domain">Wealth &amp; Ledger OS</span>
+      </div>
+      <div class="sys-row__desc">
+        <p>A production-grade, ledger-backed financial operating system uniting equities, crypto, alternative collectibles (Pok&eacute;mon cards, LEGO sets, luxury watches), and Apple Pay webhook automation into a unified net-worth view.</p>
+        <ul class="sys-specs">
+          <li><strong>Accounting Engine:</strong> Immutable append-only journal entries with exact <code>decimal.js</code> precision, XIRR (Newton-Raphson) &amp; TWR performance metrics.</li>
+          <li><strong>Verification &amp; Security:</strong> 226+ Vitest unit/property tests, Playwright E2E suite, 100% Row-Level Security (RLS) across 20+ PostgreSQL tables, and Supabase Vault secret storage.</li>
+        </ul>
+      </div>
+      <div class="sys-row__meta">
+        <div class="sys-row__stack">React 19 &middot; TypeScript &middot; Supabase &middot; Tailwind v4 &middot; PostgreSQL</div>
+        <div class="sys-row__links">
+          <a href="https://github.com/bernam07/strata" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> github.com/bernam07/strata &nearr;</a>
         </div>
       </div>
-      <p>A Letterboxd for television. Track series, check off individual episodes, rate seasons, follow friends' activity feeds, and manage a personal diary. Built with strict Clean Architecture, PWA mobile-first design, and TMDB integration.</p>
-      <div class="tech-stack">
-        <span class="badge">React 19</span>
-        <span class="badge">TypeScript</span>
-        <span class="badge">Supabase</span>
-        <span class="badge">Tailwind CSS v4</span>
-        <span class="badge">TanStack Query</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/bernam07/episodic" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repository</a>
-      </div>
-    </div>
+    </article>
 
-    <div class="card project-card reveal">
-      <div class="card-header">
-        <i class="fas fa-inbox card-icon"></i>
-        <div class="card-header__info">
-          <h3>Norma</h3>
-          <span class="card-tag">Productivity &amp; Extension</span>
+    <article class="sys-row">
+      <div class="sys-row__ref">SYS&mdash;02</div>
+      <div class="sys-row__title">
+        <h2 class="serif-title">Episodic</h2>
+        <span class="sys-row__domain">Social TV Tracker PWA</span>
+      </div>
+      <div class="sys-row__desc">
+        <p>A Letterboxd for television. Track series, check off individual episodes, rate seasons, follow friends&rsquo; activity feeds, and maintain a personal viewing diary with full TMDB metadata integration.</p>
+        <ul class="sys-specs">
+          <li><strong>Clean Architecture:</strong> Unidirectional layer boundaries (<code>domain &larr; application &larr; infrastructure/presentation</code>) enforced at compile time via Oxlint rules.</li>
+          <li><strong>Database Testing:</strong> Full SQL migration and RLS policy verification running in-memory against PGlite WASM during CI.</li>
+        </ul>
+      </div>
+      <div class="sys-row__meta">
+        <div class="sys-row__stack">React 19 &middot; TypeScript 7 &middot; Supabase &middot; TanStack Query &middot; PGlite</div>
+        <div class="sys-row__links">
+          <a href="https://github.com/bernam07/episodic" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> github.com/bernam07/episodic &nearr;</a>
         </div>
       </div>
-      <p>A minimalist daily capture scratchpad designed to eliminate context switching. Write fleeting notes with zero friction, capture web snippets via a Chromium extension, and receive a structured morning briefing in your inbox via Resend.</p>
-      <div class="tech-stack">
-        <span class="badge">Next.js 14</span>
-        <span class="badge">TypeScript</span>
-        <span class="badge">PostgreSQL</span>
-        <span class="badge">Tailwind CSS</span>
-        <span class="badge">Resend</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/bernam07/norma" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repository</a>
-      </div>
-    </div>
+    </article>
 
-    <div class="card project-card reveal">
-      <div class="card-header">
-        <i class="fas fa-laptop-code card-icon"></i>
-        <div class="card-header__info">
-          <h3>Personal Dashboard</h3>
-          <span class="card-tag">Automation</span>
+    <article class="sys-row">
+      <div class="sys-row__ref">SYS&mdash;03</div>
+      <div class="sys-row__title">
+        <h2 class="serif-title">Norma</h2>
+        <span class="sys-row__domain">Ephemeral Capture &amp; Extension</span>
+      </div>
+      <div class="sys-row__desc">
+        <p>A minimalist daily capture scratchpad designed to eliminate context switching. Write fleeting notes with zero friction, capture web snippets via a Chromium extension, and receive a structured 07:00 morning briefing via Resend.</p>
+        <ul class="sys-specs">
+          <li><strong>Security &amp; Sync:</strong> Custom <code>scrypt</code> PIN authentication with constant-time verification, rate-limited API endpoints, and optimistic offline-first IndexedDB queuing.</li>
+        </ul>
+      </div>
+      <div class="sys-row__meta">
+        <div class="sys-row__stack">Next.js 14 &middot; TypeScript &middot; PostgreSQL &middot; Manifest V3 &middot; Resend</div>
+        <div class="sys-row__links">
+          <a href="https://github.com/bernam07/norma" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> github.com/bernam07/norma &nearr;</a>
         </div>
       </div>
-      <p>The source code for this portfolio! A statically generated website featuring a completely automated, real-time stock market tracker powered by Python scripts via GitHub Actions.</p>
-      <div class="tech-stack">
-        <span class="badge">JavaScript</span>
-        <span class="badge">Python</span>
-        <span class="badge">Jekyll</span>
-        <span class="badge">GitHub Actions</span>
-      </div>
-      <div class="card-links">
-        <a href="{{ '/dashboard/' | relative_url }}"><i class="fas fa-chart-line"></i> Live View</a>
-        <a href="https://github.com/bernam07/bernam07.github.io" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repository</a>
-      </div>
-    </div>
+    </article>
 
-    <div class="card project-card reveal">
-      <div class="card-header">
-        <i class="fas fa-shopping-cart card-icon"></i>
-        <div class="card-header__info">
-          <h3>Loja Social SAS</h3>
-          <span class="card-tag">Enterprise Web</span>
+    <article class="sys-row">
+      <div class="sys-row__ref">SYS&mdash;04</div>
+      <div class="sys-row__title">
+        <h2 class="serif-title">Market Telemetry</h2>
+        <span class="sys-row__domain">Automated Portfolio Pipeline</span>
+      </div>
+      <div class="sys-row__desc">
+        <p>The source architecture for this publication and its live equity ledger. Combines static Jekyll generation with a scheduled Python market ingestion pipeline executed via GitHub Actions.</p>
+        <ul class="sys-specs">
+          <li><strong>Data Pipeline:</strong> Single-source-of-truth portfolio manifest (<code>_data/portfolio.json</code>) with server-side USD/GBP to EUR FX normalization via <code>yfinance</code>.</li>
+        </ul>
+      </div>
+      <div class="sys-row__meta">
+        <div class="sys-row__stack">Python &middot; JavaScript &middot; Jekyll &middot; GitHub Actions</div>
+        <div class="sys-row__links">
+          <a href="{{ '/dashboard/' | relative_url }}">Live Ledger &rarr;</a>
+          <a href="https://github.com/bernam07/bernam07.github.io" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Source &nearr;</a>
         </div>
       </div>
-      <p>A web-based platform developed for UPCA's Social Services to manage their social store. It includes comprehensive inventory tracking, user request handling, and dedicated administrator dashboards.</p>
-      <div class="tech-stack">
-        <span class="badge">C#</span>
-        <span class="badge">ASP.NET Core</span>
-        <span class="badge">MVC</span>
-        <span class="badge">SQL Server</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/joseegomes555/G7-LojaSas" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repository</a>
-      </div>
-    </div>
+    </article>
 
-    <div class="card project-card reveal">
-      <div class="card-header">
-        <i class="fas fa-music card-icon"></i>
-        <div class="card-header__info">
-          <h3>Eclipse Player</h3>
-          <span class="card-tag">Desktop App</span>
+    <article class="sys-row">
+      <div class="sys-row__ref">SYS&mdash;05</div>
+      <div class="sys-row__title">
+        <h2 class="serif-title">Loja Social SAS</h2>
+        <span class="sys-row__domain">Enterprise Inventory Platform</span>
+      </div>
+      <div class="sys-row__desc">
+        <p>Institutional web platform engineered for UPCA&rsquo;s Social Services (SAS) to manage stock inventory, beneficiary requests, donor allocations, and administrative auditing.</p>
+      </div>
+      <div class="sys-row__meta">
+        <div class="sys-row__stack">C# &middot; ASP.NET Core MVC &middot; SQL Server</div>
+        <div class="sys-row__links">
+          <a href="https://github.com/joseegomes555/G7-LojaSas" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> github.com/joseegomes555/G7-LojaSas &nearr;</a>
         </div>
       </div>
-      <p>A minimalist, standalone local music player built with Electron, Vite, and TypeScript. Features a sleek dark/neon theme, a dynamic vinyl with a real-time audio visualizer, and automatic lyrics fetching.</p>
-      <div class="tech-stack">
-        <span class="badge">Electron</span>
-        <span class="badge">TypeScript</span>
-        <span class="badge">Vite</span>
-        <span class="badge">CSS</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/bernam07/eclipse-player" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repository</a>
-      </div>
-    </div>
+    </article>
 
+    <article class="sys-row">
+      <div class="sys-row__ref">SYS&mdash;06</div>
+      <div class="sys-row__title">
+        <h2 class="serif-title">Eclipse Player</h2>
+        <span class="sys-row__domain">Desktop Audio Engine</span>
+      </div>
+      <div class="sys-row__desc">
+        <p>Standalone local music player built with Electron, Vite, and TypeScript. Features a tactile dark interface, dynamic vinyl platter, real-time Web Audio spectrum visualizer, and automatic lyrics fetching.</p>
+      </div>
+      <div class="sys-row__meta">
+        <div class="sys-row__stack">Electron &middot; TypeScript &middot; Vite &middot; Web Audio API</div>
+        <div class="sys-row__links">
+          <a href="https://github.com/bernam07/eclipse-player" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> github.com/bernam07/eclipse-player &nearr;</a>
+        </div>
+      </div>
+    </article>
   </div>
 
   <p class="last-updated">
-    Last updated: {{ site.time | date: '%B %Y' }}
+    CATALOG REVISION // {{ site.time | date: '%B %Y' | upcase }}
   </p>
-</div>
+</section>

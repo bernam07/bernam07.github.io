@@ -10,7 +10,10 @@
 
 <footer class="site-footer">
   <div class="wrap site-footer__inner">
-    <span>&copy; {{ site.time | date: '%Y' }} {{ site.social.name | default: site.title }}. Built with Jekyll.</span>
+    <div class="site-footer__meta">
+      <span class="footer-ref">COLOPHON // {{ site.time | date: '%Y' }}</span>
+      <span>{{ site.social.name | default: site.title }} &mdash; Braga / Porto, Portugal</span>
+    </div>
 
     <div class="site-footer__socials">
       {% include contact-links.html %}

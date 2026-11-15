@@ -3,251 +3,331 @@ layout: page
 title: ""
 ---
 
-<section class="hero wrap">
-  <div class="reveal">
-    <div class="status-pill">
-      <span class="status-dot"></span>
-      <span>Open to collaborations &amp; new challenges</span>
-    </div>
-    <img src="{{ '/assets/img/image.jpg' | relative_url }}" alt="Bernardo Martins" class="hero-avatar" width="60" height="60">
-    <p class="hero-eyebrow">whoami</p>
-    <h1>Hi, I'm <span class="accent-text">Bernardo Martins</span></h1>
-    <p class="hero-role">Programmer @ Deloitte &middot; CS Engineering @ UPCA</p>
-    <p class="hero-blurb">
-      I'm a 22-year-old developer based in Portugal who enjoys building efficient
-      systems and exploring financial markets. I balance professional software
-      development with academic studies, focusing on modern architecture and
-      scalable solutions.
-    </p>
-    <div class="hero-cta">
-      <a href="{{ '/projects/' | relative_url }}" class="btn btn-primary"><i class="fas fa-code-branch"></i> View Projects</a>
-      <a href="{{ '/assets/cv/Bernardo-Martins-CV.pdf' | relative_url }}" class="btn" target="_blank" rel="noopener"><i class="fas fa-file-arrow-down"></i> Download CV</a>
-      <a href="{{ '/dashboard/' | relative_url }}" class="btn"><i class="fas fa-chart-line"></i> Live Dashboard</a>
-      <a href="javascript:void(location.href = 'mailto:' + ['bernardomartins.dev','gmail.com'].join('@'))" class="btn"><i class="fas fa-envelope"></i> Say Hi</a>
-    </div>
-  </div>
-
-  <div class="code-window reveal">
-    <div class="code-window__bar">
-      <span class="cw-dot red"></span>
-      <span class="cw-dot yellow"></span>
-      <span class="cw-dot green"></span>
-      <span class="code-window__title">whoami.ts</span>
-    </div>
-    <div class="code-window__body"><pre><code><span class="tok-kw">const</span> <span class="tok-var">bernardo</span> <span class="tok-punc">=</span> {
-  role<span class="tok-punc">:</span> <span class="tok-str">"Programmer"</span>,
-  company<span class="tok-punc">:</span> <span class="tok-str">"Deloitte"</span>,
-  studying<span class="tok-punc">:</span> <span class="tok-str">"CS Engineering @ UPCA"</span>,
-  basedIn<span class="tok-punc">:</span> <span class="tok-str">"Portugal"</span>,
-  focus<span class="tok-punc">:</span> [<span class="tok-str">"backend"</span>, <span class="tok-str">"systems"</span>, <span class="tok-str">"markets"</span>],
-  currentlyBuilding<span class="tok-punc">:</span> <span class="tok-str">"this site's live dashboard"</span>,
-};
-
-<span class="tok-com">// always shipping something.</span></code></pre></div>
-  </div>
-</section>
-
-<section class="section section--tight wrap reveal">
-  <div class="info-grid">
-    <div class="info-card">
-      <div class="info-card__label">Role</div>
-      <div class="info-card__value">Programmer @ Deloitte</div>
-    </div>
-    <div class="info-card">
-      <div class="info-card__label">Education</div>
-      <div class="info-card__value">BSc Computer Systems Eng. @ UPCA</div>
-    </div>
-    <div class="info-card">
-      <div class="info-card__label">Based in</div>
-      <div class="info-card__value">Portugal</div>
-    </div>
-    <div class="info-card">
-      <div class="info-card__label">Focus</div>
-      <div class="info-card__value">Backend &amp; efficient systems</div>
-    </div>
-  </div>
-</section>
-
-<section class="section wrap">
-  <div class="section-heading reveal">
-    <h2>Experience</h2>
-    <a href="{{ '/roadmap/' | relative_url }}" class="see-all">Full roadmap &rarr;</a>
-  </div>
-
-  <div class="timeline">
-    <div class="timeline-item reveal">
-      <div class="timeline-marker current"></div>
-      <span class="timeline-date">September 2026</span>
-      <h3 class="timeline-title"><i class="fas fa-arrow-trend-up"></i> Promoted to Programmer</h3>
-      <p>Promoted from <strong>Developer</strong> to <strong>Programmer</strong> at Deloitte.</p>
-    </div>
-
-    <div class="timeline-item reveal">
-      <div class="timeline-marker cert"></div>
-      <span class="timeline-date">June 2025</span>
-      <h3 class="timeline-title"><i class="fab fa-github"></i> GitHub Foundations</h3>
-      <p>Certified in core GitHub concepts, collaboration, and workflow optimization.</p>
-    </div>
-
-    <div class="timeline-item reveal">
-      <div class="timeline-marker"></div>
-      <span class="timeline-date">September 2024</span>
-      <h3 class="timeline-title"><i class="fas fa-university"></i> Enrolled in BSc Degree</h3>
-      <p>Admitted to the Bachelor's Degree in <strong>Computer Systems Engineering</strong> at UPCA.</p>
-    </div>
-
-    <div class="timeline-item reveal">
-      <div class="timeline-marker work"></div>
-      <span class="timeline-date">October 2022</span>
-      <h3 class="timeline-title"><i class="fas fa-briefcase"></i> Joined Deloitte</h3>
-      <p>Started as a <strong>Developer</strong> through the Brightstart Program, balancing professional work with academic studies.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section wrap">
-  <div class="section-heading reveal">
-    <h2>Featured Projects</h2>
-    <a href="{{ '/projects/' | relative_url }}" class="see-all">View all &rarr;</a>
-  </div>
-
-  <div class="grid-auto">
-    <div class="card project-card reveal">
-      <div class="card-header">
-        <i class="fas fa-vault card-icon"></i>
-        <div class="card-header__info">
-          <h3>Strata</h3>
-          <span class="card-tag">Wealth OS</span>
+<section class="monograph-hero wrap reveal">
+  <div class="monograph-hero__grid">
+    <!-- Left 4 Columns: Identity & Index Metadata -->
+    <aside class="monograph-hero__index">
+      <div class="monograph-identity">
+        <img src="{{ '/assets/img/image.jpg' | relative_url }}" alt="Bernardo Martins" class="monograph-avatar" width="52" height="52">
+        <div>
+          <div class="monograph-name">BERNARDO MARTINS</div>
+          <div class="monograph-status">
+            <span class="status-dot"></span>
+            <span>AVAILABLE FOR COLLABORATION</span>
+          </div>
         </div>
       </div>
-      <p>A production-grade, ledger-backed financial operating system uniting equities, crypto, alternative assets (Pok&eacute;mon cards, LEGO, luxury watches), and Apple Pay automation into a unified net-worth view.</p>
-      <div class="tech-stack">
-        <span class="badge">React 19</span>
-        <span class="badge">TypeScript</span>
-        <span class="badge">Supabase</span>
-        <span class="badge">Tailwind CSS v4</span>
-        <span class="badge">PostgreSQL</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/bernam07/strata" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repository</a>
-      </div>
-    </div>
 
-    <div class="card project-card reveal">
-      <div class="card-header">
-        <i class="fas fa-tv card-icon"></i>
-        <div class="card-header__info">
-          <h3>Episodic</h3>
-          <span class="card-tag">PWA &amp; Social</span>
+      <dl class="monograph-meta">
+        <div class="monograph-meta__row">
+          <dt>ROLE</dt>
+          <dd>Programmer at Deloitte</dd>
         </div>
-      </div>
-      <p>A Letterboxd for television. Track series, check off individual episodes, rate seasons, follow friends' activity feeds, and manage a personal diary. Built with strict Clean Architecture, PWA mobile-first design, and TMDB integration.</p>
-      <div class="tech-stack">
-        <span class="badge">React 19</span>
-        <span class="badge">TypeScript</span>
-        <span class="badge">Supabase</span>
-        <span class="badge">Tailwind CSS v4</span>
-        <span class="badge">TanStack Query</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/bernam07/episodic" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repository</a>
-      </div>
-    </div>
+        <div class="monograph-meta__row">
+          <dt>DEGREE</dt>
+          <dd>BSc CS Engineering, UPCA</dd>
+        </div>
+        <div class="monograph-meta__row">
+          <dt>LOCATION</dt>
+          <dd>Braga / Porto, Portugal</dd>
+        </div>
+      </dl>
 
-    <div class="card project-card reveal">
-      <div class="card-header">
-        <i class="fas fa-inbox card-icon"></i>
-        <div class="card-header__info">
-          <h3>Norma</h3>
-          <span class="card-tag">Productivity &amp; Extension</span>
-        </div>
-      </div>
-      <p>A minimalist daily capture scratchpad designed to eliminate context switching. Write fleeting notes with zero friction, capture web snippets via a Chromium extension, and receive a structured morning briefing in your inbox via Resend.</p>
-      <div class="tech-stack">
-        <span class="badge">Next.js 14</span>
-        <span class="badge">TypeScript</span>
-        <span class="badge">PostgreSQL</span>
-        <span class="badge">Tailwind CSS</span>
-        <span class="badge">Resend</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/bernam07/norma" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repository</a>
-      </div>
-    </div>
+      <nav class="monograph-index-links" aria-label="Direct resources">
+        <a href="{{ '/assets/cv/Bernardo-Martins-CV.pdf' | relative_url }}" target="_blank" rel="noopener">
+          <span class="idx-arrow">&rarr;</span> Curriculum Vitae (PDF)
+        </a>
+        <a href="https://github.com/bernam07" target="_blank" rel="noopener">
+          <span class="idx-arrow">&rarr;</span> GitHub (@bernam07)
+        </a>
+        <a href="{{ '/dashboard/' | relative_url }}">
+          <span class="idx-arrow">&rarr;</span> Live Market Ledger
+        </a>
+        <a href="javascript:void(location.href = 'mailto:' + ['bernardomartins.dev','gmail.com'].join('@'))">
+          <span class="idx-arrow">&rarr;</span> Direct Electronic Mail
+        </a>
+      </nav>
+    </aside>
 
-    <div class="card project-card reveal">
-      <div class="card-header">
-        <i class="fas fa-laptop-code card-icon"></i>
-        <div class="card-header__info">
-          <h3>Personal Dashboard</h3>
-          <span class="card-tag">Automation</span>
-        </div>
+    <!-- Right 8 Columns: Editorial Thesis & Telemetry Strip -->
+    <div class="monograph-hero__statement">
+      <div class="monograph-statement__body">
+        <p class="monograph-kicker">MONOGRAPH // SOFTWARE &amp; FINANCIAL SYSTEMS</p>
+        <h1 class="serif-display">
+          Engineering software systems where financial precision, strict database boundaries, and calm interfaces meet.
+        </h1>
+        <p class="monograph-lead">
+          Since joining Deloitte through the Brightstart program in 2022 and advancing to Programmer in 2026, I have balanced enterprise delivery with Computer Systems Engineering studies at UPCA and open-source systems architecture.
+        </p>
       </div>
-      <p>The source code for this site! A statically generated portfolio with a fully automated, real-time stock market tracker powered by Python and GitHub Actions.</p>
-      <div class="tech-stack">
-        <span class="badge">JavaScript</span>
-        <span class="badge">Python</span>
-        <span class="badge">Jekyll</span>
-        <span class="badge">Actions</span>
-      </div>
-      <div class="card-links">
-        <a href="{{ '/dashboard/' | relative_url }}"><i class="fas fa-chart-line"></i> Live View</a>
-        <a href="https://github.com/bernam07/bernam07.github.io" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repository</a>
-      </div>
-    </div>
 
-    <div class="card project-card reveal">
-      <div class="card-header">
-        <i class="fas fa-music card-icon"></i>
-        <div class="card-header__info">
-          <h3>Eclipse Player</h3>
-          <span class="card-tag">Desktop App</span>
+      <div class="monograph-kpis">
+        <div class="monograph-kpi">
+          <span class="monograph-kpi__label">01 / EXPERIENCE</span>
+          <strong class="monograph-kpi__value">4+ Years @ Deloitte</strong>
+          <span class="monograph-kpi__sub">Promoted to Programmer &middot; Sep 2026</span>
         </div>
-      </div>
-      <p>A minimalist, standalone local music player built with Electron, Vite, and TypeScript, featuring a dynamic vinyl with real-time audio visualizer.</p>
-      <div class="tech-stack">
-        <span class="badge">Electron</span>
-        <span class="badge">TypeScript</span>
-        <span class="badge">Vite</span>
-      </div>
-      <div class="card-links">
-        <a href="https://github.com/bernam07/eclipse-player" target="_blank" rel="noopener"><i class="fab fa-github"></i> Repository</a>
+        <div class="monograph-kpi">
+          <span class="monograph-kpi__label">02 / CERTIFICATIONS</span>
+          <strong class="monograph-kpi__value">AZ-900 &middot; AI-900 &middot; SC-900</strong>
+          <span class="monograph-kpi__sub">Microsoft &amp; GitHub Foundations</span>
+        </div>
+        <div class="monograph-kpi">
+          <span class="monograph-kpi__label">03 / PORTFOLIO P/L</span>
+          <a href="{{ '/dashboard/' | relative_url }}" class="monograph-kpi__value monograph-kpi__value--accent" id="hero-live-lead">
+            PLTR +330.5% Lead &rarr;
+          </a>
+          <span class="monograph-kpi__sub" id="hero-live-sub">Live Yahoo Finance Telemetry</span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section wrap">
-  <div class="section-heading reveal">
-    <h2>Tech Stack</h2>
-  </div>
+<!-- 01 / SYSTEMS ARCHITECTURE INDEX -->
+<section class="section wrap reveal" id="systems">
+  <header class="monograph-section-header">
+    <div class="monograph-section-header__left">
+      <span class="sec-num">01 / SYSTEMS</span>
+      <h2 class="serif-heading">Selected Engineering Works</h2>
+    </div>
+    <a href="{{ '/projects/' | relative_url }}" class="see-all">Full specification index (06) &rarr;</a>
+  </header>
 
-  <div class="tech-stack tech-stack--grid reveal">
-    <span class="badge"><i class="fab fa-python"></i> Python</span>
-    <span class="badge"><i class="fab fa-js"></i> TypeScript</span>
-    <span class="badge"><i class="fab fa-js-square"></i> JavaScript</span>
-    <span class="badge"><i class="fab fa-react"></i> React / Next.js</span>
-    <span class="badge"><i class="fab fa-node-js"></i> Node.js</span>
-    <span class="badge"><i class="fas fa-code"></i> C# / .NET</span>
-    <span class="badge"><i class="fas fa-terminal"></i> Kotlin</span>
-    <span class="badge"><i class="fas fa-desktop"></i> Electron</span>
-    <span class="badge"><i class="fab fa-css3-alt"></i> Tailwind CSS</span>
-    <span class="badge"><i class="fab fa-git-alt"></i> Git</span>
-    <span class="badge"><i class="fab fa-docker"></i> Docker</span>
-    <span class="badge"><i class="fas fa-database"></i> PostgreSQL / Supabase</span>
-    <span class="badge"><i class="fas fa-server"></i> SQL Server</span>
+  <div class="sys-ledger" role="region" aria-label="Selected software systems">
+    <div class="sys-ledger__head">
+      <span>REF</span>
+      <span>SYSTEM</span>
+      <span>ARCHITECTURAL THESIS</span>
+      <span class="sys-ledger__right">STACK &amp; SOURCE</span>
+    </div>
+
+    <article class="sys-row">
+      <div class="sys-row__ref"><span class="ref-accent">SYS&mdash;01</span></div>
+      <div class="sys-row__title">
+        <h3 class="serif-title">Strata</h3>
+        <span class="sys-row__domain">Wealth &amp; Ledger OS</span>
+      </div>
+      <p class="sys-row__desc">
+        Immutable ledger accounting for equities, crypto, and alternative collectibles (Pok&eacute;mon cards, LEGO, luxury watches) with exact XIRR/TWR performance engines, Apple Pay webhook automation, 226+ Vitest specs, and 100% PostgreSQL RLS.
+      </p>
+      <div class="sys-row__meta">
+        <div class="sys-row__stack">React 19 &middot; TypeScript &middot; Supabase &middot; PostgreSQL</div>
+        <div class="sys-row__links">
+          <a href="https://github.com/bernam07/strata" target="_blank" rel="noopener">Repository &nearr;</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="sys-row">
+      <div class="sys-row__ref">SYS&mdash;02</div>
+      <div class="sys-row__title">
+        <h3 class="serif-title">Episodic</h3>
+        <span class="sys-row__domain">Social TV Tracker PWA</span>
+      </div>
+      <p class="sys-row__desc">
+        A Letterboxd for television. Track series, log episodes, rate seasons, and follow activity feeds—architected with unidirectional Clean Architecture enforced at compile time via Oxlint and tested against in-memory PGlite WASM.
+      </p>
+      <div class="sys-row__meta">
+        <div class="sys-row__stack">React 19 &middot; TypeScript &middot; TanStack &middot; PGlite</div>
+        <div class="sys-row__links">
+          <a href="https://github.com/bernam07/episodic" target="_blank" rel="noopener">Repository &nearr;</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="sys-row">
+      <div class="sys-row__ref">SYS&mdash;03</div>
+      <div class="sys-row__title">
+        <h3 class="serif-title">Norma</h3>
+        <span class="sys-row__domain">Ephemeral Capture &amp; Extension</span>
+      </div>
+      <p class="sys-row__desc">
+        Minimalist daily capture scratchpad and Manifest V3 Chromium extension designed to eliminate context switching. Captures fleeting notes and web snippets, dispatching a structured 07:00 morning digest via Resend.
+      </p>
+      <div class="sys-row__meta">
+        <div class="sys-row__stack">Next.js 14 &middot; TypeScript &middot; PostgreSQL &middot; Resend</div>
+        <div class="sys-row__links">
+          <a href="https://github.com/bernam07/norma" target="_blank" rel="noopener">Repository &nearr;</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="sys-row">
+      <div class="sys-row__ref">SYS&mdash;04</div>
+      <div class="sys-row__title">
+        <h3 class="serif-title">Market Telemetry</h3>
+        <span class="sys-row__domain">Automated Portfolio Pipeline</span>
+      </div>
+      <p class="sys-row__desc">
+        This publication&rsquo;s real-time financial tracker: server-side Python ingestion from Yahoo Finance, automatic USD/GBP to EUR currency normalization, and scheduled weekday GitHub Actions workflows.
+      </p>
+      <div class="sys-row__meta">
+        <div class="sys-row__stack">Python &middot; JavaScript &middot; Jekyll &middot; Actions</div>
+        <div class="sys-row__links">
+          <a href="{{ '/dashboard/' | relative_url }}">Live Ledger &rarr;</a>
+          <a href="https://github.com/bernam07/bernam07.github.io" target="_blank" rel="noopener">Source &nearr;</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="sys-row">
+      <div class="sys-row__ref">SYS&mdash;05</div>
+      <div class="sys-row__title">
+        <h3 class="serif-title">Eclipse Player</h3>
+        <span class="sys-row__domain">Desktop Audio Engine</span>
+      </div>
+      <p class="sys-row__desc">
+        Standalone local music player built with Electron, Vite, and TypeScript, featuring a dynamic vinyl platter, real-time Web Audio frequency visualizer, and automated lyrics synchronization.
+      </p>
+      <div class="sys-row__meta">
+        <div class="sys-row__stack">Electron &middot; TypeScript &middot; Vite</div>
+        <div class="sys-row__links">
+          <a href="https://github.com/bernam07/eclipse-player" target="_blank" rel="noopener">Repository &nearr;</a>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
-<section class="section wrap reveal contact-cta">
-  <p class="section-eyebrow">Get in touch</p>
-  <h2>Let's build something together.</h2>
-  <p>
-    Always open to interesting conversations, collaborations, or just talking about code and markets.
-  </p>
-  <div class="hero-cta">
-    <a href="javascript:void(location.href = 'mailto:' + ['bernardomartins.dev','gmail.com'].join('@'))" class="btn btn-primary"><i class="fas fa-envelope"></i> Email Me</a>
-    <a href="https://github.com/bernam07" target="_blank" class="btn"><i class="fab fa-github"></i> GitHub</a>
-    <a href="https://www.linkedin.com/in/bernardomfm/" target="_blank" class="btn"><i class="fab fa-linkedin"></i> LinkedIn</a>
+<!-- 02 / CHRONICLE (EXPERIENCE & EDUCATION) -->
+<section class="section wrap reveal" id="chronicle">
+  <div class="monograph-split">
+    <div class="monograph-split__aside">
+      <span class="sec-num">02 / CHRONICLE</span>
+      <h2 class="serif-heading">Career &amp; Academic Trajectory</h2>
+      <p class="monograph-split__note">
+        Four years of concurrent enterprise engineering at Deloitte and academic specialization in Computer Systems.
+      </p>
+      <a href="{{ '/roadmap/' | relative_url }}" class="see-all">Complete chronicle (10) &rarr;</a>
+    </div>
+
+    <div class="monograph-split__main">
+      <div class="chronicle-list">
+        <div class="chronicle-row chronicle-row--current">
+          <div class="chronicle-row__date">SEP 2026 <span class="live-tag">CURRENT</span></div>
+          <div class="chronicle-row__content">
+            <h3>Promoted to Programmer &mdash; Deloitte</h3>
+            <p>Advancement from Developer to Programmer, taking ownership of core backend modules and enterprise delivery.</p>
+          </div>
+        </div>
+
+        <div class="chronicle-row">
+          <div class="chronicle-row__date">JUN 2025</div>
+          <div class="chronicle-row__content">
+            <h3>GitHub Foundations Certification</h3>
+            <p>Validated proficiency in repository governance, CI/CD automation workflows, and collaborative software engineering.</p>
+          </div>
+        </div>
+
+        <div class="chronicle-row">
+          <div class="chronicle-row__date">SEP 2024</div>
+          <div class="chronicle-row__content">
+            <h3>BSc in Computer Systems Engineering &mdash; UPCA</h3>
+            <p>Admitted to the Bachelor&rsquo;s degree program following completion of the CTeSP in Information Technology &amp; Innovation (Final Grade: 16/20).</p>
+          </div>
+        </div>
+
+        <div class="chronicle-row">
+          <div class="chronicle-row__date">OCT 2022</div>
+          <div class="chronicle-row__content">
+            <h3>Joined Deloitte (Brightstart Program)</h3>
+            <p>Entered professional software engineering as a Developer while pursuing full-time higher education.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 / TECHNICAL SPECIFICATION -->
+<section class="section wrap reveal" id="specification">
+  <div class="monograph-split">
+    <div class="monograph-split__aside">
+      <span class="sec-num">03 / SPECIFICATION</span>
+      <h2 class="serif-heading">Technical Matrix</h2>
+      <p class="monograph-split__note">
+        Core languages, runtimes, and verification tooling used across production systems.
+      </p>
+      <a href="{{ '/setup/' | relative_url }}" class="see-all">Hardware &amp; environment &rarr;</a>
+    </div>
+
+    <div class="monograph-split__main">
+      <div class="spec-matrix">
+        <div class="spec-matrix__group">
+          <div class="spec-matrix__label">01 // LANGUAGES &amp; RUNTIMES</div>
+          <div class="spec-matrix__items">
+            <span>TypeScript</span>
+            <span>Python</span>
+            <span>C# / .NET</span>
+            <span>SQL (PostgreSQL / T-SQL)</span>
+            <span>JavaScript (ES2024)</span>
+            <span>Kotlin</span>
+            <span>Node.js &amp; Deno</span>
+          </div>
+        </div>
+
+        <div class="spec-matrix__group">
+          <div class="spec-matrix__label">02 // FRONTEND &amp; CLIENT ARCHITECTURE</div>
+          <div class="spec-matrix__items">
+            <span>React 19</span>
+            <span>Next.js 14</span>
+            <span>TanStack Query</span>
+            <span>Tailwind CSS v4</span>
+            <span>Electron</span>
+            <span>Manifest V3 Extensions</span>
+          </div>
+        </div>
+
+        <div class="spec-matrix__group">
+          <div class="spec-matrix__label">03 // DATA, LEDGERS &amp; CLOUD</div>
+          <div class="spec-matrix__items">
+            <span>PostgreSQL (RLS &amp; Triggers)</span>
+            <span>Supabase (Auth, Edge, Vault)</span>
+            <span>Microsoft SQL Server</span>
+            <span>Microsoft Azure (AZ / AI / SC-900)</span>
+            <span>Docker</span>
+          </div>
+        </div>
+
+        <div class="spec-matrix__group">
+          <div class="spec-matrix__label">04 // VERIFICATION &amp; TOOLING</div>
+          <div class="spec-matrix__items">
+            <span>Vitest &amp; PGlite WASM</span>
+            <span>Playwright E2E</span>
+            <span>Oxlint Architecture Rules</span>
+            <span>GitHub Actions CI/CD</span>
+            <span>Git</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 / CORRESPONDENCE -->
+<section class="section wrap reveal" id="correspondence">
+  <div class="monograph-colophon">
+    <div class="monograph-colophon__left">
+      <span class="sec-num">04 / CORRESPONDENCE</span>
+      <h2 class="serif-display monograph-colophon__title">
+        Initiate a technical dialogue or collaboration.
+      </h2>
+      <p class="monograph-lead">
+        Available for architectural discussions, software engineering opportunities, or conversations on deterministic backend systems and financial markets.
+      </p>
+    </div>
+
+    <div class="monograph-colophon__actions">
+      <a href="javascript:void(location.href = 'mailto:' + ['bernardomartins.dev','gmail.com'].join('@'))" class="btn btn-primary">
+        <span>bernardomartins.dev@gmail.com</span>
+        <span>&rarr;</span>
+      </a>
+      <div class="monograph-colophon__secondary">
+        <a href="https://github.com/bernam07" target="_blank" rel="noopener" class="btn">GitHub (@bernam07) &nearr;</a>
+        <a href="https://www.linkedin.com/in/bernardomfm/" target="_blank" rel="noopener" class="btn">LinkedIn &nearr;</a>
+        <a href="{{ '/assets/cv/Bernardo-Martins-CV.pdf' | relative_url }}" target="_blank" rel="noopener" class="btn">Curriculum Vitae (PDF) &darr;</a>
+      </div>
+    </div>
   </div>
 </section>

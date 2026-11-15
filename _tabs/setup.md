@@ -1,77 +1,163 @@
 ---
 layout: page
-title: Setup
+title: Environment
+permalink: /setup/
 ---
 
-<div class="page-hero wrap reveal">
-  <div class="page-hero__icon"><i class="fas fa-desktop"></i></div>
-  <h1>Setup</h1>
-  <p>&ldquo;Build your own tools, but don't forget to use them.&rdquo;</p>
-</div>
+<header class="page-hero wrap reveal">
+  <div class="page-hero__meta">INDEX // 03 &mdash; HARDWARE &amp; SOFTWARE SPECIFICATION</div>
+  <h1 class="serif-display">Working Environment</h1>
+  <p>The workstation hardware, peripherals, and development toolchain used daily for systems engineering and university research.</p>
+</header>
 
-<div class="section wrap prose reveal" markdown="1">
+<section class="section section--tight wrap reveal">
+  <div class="monograph-split">
+    <div class="monograph-split__aside">
+      <span class="sec-num">01 / WORKSTATION</span>
+      <h2 class="serif-heading">Compute &amp; Display</h2>
+      <p class="monograph-split__note">Primary desktop configuration for compilation, local containerization, and high-refresh display output.</p>
+    </div>
 
-Here is the hardware and software configuration I use daily for software development, university tasks, and competitive gaming.
+    <div class="monograph-split__main">
+      <div class="spec-table-wrap" role="region" aria-label="Workstation hardware specifications" tabindex="0">
+        <table class="spec-table">
+          <thead>
+            <tr>
+              <th scope="col">Subsystem</th>
+              <th scope="col">Specification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Processor (CPU)</th>
+              <td>AMD Ryzen 7 5800X (8 Cores / 16 Threads)</td>
+            </tr>
+            <tr>
+              <th scope="row">Graphics (GPU)</th>
+              <td>NVIDIA GeForce RTX 3070</td>
+            </tr>
+            <tr>
+              <th scope="row">Memory (RAM)</th>
+              <td>16 GB DDR4 @ 3600 MHz</td>
+            </tr>
+            <tr>
+              <th scope="row">Primary Storage</th>
+              <td>500 GB NVMe PCIe Gen4 SSD</td>
+            </tr>
+            <tr>
+              <th scope="row">Chassis</th>
+              <td>NOX Infinity SIGMA</td>
+            </tr>
+            <tr>
+              <th scope="row">Primary Display</th>
+              <td>AOC AG251FZ2E &mdash; 24.5&Prime; @ 240 Hz</td>
+            </tr>
+            <tr>
+              <th scope="row">Secondary Display</th>
+              <td>AOC 27G2U5 &mdash; 27&Prime; IPS @ 75 Hz</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
 
-## The Battlestation
+<section class="section section--tight wrap reveal">
+  <div class="monograph-split">
+    <div class="monograph-split__aside">
+      <span class="sec-num">02 / INTERFACE</span>
+      <h2 class="serif-heading">Peripherals &amp; Audio</h2>
+      <p class="monograph-split__note">Tactile input devices and acoustic monitoring.</p>
+    </div>
 
-My main workhorse for heavy projects, code compilation and gaming sessions.
+    <div class="monograph-split__main">
+      <div class="spec-table-wrap" role="region" aria-label="Peripherals and audio specifications" tabindex="0">
+        <table class="spec-table">
+          <thead>
+            <tr>
+              <th scope="col">Device</th>
+              <th scope="col">Model</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Mechanical Keyboard</th>
+              <td>Razer BlackWidow V3 Tenkeyless</td>
+            </tr>
+            <tr>
+              <th scope="row">Pointing Device</th>
+              <td>SteelSeries Rival 650 Wireless</td>
+            </tr>
+            <tr>
+              <th scope="row">Headphones</th>
+              <td>Sony WH-1000XM4</td>
+            </tr>
+            <tr>
+              <th scope="row">Microphone</th>
+              <td>Logitech G Yeti GX</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
 
-| Component     | Specs                     |
-| :------------ | :------------------------ |
-| **CPU** | AMD Ryzen 7 5800X         |
-| **GPU** | NVIDIA RTX 3070           |
-| **RAM** | 16GB DDR4 3600MHz         |
-| **Storage** | 500GB NVMe Gen4           |
-| **Case** | NOX Infinity SIGMA        |
-| **Monitor 1** | AOC AG251FZ2E 24.5" 240Hz |
-| **Monitor 2** | AOC 27G2U5 27" 75Hz       |
+<section class="section section--tight wrap reveal">
+  <div class="monograph-split">
+    <div class="monograph-split__aside">
+      <span class="sec-num">03 / TOOLCHAIN</span>
+      <h2 class="serif-heading">Software &amp; Stack</h2>
+      <p class="monograph-split__note">Development environment, languages, and daily operational utilities.</p>
+    </div>
 
-## Peripherals & Audio
+    <div class="monograph-split__main">
+      <div class="spec-matrix">
+        <div class="spec-matrix__group">
+          <div class="spec-matrix__label">CORE LANGUAGES &amp; FRAMEWORKS</div>
+          <div class="spec-matrix__items">
+            <span>TypeScript</span>
+            <span>Python</span>
+            <span>C# / .NET</span>
+            <span>JavaScript</span>
+            <span>Kotlin</span>
+            <span>React 19</span>
+            <span>Next.js 14</span>
+            <span>Node.js</span>
+            <span>Electron</span>
+            <span>Tailwind CSS</span>
+            <span>Supabase</span>
+            <span>PostgreSQL</span>
+            <span>SQL Server</span>
+            <span>Jekyll</span>
+          </div>
+        </div>
 
-* **Keyboard:** Razer Blackwidow V3 Tenkeyless
-* **Mouse:** Steelseries Rival 650 Wireless
-* **Headset:** Sony WH-1000XM4
-* **Microphone:** Logitech G Yeti GX
+        <div class="spec-matrix__group">
+          <div class="spec-matrix__label">DEVELOPMENT ENVIRONMENT</div>
+          <div class="spec-matrix__items">
+            <span>Visual Studio Code</span>
+            <span>Windows Terminal + PowerShell 7</span>
+            <span>Git &amp; GitHub Actions</span>
+            <span>Docker Desktop</span>
+          </div>
+        </div>
 
-## Tech Stack & Software
+        <div class="spec-matrix__group">
+          <div class="spec-matrix__label">OPERATIONS &amp; DOCUMENTATION</div>
+          <div class="spec-matrix__items">
+            <span>Norma (Daily Scratchpad)</span>
+            <span>Notion</span>
+            <span>Opera</span>
+            <span>Discord &amp; Microsoft Teams</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-My toolset of choice for maintaining productivity and code quality.
-
-### Languages & Frameworks
-
-<div class="badge-row">
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white" alt="C#">
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
-  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
-  <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin">
-  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
-  <img src="https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js">
-  <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
-  <img src="https://img.shields.io/badge/Electron-191970?style=for-the-badge&logo=electron&logoColor=white" alt="Electron">
-  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
-  <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase">
-  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
-  <img src="https://img.shields.io/badge/SQL-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white" alt="SQL">
-  <img src="https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white" alt="Selenium">
-  <img src="https://img.shields.io/badge/Jekyll-CC0000?style=for-the-badge&logo=jekyll&logoColor=white" alt="Jekyll">
-</div>
-
-### Dev Tools & Environment
-
-* ![VSCode](https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=flat&logo=visual%20studio%20code&logoColor=white) **VS Code** (Theme: Tokyo Night)
-* ![Terminal](https://img.shields.io/badge/Terminal-Windows_Terminal-4D4D4D?style=flat&logo=windows-terminal&logoColor=white) **Windows Terminal** + PowerShell 7
-* ![Git](https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white) **Git & GitHub Actions**
-
-### Productivity
-
-* **Browser:** Opera
-* **Notes:** Notion
-* **Communication:** Discord / Microsoft Teams
-
-<p class="last-updated" markdown="0">
-  Last updated: {{ site.time | date: '%B %Y' }}
-</p>
-
-</div>
+  <p class="last-updated">
+    ENVIRONMENT REVISION // {{ site.time | date: '%B %Y' | upcase }}
+  </p>
+</section>

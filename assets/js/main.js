@@ -72,4 +72,37 @@
       el.classList.add('is-visible');
     });
   }
+
+  // Hydrate home hero telemetry KPI from live market_data.json if present
+  var heroLeadEl = document.getElementById('hero-live-lead');
+  var heroSubEl = document.getElementById('hero-live-sub');
+  if (heroLeadEl && 'fetch' in window) {
+    fetch('/assets/data/market_data.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(function (res) {
+        if (!res.ok) return null;
+        return res.json();
+      })
+      .then(function (data) {
+        if (!data || !Array.isArray(data.stocks) || !data.stocks.length) return;
+        var sorted = data.stocks.slice().sort(function (a, b) {
+          return (b.pl_percent || 0) - (a.pl_percent || 0);
+        });
+        var top = sorted[0];
+        if (top && typeof top.pl_percent === 'number') {
+          var sym = (top.symbol || '').replace('.L', '').replace('.AS', '');
+          var sign = top.pl_percent >= 0 ? '+' : '';
+          heroLeadEl.innerHTML = sym + ' ' + sign + top.pl_percent.toFixed(1) + '% Lead &rarr;';
+        }
+        if (heroSubEl) {
+          var winners = data.stocks.filter(function (s) {
+            return (s.pl_percent || 0) > 0;
+          }).length;
+          heroSubEl.textContent =
+            winners + '/' + data.stocks.length + ' Positions in Profit · Live Ledger';
+        }
+      })
+      .catch(function () {
+        // Keep static fallback silently
+      });
+  }
 })();

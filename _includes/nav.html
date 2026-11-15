@@ -1,15 +1,16 @@
-<nav class="site-nav" id="site-nav">
+<nav class="site-nav" id="site-nav" aria-label="Primary">
   <div class="site-nav__inner">
     <a href="{{ '/' | relative_url }}" class="site-nav__brand">
-      bernardo<span class="dot">.</span>dev
+      <span class="brand-index">BM</span>
+      <span>bernardo<span class="dot">.</span>dev</span>
     </a>
 
     <div class="site-nav__links" id="site-nav-links">
-      <a href="{{ '/' | relative_url }}" class="site-nav__link{% if page.url == '/' %} is-active{% endif %}">Home</a>
-      <a href="{{ '/projects/' | relative_url }}" class="site-nav__link{% if page.url == '/projects/' %} is-active{% endif %}">Projects</a>
-      <a href="{{ '/roadmap/' | relative_url }}" class="site-nav__link{% if page.url == '/roadmap/' %} is-active{% endif %}">Roadmap</a>
-      <a href="{{ '/setup/' | relative_url }}" class="site-nav__link{% if page.url == '/setup/' %} is-active{% endif %}">Setup</a>
-      <a href="{{ '/dashboard/' | relative_url }}" class="site-nav__link{% if page.url == '/dashboard/' %} is-active{% endif %}">Dashboard</a>
+      <a href="{{ '/' | relative_url }}" class="site-nav__link{% if page.url == '/' %} is-active{% endif %}"{% if page.url == '/' %} aria-current="page"{% endif %}><span class="nav-idx">00</span>Index</a>
+      <a href="{{ '/projects/' | relative_url }}" class="site-nav__link{% if page.url == '/projects/' %} is-active{% endif %}"{% if page.url == '/projects/' %} aria-current="page"{% endif %}><span class="nav-idx">01</span>Systems</a>
+      <a href="{{ '/roadmap/' | relative_url }}" class="site-nav__link{% if page.url == '/roadmap/' %} is-active{% endif %}"{% if page.url == '/roadmap/' %} aria-current="page"{% endif %}><span class="nav-idx">02</span>Chronicle</a>
+      <a href="{{ '/setup/' | relative_url }}" class="site-nav__link{% if page.url == '/setup/' %} is-active{% endif %}"{% if page.url == '/setup/' %} aria-current="page"{% endif %}><span class="nav-idx">03</span>Environment</a>
+      <a href="{{ '/dashboard/' | relative_url }}" class="site-nav__link{% if page.url == '/dashboard/' %} is-active{% endif %}"{% if page.url == '/dashboard/' %} aria-current="page"{% endif %}><span class="nav-idx">04</span>Ledger</a>
 
       <div class="site-nav__socials">
         {% include contact-links.html %}
@@ -17,7 +18,7 @@
     </div>
 
     <button type="button" class="site-nav__toggle" id="site-nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-      <i class="fas fa-bars"></i>
+      <i class="fas fa-bars" aria-hidden="true"></i>
     </button>
   </div>
 </nav>
