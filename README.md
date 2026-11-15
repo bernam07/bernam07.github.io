@@ -27,7 +27,6 @@ This repository hosts the source code for my personal portfolio and engineering 
 
 | Project | Domain | Stack | Highlights |
 | :--- | :--- | :--- | :--- |
-| **[Strata](https://github.com/bernam07/strata)** | Wealth OS &amp; Portfolio Intelligence | React 19, TypeScript, Supabase, Tailwind v4, Vitest | Production-grade ledger accounting, multi-currency conversion, alternative asset valuations (Pok&eacute;mon, LEGO, luxury watches), and Apple Pay webhook ingestion. |
 | **[Episodic](https://github.com/bernam07/episodic)** | Social TV Tracking &amp; Diary | React 19, TypeScript, Supabase, TanStack Query, PWA | Letterboxd-style tracking platform with episode check-ins, diary, friends feed, Clean Architecture, and TMDB integration. |
 | **[Norma](https://github.com/bernam07/norma)** | Ephemeral Capture &amp; Morning Briefing | Next.js 14, TypeScript, PostgreSQL, Tailwind, Resend | Frictionless daily scratchpad with Chromium extension integration and automated daily email digest briefings delivered at 07:00 UTC. |
 

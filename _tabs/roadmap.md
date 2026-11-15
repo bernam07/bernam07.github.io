@@ -1,11 +1,11 @@
 ---
 layout: page
-title: Chronicle
+title: Roadmap
 permalink: /roadmap/
 ---
 
 <header class="page-hero wrap reveal">
-  <div class="page-hero__meta">INDEX // 02 &mdash; CAREER &amp; ACADEMIC CHRONICLE</div>
+  <div class="page-hero__meta">INDEX // 02 &mdash; CAREER &amp; ACADEMIC ROADMAP</div>
   <h1 class="serif-display">Milestones &amp; Credentials</h1>
   <p>A chronological record of professional progression at Deloitte, academic degrees at UPCA, and technical certifications.</p>
 </header>

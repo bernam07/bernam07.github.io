@@ -1,11 +1,11 @@
 ---
 layout: page
-title: Environment
+title: Setup
 permalink: /setup/
 ---
 
 <header class="page-hero wrap reveal">
-  <div class="page-hero__meta">INDEX // 03 &mdash; HARDWARE &amp; SOFTWARE SPECIFICATION</div>
+  <div class="page-hero__meta">INDEX // 03 &mdash; HARDWARE &amp; SOFTWARE SETUP</div>
   <h1 class="serif-display">Working Environment</h1>
   <p>The workstation hardware, peripherals, and development toolchain used daily for systems engineering and university research.</p>
 </header>

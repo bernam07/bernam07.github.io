@@ -1,17 +1,17 @@
 ---
 layout: page
-title: Systems
+title: Projects
 permalink: /projects/
 ---
 
 <header class="page-hero wrap reveal">
-  <div class="page-hero__meta">INDEX // 01 &mdash; SYSTEMS &amp; ARCHITECTURE</div>
-  <h1 class="serif-display">Engineering Monograph</h1>
+  <div class="page-hero__meta">INDEX // 01 &mdash; PROJECTS &amp; ARCHITECTURE</div>
+  <h1 class="serif-display">Selected Projects</h1>
   <p>Production software systems, open-source repositories, and architectural case studies emphasizing strict domain boundaries and deterministic state.</p>
 </header>
 
 <section class="section section--tight wrap reveal">
-  <div class="sys-ledger sys-ledger--detailed" role="region" aria-label="Complete systems catalog">
+  <div class="sys-ledger sys-ledger--detailed" role="region" aria-label="Complete projects catalog">
     <div class="sys-ledger__head">
       <span>REF</span>
       <span>SYSTEM</span>
@@ -21,27 +21,6 @@ permalink: /projects/
 
     <article class="sys-row">
       <div class="sys-row__ref"><span class="ref-accent">SYS&mdash;01</span></div>
-      <div class="sys-row__title">
-        <h2 class="serif-title">Strata</h2>
-        <span class="sys-row__domain">Wealth &amp; Ledger OS</span>
-      </div>
-      <div class="sys-row__desc">
-        <p>A production-grade, ledger-backed financial operating system uniting equities, crypto, alternative collectibles (Pok&eacute;mon cards, LEGO sets, luxury watches), and Apple Pay webhook automation into a unified net-worth view.</p>
-        <ul class="sys-specs">
-          <li><strong>Accounting Engine:</strong> Immutable append-only journal entries with exact <code>decimal.js</code> precision, XIRR (Newton-Raphson) &amp; TWR performance metrics.</li>
-          <li><strong>Verification &amp; Security:</strong> 226+ Vitest unit/property tests, Playwright E2E suite, 100% Row-Level Security (RLS) across 20+ PostgreSQL tables, and Supabase Vault secret storage.</li>
-        </ul>
-      </div>
-      <div class="sys-row__meta">
-        <div class="sys-row__stack">React 19 &middot; TypeScript &middot; Supabase &middot; Tailwind v4 &middot; PostgreSQL</div>
-        <div class="sys-row__links">
-          <a href="https://github.com/bernam07/strata" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> github.com/bernam07/strata &nearr;</a>
-        </div>
-      </div>
-    </article>
-
-    <article class="sys-row">
-      <div class="sys-row__ref">SYS&mdash;02</div>
       <div class="sys-row__title">
         <h2 class="serif-title">Episodic</h2>
         <span class="sys-row__domain">Social TV Tracker PWA</span>
@@ -62,7 +41,7 @@ permalink: /projects/
     </article>
 
     <article class="sys-row">
-      <div class="sys-row__ref">SYS&mdash;03</div>
+      <div class="sys-row__ref">SYS&mdash;02</div>
       <div class="sys-row__title">
         <h2 class="serif-title">Norma</h2>
         <span class="sys-row__domain">Ephemeral Capture &amp; Extension</span>
@@ -82,13 +61,13 @@ permalink: /projects/
     </article>
 
     <article class="sys-row">
-      <div class="sys-row__ref">SYS&mdash;04</div>
+      <div class="sys-row__ref">SYS&mdash;03</div>
       <div class="sys-row__title">
         <h2 class="serif-title">Market Telemetry</h2>
         <span class="sys-row__domain">Automated Portfolio Pipeline</span>
       </div>
       <div class="sys-row__desc">
-        <p>The source architecture for this publication and its live equity ledger. Combines static Jekyll generation with a scheduled Python market ingestion pipeline executed via GitHub Actions.</p>
+        <p>The source architecture for this website and its live equity dashboard. Combines static Jekyll generation with a scheduled Python market ingestion pipeline executed via GitHub Actions.</p>
         <ul class="sys-specs">
           <li><strong>Data Pipeline:</strong> Single-source-of-truth portfolio manifest (<code>_data/portfolio.json</code>) with server-side USD/GBP to EUR FX normalization via <code>yfinance</code>.</li>
         </ul>
@@ -96,14 +75,14 @@ permalink: /projects/
       <div class="sys-row__meta">
         <div class="sys-row__stack">Python &middot; JavaScript &middot; Jekyll &middot; GitHub Actions</div>
         <div class="sys-row__links">
-          <a href="{{ '/dashboard/' | relative_url }}">Live Ledger &rarr;</a>
+          <a href="{{ '/dashboard/' | relative_url }}">Live Dashboard &rarr;</a>
           <a href="https://github.com/bernam07/bernam07.github.io" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Source &nearr;</a>
         </div>
       </div>
     </article>
 
     <article class="sys-row">
-      <div class="sys-row__ref">SYS&mdash;05</div>
+      <div class="sys-row__ref">SYS&mdash;04</div>
       <div class="sys-row__title">
         <h2 class="serif-title">Loja Social SAS</h2>
         <span class="sys-row__domain">Enterprise Inventory Platform</span>
@@ -120,7 +99,7 @@ permalink: /projects/
     </article>
 
     <article class="sys-row">
-      <div class="sys-row__ref">SYS&mdash;06</div>
+      <div class="sys-row__ref">SYS&mdash;05</div>
       <div class="sys-row__title">
         <h2 class="serif-title">Eclipse Player</h2>
         <span class="sys-row__domain">Desktop Audio Engine</span>
@@ -138,6 +117,6 @@ permalink: /projects/
   </div>
 
   <p class="last-updated">
-    CATALOG REVISION // {{ site.time | date: '%B %Y' | upcase }}
+    LAST UPDATED // {{ site.time | date: '%B %Y' | upcase }}
   </p>
 </section>

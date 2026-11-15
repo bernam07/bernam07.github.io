@@ -1,11 +1,11 @@
 ---
 layout: page
-title: Ledger
+title: Dashboard
 permalink: /dashboard/
 ---
 
 <header class="page-hero wrap reveal">
-  <div class="page-hero__meta">INDEX // 04 &mdash; LIVE FINANCIAL TELEMETRY</div>
+  <div class="page-hero__meta">INDEX // 04 &mdash; LIVE MARKET DASHBOARD</div>
   <h1 class="serif-display">Equity Portfolio Ledger</h1>
   <p>Automated market tracking of personal equity positions, normalized to EUR via scheduled GitHub Actions and Yahoo Finance ingestion.</p>
 </header>
