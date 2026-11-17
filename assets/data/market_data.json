@@ -4,96 +4,96 @@
       "symbol": "VUSA.L",
       "name": "Vanguard S&P 500 ETF",
       "avgPrice": 102.25,
-      "price": 108.02,
-      "price_eur": 129.41,
+      "price": 107.65,
+      "price_eur": 129.01,
       "currency": "GBP",
-      "percent": 0.03,
-      "pl_percent": 26.56
+      "percent": -0.31,
+      "pl_percent": 26.17
     },
     {
       "symbol": "NVDA",
       "name": "NVIDIA Corporation",
       "avgPrice": 117.62,
-      "price": 158.73,
-      "price_eur": 144.11,
+      "price": 156.14,
+      "price_eur": 142.1,
       "currency": "USD",
-      "percent": -1.34,
-      "pl_percent": 22.52
+      "percent": -2.95,
+      "pl_percent": 20.81
     },
     {
       "symbol": "PLTR",
       "name": "Palantir Technologies",
       "avgPrice": 41.76,
-      "price": 165.41,
-      "price_eur": 150.18,
+      "price": 160.39,
+      "price_eur": 145.97,
       "currency": "USD",
-      "percent": 0.1,
-      "pl_percent": 259.63
+      "percent": -2.94,
+      "pl_percent": 249.55
     },
     {
       "symbol": "NVO",
       "name": "Novo Nordisk",
       "avgPrice": 61.9,
-      "price": 42.06,
-      "price_eur": 38.19,
+      "price": 41.6,
+      "price_eur": 37.86,
       "currency": "USD",
-      "percent": 1.61,
-      "pl_percent": -38.3
+      "percent": 0.48,
+      "pl_percent": -38.84
     },
     {
       "symbol": "SOFI",
       "name": "SoFi Technologies",
       "avgPrice": 14.35,
-      "price": 15.06,
-      "price_eur": 13.67,
+      "price": 14.85,
+      "price_eur": 13.51,
       "currency": "USD",
-      "percent": -1.36,
-      "pl_percent": -4.74
+      "percent": -2.74,
+      "pl_percent": -5.85
     },
     {
       "symbol": "META",
       "name": "Meta Platforms",
       "avgPrice": 529.08,
-      "price": 633.87,
-      "price_eur": 575.49,
+      "price": 626.41,
+      "price_eur": 570.1,
       "currency": "USD",
-      "percent": -0.46,
-      "pl_percent": 8.77
+      "percent": -1.63,
+      "pl_percent": 7.75
     },
     {
       "symbol": "AMZN",
       "name": "Amazon.com",
       "avgPrice": 178.7,
-      "price": 261.59,
-      "price_eur": 237.5,
+      "price": 257.75,
+      "price_eur": 234.58,
       "currency": "USD",
-      "percent": -1.03,
-      "pl_percent": 32.9
+      "percent": -2.49,
+      "pl_percent": 31.27
     },
     {
       "symbol": "O",
       "name": "Realty Income Corp",
       "avgPrice": 50.51,
-      "price": 59.33,
-      "price_eur": 53.86,
+      "price": 58.55,
+      "price_eur": 53.29,
       "currency": "USD",
-      "percent": 0.86,
-      "pl_percent": 6.63
+      "percent": -0.46,
+      "pl_percent": 5.5
     },
     {
       "symbol": "ORCL",
       "name": "Oracle Corporation",
       "avgPrice": 158.16,
-      "price": 121.71,
-      "price_eur": 110.5,
+      "price": 119.09,
+      "price_eur": 108.38,
       "currency": "USD",
-      "percent": -1.53,
-      "pl_percent": -30.13
+      "percent": -3.65,
+      "pl_percent": -31.47
     }
   ],
   "rates": {
-    "usdToEur": 0.9079,
-    "gbpToEur": 1.198
+    "usdToEur": 0.9101,
+    "gbpToEur": 1.1984
   },
-  "last_updated": "16/11/2026 14:33"
+  "last_updated": "17/11/2026 01:28"
 }
