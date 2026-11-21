@@ -24,7 +24,7 @@ permalink: /roadmap/
       <div class="cert-featured-banner">
         <img src="{{ '/assets/img/outsystems-associate-o11.png' | relative_url }}" alt="OutSystems Associate Developer O11 Badge" class="cert-featured-banner__badge" width="72" height="93">
         <div class="cert-featured-banner__body">
-          <span class="sec-num">PRIMARY ENTERPRISE CREDENTIAL</span>
+          <span class="sec-num">PRIMARY ENTERPRISE CREDENTIAL &middot; ISSUED NOV 2026</span>
           <h3 class="serif-title">OutSystems Associate Developer (O11 / ODC)</h3>
           <p>Certified in OutSystems reactive and web architecture, data modeling, modular service layer design, BPT/Timers, and enterprise lifecycle governance.</p>
         </div>
@@ -84,7 +84,7 @@ permalink: /roadmap/
       </div>
       <div class="chronicle-entry__body">
         <h2 class="serif-title">Programmer &mdash; Deloitte (Braga, Portugal)</h2>
-        <p>Promoted from Developer to <strong>Programmer</strong> on the <strong>Danish Insurance Company</strong> account (<code>OutSystems &middot; .NET &middot; SQL Server &middot; GitHub &middot; Agile Scrum/Kanban</code>):</p>
+        <p>Promoted from Developer to <strong>Programmer</strong> on the <strong>Danish Insurance Company</strong> project (<code>OutSystems &middot; .NET &middot; SQL Server &middot; GitHub &middot; Agile Scrum/Kanban</code>):</p>
         <ul class="sys-specs">
           <li>Continuous maintenance, technical enhancements, and end-to-end feature implementation across insurer web portals;</li>
           <li>Development and maintenance of OutSystems modules integrated with a lower-tier <strong>.NET (C#)</strong> service layer for complex business logic;</li>
