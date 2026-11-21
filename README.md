@@ -8,8 +8,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Bernardo%20Martins-0077B5?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/bernardomfm/)
 
-**Software Engineer @ Deloitte &middot; Computer Systems Engineering Student @ UPCA**  
-*Focusing on Backend Architecture, Distributed Systems, High-Performance Workloads, and Financial Markets.*
+**OutSystems Developer (Programmer) @ Deloitte &middot; Computer Systems Engineering Student @ UPCA**  
+*Combining OutSystems architecture, custom C# / .NET extensions, and SQL Server engineering with modern full-stack web systems.*
 
 [Live Website (bernardomartins.me)](https://bernardomartins.me) &nbsp;&bull;&nbsp; [Alternative Domain (GitHub Pages)](https://bernam07.github.io)
 
@@ -28,7 +28,9 @@ This repository hosts the source code for my personal portfolio and engineering 
 | Project | Domain | Stack | Highlights |
 | :--- | :--- | :--- | :--- |
 | **[Episodic](https://github.com/bernam07/episodic)** | Social TV Tracking &amp; Diary | React 19, TypeScript, Supabase, TanStack Query, PWA | Letterboxd-style tracking platform with episode check-ins, diary, friends feed, Clean Architecture, and TMDB integration. |
+| **[ClearPost](https://github.com/bernam07/clearpost)** | Multi-Carrier Parcel Tracker PWA | React, TypeScript, Firebase, Cloudflare Workers, 17TRACK API | Clear Glass parcel tracking PWA for CTT, DPD/BRT, InPost, DHL, GLS, UPS, and Correos Express with Cloudflare Worker proxy, iOS Scriptable widget feed, and zero-trust Firestore rules. |
 | **[Norma](https://github.com/bernam07/norma)** | Ephemeral Capture &amp; Morning Briefing | Next.js 14, TypeScript, PostgreSQL, Tailwind, Resend | Frictionless daily scratchpad with Chromium extension integration and automated daily email digest briefings delivered at 07:00 UTC. |
+| **[Eclipse Player](https://github.com/bernam07/eclipse-player)** | Desktop Audio Engine | Electron, TypeScript, Vite, Web Audio API | Minimalist standalone desktop audio player with dynamic vinyl simulation and real-time audio spectrum visualizer. |
 
 ---
 

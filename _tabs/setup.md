@@ -115,11 +115,21 @@ permalink: /setup/
     <div class="monograph-split__main">
       <div class="spec-matrix">
         <div class="spec-matrix__group">
-          <div class="spec-matrix__label">CORE LANGUAGES &amp; FRAMEWORKS</div>
+          <div class="spec-matrix__label">ENTERPRISE &amp; BACKEND PLATFORMS</div>
+          <div class="spec-matrix__items">
+            <span>OutSystems (O11 / ODC)</span>
+            <span>C# / .NET Framework</span>
+            <span>Microsoft SQL Server</span>
+            <span>REST &amp; SOAP APIs</span>
+            <span>Microsoft Azure</span>
+          </div>
+        </div>
+
+        <div class="spec-matrix__group">
+          <div class="spec-matrix__label">FULL-STACK LANGUAGES &amp; FRAMEWORKS</div>
           <div class="spec-matrix__items">
             <span>TypeScript</span>
             <span>Python</span>
-            <span>C# / .NET</span>
             <span>JavaScript</span>
             <span>Kotlin</span>
             <span>React 19</span>
@@ -128,8 +138,9 @@ permalink: /setup/
             <span>Electron</span>
             <span>Tailwind CSS</span>
             <span>Supabase</span>
+            <span>Firebase</span>
+            <span>Cloudflare Workers</span>
             <span>PostgreSQL</span>
-            <span>SQL Server</span>
             <span>Jekyll</span>
           </div>
         </div>
@@ -137,7 +148,9 @@ permalink: /setup/
         <div class="spec-matrix__group">
           <div class="spec-matrix__label">DEVELOPMENT ENVIRONMENT</div>
           <div class="spec-matrix__items">
-            <span>Visual Studio Code</span>
+            <span>OutSystems Service Studio &amp; Integration Studio</span>
+            <span>Visual Studio &amp; VS Code</span>
+            <span>SQL Server Management Studio (SSMS)</span>
             <span>Windows Terminal + PowerShell 7</span>
             <span>Git &amp; GitHub Actions</span>
             <span>Docker Desktop</span>

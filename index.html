@@ -5,7 +5,7 @@ title: ""
 
 <section class="monograph-hero wrap reveal">
   <div class="monograph-hero__grid">
-    <!-- Left 4 Columns: Identity & Index Metadata -->
+    <!-- Left 4 Columns: Identity, Metadata & Certified Badge -->
     <aside class="monograph-hero__index">
       <div class="monograph-identity">
         <img src="{{ '/assets/img/image.jpg' | relative_url }}" alt="Bernardo Martins" class="monograph-avatar" width="52" height="52">
@@ -13,15 +13,15 @@ title: ""
           <div class="monograph-name">BERNARDO MARTINS</div>
           <div class="monograph-status">
             <span class="status-dot"></span>
-            <span>AVAILABLE FOR COLLABORATION</span>
+            <span>PROGRAMMER @ DELOITTE</span>
           </div>
         </div>
       </div>
 
       <dl class="monograph-meta">
         <div class="monograph-meta__row">
-          <dt>ROLE</dt>
-          <dd>Programmer at Deloitte</dd>
+          <dt>SPECIALTY</dt>
+          <dd>OutSystems &amp; .NET (C#)</dd>
         </div>
         <div class="monograph-meta__row">
           <dt>DEGREE</dt>
@@ -29,22 +29,35 @@ title: ""
         </div>
         <div class="monograph-meta__row">
           <dt>LOCATION</dt>
-          <dd>Braga / Porto, Portugal</dd>
+          <dd>Braga, Portugal</dd>
+        </div>
+        <div class="monograph-meta__row">
+          <dt>LANGUAGES</dt>
+          <dd>PT &middot; EN (Bilingual) &middot; FR</dd>
         </div>
       </dl>
+
+      <div class="monograph-badge-card">
+        <img src="{{ '/assets/img/outsystems-associate-o11.png' | relative_url }}" alt="OutSystems Associate Developer O11 Badge" class="monograph-badge-card__img" width="54" height="70">
+        <div class="monograph-badge-card__info">
+          <span class="monograph-badge-card__kicker">CERTIFIED // O11 &amp; ODC</span>
+          <strong class="monograph-badge-card__title">OutSystems Associate Developer</strong>
+          <span class="monograph-badge-card__sub">+ Microsoft AZ-900 &middot; AI-900 &middot; SC-900 &middot; C#</span>
+        </div>
+      </div>
 
       <nav class="monograph-index-links" aria-label="Direct resources">
         <a href="{{ '/assets/cv/Bernardo-Martins-CV.pdf' | relative_url }}" target="_blank" rel="noopener">
           <span class="idx-arrow">&rarr;</span> Curriculum Vitae (PDF)
         </a>
+        <a href="https://www.linkedin.com/in/bernardomfm/" target="_blank" rel="noopener">
+          <span class="idx-arrow">&rarr;</span> LinkedIn (/in/bernardomfm)
+        </a>
         <a href="https://github.com/bernam07" target="_blank" rel="noopener">
           <span class="idx-arrow">&rarr;</span> GitHub (@bernam07)
         </a>
         <a href="{{ '/dashboard/' | relative_url }}">
-          <span class="idx-arrow">&rarr;</span> Live Market Ledger
-        </a>
-        <a href="javascript:void(location.href = 'mailto:' + ['bernardomartins.dev','gmail.com'].join('@'))">
-          <span class="idx-arrow">&rarr;</span> Direct Electronic Mail
+          <span class="idx-arrow">&rarr;</span> Live Equity Portfolio
         </a>
       </nav>
     </aside>
@@ -52,25 +65,25 @@ title: ""
     <!-- Right 8 Columns: Editorial Thesis & Telemetry Strip -->
     <div class="monograph-hero__statement">
       <div class="monograph-statement__body">
-        <p class="monograph-kicker">PORTFOLIO // SOFTWARE &amp; FINANCIAL SYSTEMS</p>
+        <p class="monograph-kicker">PORTFOLIO // ENTERPRISE &amp; FULL-STACK ENGINEERING</p>
         <h1 class="serif-display">
-          Engineering software systems where financial precision, strict database boundaries, and calm interfaces meet.
+          Combining OutSystems architecture, custom .NET service layers, and SQL Server engineering with modern full-stack products.
         </h1>
         <p class="monograph-lead">
-          Since joining Deloitte through the Brightstart program in 2022 and advancing to Programmer in 2026, I have balanced enterprise delivery with Computer Systems Engineering studies at UPCA and open-source systems architecture.
+          OutSystems Developer (Programmer) at Deloitte with 4+ years of enterprise experience building robust web and reactive applications for international insurance clients. My core strength lies in bridging OutSystems with custom C# / .NET extensions, relational SQL Server data modeling, and REST/SOAP integrations&mdash;alongside my BSc in Computer Systems Engineering at UPCA.
         </p>
       </div>
 
       <div class="monograph-kpis">
         <div class="monograph-kpi">
-          <span class="monograph-kpi__label">01 / EXPERIENCE</span>
+          <span class="monograph-kpi__label">01 / ENTERPRISE</span>
           <strong class="monograph-kpi__value">4+ Years @ Deloitte</strong>
-          <span class="monograph-kpi__sub">Promoted to Programmer &middot; Sep 2026</span>
+          <span class="monograph-kpi__sub">OutSystems &middot; .NET &middot; SQL Server</span>
         </div>
         <div class="monograph-kpi">
           <span class="monograph-kpi__label">02 / CERTIFICATIONS</span>
-          <strong class="monograph-kpi__value">AZ-900 &middot; AI-900 &middot; SC-900</strong>
-          <span class="monograph-kpi__sub">Microsoft &amp; GitHub Foundations</span>
+          <strong class="monograph-kpi__value">6 Verified Credentials</strong>
+          <span class="monograph-kpi__sub">OutSystems &middot; Azure (3x) &middot; C# &middot; GitHub</span>
         </div>
         <div class="monograph-kpi">
           <span class="monograph-kpi__label">03 / PORTFOLIO P/L</span>
@@ -91,7 +104,7 @@ title: ""
       <span class="sec-num">01 / PROJECTS</span>
       <h2 class="serif-heading">Selected Engineering Works</h2>
     </div>
-    <a href="{{ '/projects/' | relative_url }}" class="see-all">View all projects (05) &rarr;</a>
+    <a href="{{ '/projects/' | relative_url }}" class="see-all">View detailed specifications (04) &rarr;</a>
   </header>
 
   <div class="sys-ledger" role="region" aria-label="Selected software projects">
@@ -109,10 +122,10 @@ title: ""
         <span class="sys-row__domain">Social TV Tracker PWA</span>
       </div>
       <p class="sys-row__desc">
-        A Letterboxd for television. Track series, log episodes, rate seasons, and follow activity feeds—architected with unidirectional Clean Architecture enforced at compile time via Oxlint and tested against in-memory PGlite WASM.
+        A Letterboxd for television. Track series, log episodes, rate seasons, and follow activity feeds&mdash;architected with unidirectional Clean Architecture enforced at compile time via Oxlint and tested against in-memory PGlite WASM.
       </p>
       <div class="sys-row__meta">
-        <div class="sys-row__stack">React 19 &middot; TypeScript &middot; TanStack &middot; PGlite</div>
+        <div class="sys-row__stack">React 19 &middot; TypeScript &middot; Supabase &middot; PGlite</div>
         <div class="sys-row__links">
           <a href="https://github.com/bernam07/episodic" target="_blank" rel="noopener">Repository &nearr;</a>
         </div>
@@ -121,6 +134,24 @@ title: ""
 
     <article class="sys-row">
       <div class="sys-row__ref">SYS&mdash;02</div>
+      <div class="sys-row__title">
+        <h3 class="serif-title">ClearPost</h3>
+        <span class="sys-row__domain">Multi-Carrier Parcel PWA</span>
+      </div>
+      <p class="sys-row__desc">
+        Clear Glass parcel tracking PWA for CTT, DPD/BRT, InPost, DHL, GLS, UPS, and Correos Express. Powered by a Cloudflare Worker edge proxy integrating 17TRACK v2.4 webhooks, iOS Scriptable widgets, and zero-trust Cloud Firestore rules.
+      </p>
+      <div class="sys-row__meta">
+        <div class="sys-row__stack">React &middot; TypeScript &middot; Firebase &middot; Cloudflare Workers</div>
+        <div class="sys-row__links">
+          <a href="https://clearpost-pt.web.app" target="_blank" rel="noopener">Live App &nearr;</a>
+          <a href="https://github.com/bernam07/clearpost" target="_blank" rel="noopener">Repository &nearr;</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="sys-row">
+      <div class="sys-row__ref">SYS&mdash;03</div>
       <div class="sys-row__title">
         <h3 class="serif-title">Norma</h3>
         <span class="sys-row__domain">Ephemeral Capture &amp; Extension</span>
@@ -132,24 +163,6 @@ title: ""
         <div class="sys-row__stack">Next.js 14 &middot; TypeScript &middot; PostgreSQL &middot; Resend</div>
         <div class="sys-row__links">
           <a href="https://github.com/bernam07/norma" target="_blank" rel="noopener">Repository &nearr;</a>
-        </div>
-      </div>
-    </article>
-
-    <article class="sys-row">
-      <div class="sys-row__ref">SYS&mdash;03</div>
-      <div class="sys-row__title">
-        <h3 class="serif-title">Market Telemetry</h3>
-        <span class="sys-row__domain">Automated Portfolio Pipeline</span>
-      </div>
-      <p class="sys-row__desc">
-        This website&rsquo;s real-time financial tracker: server-side Python ingestion from Yahoo Finance, automatic USD/GBP to EUR currency normalization, and scheduled weekday GitHub Actions workflows.
-      </p>
-      <div class="sys-row__meta">
-        <div class="sys-row__stack">Python &middot; JavaScript &middot; Jekyll &middot; Actions</div>
-        <div class="sys-row__links">
-          <a href="{{ '/dashboard/' | relative_url }}">Live Dashboard &rarr;</a>
-          <a href="https://github.com/bernam07/bernam07.github.io" target="_blank" rel="noopener">Source &nearr;</a>
         </div>
       </div>
     </article>
@@ -177,45 +190,45 @@ title: ""
 <section class="section wrap reveal" id="chronicle">
   <div class="monograph-split">
     <div class="monograph-split__aside">
-      <span class="sec-num">02 / ROADMAP</span>
-      <h2 class="serif-heading">Career &amp; Academic Trajectory</h2>
+      <span class="sec-num">02 / EXPERIENCE &amp; ROADMAP</span>
+      <h2 class="serif-heading">Enterprise Delivery &amp; Academia</h2>
       <p class="monograph-split__note">
-        Four years of concurrent enterprise engineering at Deloitte and academic specialization in Computer Systems.
+        4+ years engineering insurance platforms at Deloitte alongside Computer Systems Engineering studies at UPCA.
       </p>
-      <a href="{{ '/roadmap/' | relative_url }}" class="see-all">Full roadmap (10 milestones) &rarr;</a>
+      <a href="{{ '/roadmap/' | relative_url }}" class="see-all">Full roadmap &amp; certifications &rarr;</a>
     </div>
 
     <div class="monograph-split__main">
       <div class="chronicle-list">
         <div class="chronicle-row chronicle-row--current">
-          <div class="chronicle-row__date">SEP 2026 <span class="live-tag">CURRENT</span></div>
+          <div class="chronicle-row__date">SEP 2026 &mdash; NOW <span class="live-tag">CURRENT</span></div>
           <div class="chronicle-row__content">
-            <h3>Promoted to Programmer &mdash; Deloitte</h3>
-            <p>Advancement from Developer to Programmer, taking ownership of core backend modules and enterprise delivery.</p>
+            <h3>Programmer &mdash; Deloitte (Danish Insurance Project)</h3>
+            <p>Leading continuous enhancements and feature delivery across insurer web portals. Integrating OutSystems modules with a lower-tier C# / .NET service layer for complex business logic, SQL Server data synchronization, and GitHub release workflows in Agile Scrum/Kanban.</p>
           </div>
         </div>
 
         <div class="chronicle-row">
-          <div class="chronicle-row__date">JUN 2025</div>
+          <div class="chronicle-row__date">DEC 2023 &mdash; SEP 2026</div>
           <div class="chronicle-row__content">
-            <h3>GitHub Foundations Certification</h3>
-            <p>Validated proficiency in repository governance, CI/CD automation workflows, and collaborative software engineering.</p>
+            <h3>Developer &mdash; Deloitte (Danish Insurance Project)</h3>
+            <p>Implemented end-to-end business requirements across insurer portals using OutSystems, custom .NET backend extensions, and relational SQL Server data models.</p>
           </div>
         </div>
 
         <div class="chronicle-row">
-          <div class="chronicle-row__date">SEP 2024</div>
+          <div class="chronicle-row__date">SEP 2024 &mdash; JUL 2027</div>
           <div class="chronicle-row__content">
             <h3>BSc in Computer Systems Engineering &mdash; UPCA</h3>
-            <p>Admitted to the Bachelor&rsquo;s degree program following completion of the CTeSP in Information Technology &amp; Innovation (Final Grade: 16/20).</p>
+            <p>Pursuing the Bachelor&rsquo;s degree at the Polytechnic University of C&aacute;vado and Ave after completing the CTeSP in Information Technology &amp; Innovation (Final Grade: 16/20).</p>
           </div>
         </div>
 
         <div class="chronicle-row">
-          <div class="chronicle-row__date">OCT 2022</div>
+          <div class="chronicle-row__date">OCT 2022 &mdash; DEC 2023</div>
           <div class="chronicle-row__content">
-            <h3>Joined Deloitte (Brightstart Program)</h3>
-            <p>Entered professional software engineering as a Developer while pursuing full-time higher education.</p>
+            <h3>Developer &mdash; Deloitte (Swiss Insurance Project &amp; Brightstart)</h3>
+            <p>Engineered backend business logic in .NET, authored unit test suites and technical specifications, and utilized GitHub and Microsoft Azure CI/CD pipelines with an international engineering team.</p>
           </div>
         </div>
       </div>
@@ -230,57 +243,58 @@ title: ""
       <span class="sec-num">03 / SPECIFICATION</span>
       <h2 class="serif-heading">Technical Matrix</h2>
       <p class="monograph-split__note">
-        Core languages, runtimes, and verification tooling used across production systems.
+        Enterprise platforms, backend languages, cloud databases, and spoken languages.
       </p>
-      <a href="{{ '/setup/' | relative_url }}" class="see-all">Hardware &amp; environment &rarr;</a>
+      <a href="{{ '/setup/' | relative_url }}" class="see-all">Hardware &amp; setup &rarr;</a>
     </div>
 
     <div class="monograph-split__main">
       <div class="spec-matrix">
         <div class="spec-matrix__group">
-          <div class="spec-matrix__label">01 // LANGUAGES &amp; RUNTIMES</div>
+          <div class="spec-matrix__label">01 // ENTERPRISE &amp; BACKEND CORE</div>
           <div class="spec-matrix__items">
-            <span>TypeScript</span>
-            <span>Python</span>
-            <span>C# / .NET</span>
-            <span>SQL (PostgreSQL / T-SQL)</span>
-            <span>JavaScript (ES2024)</span>
-            <span>Kotlin</span>
-            <span>Node.js &amp; Deno</span>
+            <span>OutSystems (O11 / ODC)</span>
+            <span>C# / .NET Framework</span>
+            <span>Microsoft SQL Server</span>
+            <span>REST &amp; SOAP Integrations</span>
+            <span>Relational Data Modeling</span>
+            <span>Agile (Scrum / Kanban)</span>
           </div>
         </div>
 
         <div class="spec-matrix__group">
-          <div class="spec-matrix__label">02 // FRONTEND &amp; CLIENT ARCHITECTURE</div>
+          <div class="spec-matrix__label">02 // MODERN FULL-STACK &amp; CLIENT</div>
           <div class="spec-matrix__items">
+            <span>TypeScript</span>
             <span>React 19</span>
             <span>Next.js 14</span>
+            <span>Python</span>
+            <span>Tailwind CSS</span>
             <span>TanStack Query</span>
-            <span>Tailwind CSS v4</span>
             <span>Electron</span>
             <span>Manifest V3 Extensions</span>
           </div>
         </div>
 
         <div class="spec-matrix__group">
-          <div class="spec-matrix__label">03 // DATA, LEDGERS &amp; CLOUD</div>
+          <div class="spec-matrix__label">03 // DATA, CLOUD &amp; EDGE</div>
           <div class="spec-matrix__items">
-            <span>PostgreSQL (RLS &amp; Triggers)</span>
-            <span>Supabase (Auth, Edge, Vault)</span>
-            <span>Microsoft SQL Server</span>
-            <span>Microsoft Azure (AZ / AI / SC-900)</span>
+            <span>Microsoft Azure</span>
+            <span>PostgreSQL (RLS)</span>
+            <span>Supabase</span>
+            <span>Firebase (Auth &amp; Firestore)</span>
+            <span>Cloudflare Workers</span>
+            <span>GitHub Actions CI/CD</span>
             <span>Docker</span>
           </div>
         </div>
 
         <div class="spec-matrix__group">
-          <div class="spec-matrix__label">04 // VERIFICATION &amp; TOOLING</div>
+          <div class="spec-matrix__label">04 // LANGUAGES &amp; COMMUNICATION</div>
           <div class="spec-matrix__items">
-            <span>Vitest &amp; PGlite WASM</span>
-            <span>Playwright E2E</span>
-            <span>Oxlint Architecture Rules</span>
-            <span>GitHub Actions CI/CD</span>
-            <span>Git</span>
+            <span>Portuguese (Native)</span>
+            <span>English (Native / Bilingual)</span>
+            <span>French (Full Professional)</span>
           </div>
         </div>
       </div>
@@ -297,7 +311,7 @@ title: ""
         Let&rsquo;s build something together.
       </h2>
       <p class="monograph-lead">
-        Available for architectural discussions, software engineering opportunities, or conversations on backend systems and financial markets.
+        Available for architectural discussions, enterprise OutSystems/.NET collaborations, or conversations on full-stack systems and financial markets.
       </p>
     </div>
 
@@ -307,8 +321,8 @@ title: ""
         <span>&rarr;</span>
       </a>
       <div class="monograph-colophon__secondary">
-        <a href="https://github.com/bernam07" target="_blank" rel="noopener" class="btn">GitHub (@bernam07) &nearr;</a>
         <a href="https://www.linkedin.com/in/bernardomfm/" target="_blank" rel="noopener" class="btn">LinkedIn &nearr;</a>
+        <a href="https://github.com/bernam07" target="_blank" rel="noopener" class="btn">GitHub (@bernam07) &nearr;</a>
         <a href="{{ '/assets/cv/Bernardo-Martins-CV.pdf' | relative_url }}" target="_blank" rel="noopener" class="btn">Curriculum Vitae (PDF) &darr;</a>
       </div>
     </div>

@@ -7,7 +7,7 @@ permalink: /projects/
 <header class="page-hero wrap reveal">
   <div class="page-hero__meta">INDEX // 01 &mdash; PROJECTS &amp; ARCHITECTURE</div>
   <h1 class="serif-display">Selected Projects</h1>
-  <p>Production software systems, open-source repositories, and architectural case studies emphasizing strict domain boundaries and deterministic state.</p>
+  <p>Open-source applications and full-stack systems built with strict domain boundaries, edge proxies, and zero-trust data policies.</p>
 </header>
 
 <section class="section section--tight wrap reveal">
@@ -43,6 +43,28 @@ permalink: /projects/
     <article class="sys-row">
       <div class="sys-row__ref">SYS&mdash;02</div>
       <div class="sys-row__title">
+        <h2 class="serif-title">ClearPost</h2>
+        <span class="sys-row__domain">Multi-Carrier Parcel Tracker PWA</span>
+      </div>
+      <div class="sys-row__desc">
+        <p>Installable Clear Glass PWA that tracks CTT, DPD/BRT, InPost, DHL, GLS, UPS, and Correos Express shipments with automatic carrier pattern detection, ambiguity resolution dialogs, and real-time multi-device sync.</p>
+        <ul class="sys-specs">
+          <li><strong>Cloudflare Worker Edge Proxy:</strong> Integrates the 17TRACK v2.4 API, carrier fallback endpoints, webhook ingestion (<code>POST /api/webhook</code>), and a lightweight <code>GET /api/widget</code> JSON feed for iOS Scriptable widgets.</li>
+          <li><strong>Zero-Trust Firestore Rules:</strong> Default-deny per-user Cloud Firestore rules (<code>request.auth.uid == userId</code>) enforcing strict <code>hasOnly</code> field schemas, payload caps, and immutable timestamps.</li>
+        </ul>
+      </div>
+      <div class="sys-row__meta">
+        <div class="sys-row__stack">React &middot; TypeScript &middot; Firebase &middot; Cloudflare Workers &middot; 17TRACK API</div>
+        <div class="sys-row__links">
+          <a href="https://clearpost-pt.web.app" target="_blank" rel="noopener">clearpost-pt.web.app &nearr;</a>
+          <a href="https://github.com/bernam07/clearpost" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Repository &nearr;</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="sys-row">
+      <div class="sys-row__ref">SYS&mdash;03</div>
+      <div class="sys-row__title">
         <h2 class="serif-title">Norma</h2>
         <span class="sys-row__domain">Ephemeral Capture &amp; Extension</span>
       </div>
@@ -61,45 +83,7 @@ permalink: /projects/
     </article>
 
     <article class="sys-row">
-      <div class="sys-row__ref">SYS&mdash;03</div>
-      <div class="sys-row__title">
-        <h2 class="serif-title">Market Telemetry</h2>
-        <span class="sys-row__domain">Automated Portfolio Pipeline</span>
-      </div>
-      <div class="sys-row__desc">
-        <p>The source architecture for this website and its live equity dashboard. Combines static Jekyll generation with a scheduled Python market ingestion pipeline executed via GitHub Actions.</p>
-        <ul class="sys-specs">
-          <li><strong>Data Pipeline:</strong> Single-source-of-truth portfolio manifest (<code>_data/portfolio.json</code>) with server-side USD/GBP to EUR FX normalization via <code>yfinance</code>.</li>
-        </ul>
-      </div>
-      <div class="sys-row__meta">
-        <div class="sys-row__stack">Python &middot; JavaScript &middot; Jekyll &middot; GitHub Actions</div>
-        <div class="sys-row__links">
-          <a href="{{ '/dashboard/' | relative_url }}">Live Dashboard &rarr;</a>
-          <a href="https://github.com/bernam07/bernam07.github.io" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Source &nearr;</a>
-        </div>
-      </div>
-    </article>
-
-    <article class="sys-row">
       <div class="sys-row__ref">SYS&mdash;04</div>
-      <div class="sys-row__title">
-        <h2 class="serif-title">Loja Social SAS</h2>
-        <span class="sys-row__domain">Enterprise Inventory Platform</span>
-      </div>
-      <div class="sys-row__desc">
-        <p>Institutional web platform engineered for UPCA&rsquo;s Social Services (SAS) to manage stock inventory, beneficiary requests, donor allocations, and administrative auditing.</p>
-      </div>
-      <div class="sys-row__meta">
-        <div class="sys-row__stack">C# &middot; ASP.NET Core MVC &middot; SQL Server</div>
-        <div class="sys-row__links">
-          <a href="https://github.com/joseegomes555/G7-LojaSas" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> github.com/joseegomes555/G7-LojaSas &nearr;</a>
-        </div>
-      </div>
-    </article>
-
-    <article class="sys-row">
-      <div class="sys-row__ref">SYS&mdash;05</div>
       <div class="sys-row__title">
         <h2 class="serif-title">Eclipse Player</h2>
         <span class="sys-row__domain">Desktop Audio Engine</span>

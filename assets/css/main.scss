@@ -442,6 +442,112 @@ main {
   }
 }
 
+.monograph-badge-card {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.85rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+}
+
+.monograph-badge-card__img {
+  inline-size: 3.35rem;
+  block-size: auto;
+  flex-shrink: 0;
+}
+
+.monograph-badge-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-inline-size: 0;
+}
+
+.monograph-badge-card__kicker {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+}
+
+.monograph-badge-card__title {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  line-height: 1.25;
+}
+
+.monograph-badge-card__sub {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-dim);
+}
+
+/* --------------------------------------------------------------------------
+   Certifications Showcase (Roadmap Page)
+   -------------------------------------------------------------------------- */
+
+.cert-featured-banner {
+  display: flex;
+  align-items: center;
+  gap: 1.35rem;
+  padding: 1.35rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-strong);
+  margin-block-end: 1rem;
+}
+
+.cert-featured-banner__badge {
+  inline-size: 4.5rem;
+  block-size: auto;
+  flex-shrink: 0;
+}
+
+.cert-featured-banner__body {
+  p {
+    margin: 0.35rem 0 0;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+}
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.5rem), 1fr));
+  border-block-start: 1px solid var(--border);
+  border-inline-start: 1px solid var(--border);
+}
+
+.cert-item {
+  padding: 1rem 1.1rem;
+  border-inline-end: 1px solid var(--border);
+  border-block-end: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  background: var(--bg);
+
+  strong {
+    color: var(--text-bright);
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+}
+
+.cert-item__issuer {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+
+.cert-item__date {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+
 .monograph-index-links {
   display: flex;
   flex-direction: column;
