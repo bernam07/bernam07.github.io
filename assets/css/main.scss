@@ -717,9 +717,9 @@ main {
 
 .sys-ledger__head {
   display: grid;
-  grid-template-columns: 6.5rem 11rem minmax(0, 1fr) 15rem;
-  gap: 1.5rem;
-  padding-block: 0.75rem;
+  grid-template-columns: 5.25rem 11.5rem minmax(0, 1fr) 16.5rem;
+  column-gap: 2.75rem;
+  padding-block: 0.85rem;
   border-block-end: 1px solid var(--border);
   font-family: var(--font-mono);
   font-size: 0.7rem;
@@ -734,9 +734,9 @@ main {
 
 .sys-row {
   display: grid;
-  grid-template-columns: 6.5rem 11rem minmax(0, 1fr) 15rem;
-  gap: 1.5rem;
-  padding-block: 1.75rem;
+  grid-template-columns: 5.25rem 11.5rem minmax(0, 1fr) 16.5rem;
+  column-gap: 2.75rem;
+  padding-block: 2.35rem;
   border-block-end: 1px solid var(--border);
   align-items: baseline;
   transition: background 0.18s var(--ease);
@@ -765,23 +765,24 @@ main {
 .sys-row__title {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.35rem;
 }
 
 .sys-row__domain {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   color: var(--text-dim);
+  line-height: 1.45;
 }
 
 .sys-row__desc {
   margin: 0;
-  font-size: 0.94rem;
-  line-height: 1.65;
+  font-size: 0.95rem;
+  line-height: 1.72;
   color: var(--text);
 
   p {
-    margin: 0 0 0.75rem;
+    margin: 0 0 0.85rem;
   }
 
   p:last-child {
@@ -790,13 +791,18 @@ main {
 }
 
 .sys-specs {
-  margin: 0.75rem 0 0;
-  padding-inline-start: 1.1rem;
-  font-size: 0.86rem;
+  margin: 1rem 0 0;
+  padding-inline-start: 1.15rem;
+  font-size: 0.88rem;
+  line-height: 1.68;
   color: var(--text-dim);
 
   li {
-    margin-block-end: 0.35rem;
+    margin-block-end: 0.55rem;
+  }
+
+  li:last-child {
+    margin-block-end: 0;
   }
 
   strong {
@@ -806,11 +812,11 @@ main {
 
   code {
     font-family: var(--font-mono);
-    font-size: 0.85em;
+    font-size: 0.84em;
     color: var(--text-bright);
-    background: var(--bg-elevated);
-    padding: 0.1rem 0.35rem;
-    border: 1px solid var(--border);
+    background: rgb(255 255 255 / 6%);
+    padding: 0.08rem 0.3rem;
+    border-radius: 2px;
   }
 }
 
@@ -819,28 +825,32 @@ main {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 0.5rem;
+  gap: 0.85rem;
 }
 
 .sys-row__stack {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   color: var(--text-dim);
-  line-height: 1.5;
+  line-height: 1.65;
 }
 
 .sys-row__links {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
-  gap: 0.85rem;
+  gap: 1.15rem;
   font-family: var(--font-mono);
   font-size: 0.78rem;
 
   a {
     color: var(--text-bright);
     border-block-end: 1px solid var(--border-strong);
-    padding-block-end: 0.1rem;
+    padding-block-end: 0.15rem;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
   }
 
   a:hover {

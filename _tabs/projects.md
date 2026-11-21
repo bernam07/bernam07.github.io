@@ -35,7 +35,7 @@ permalink: /projects/
       <div class="sys-row__meta">
         <div class="sys-row__stack">React 19 &middot; TypeScript 7 &middot; Supabase &middot; TanStack Query &middot; PGlite</div>
         <div class="sys-row__links">
-          <a href="https://github.com/bernam07/episodic" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> github.com/bernam07/episodic &nearr;</a>
+          <a href="https://github.com/bernam07/episodic" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Repository &nearr;</a>
         </div>
       </div>
     </article>
@@ -56,7 +56,7 @@ permalink: /projects/
       <div class="sys-row__meta">
         <div class="sys-row__stack">React &middot; TypeScript &middot; Firebase &middot; Cloudflare Workers &middot; 17TRACK API</div>
         <div class="sys-row__links">
-          <a href="https://clearpost-pt.web.app" target="_blank" rel="noopener">clearpost-pt.web.app &nearr;</a>
+          <a href="https://clearpost-pt.web.app" target="_blank" rel="noopener">Live App &nearr;</a>
           <a href="https://github.com/bernam07/clearpost" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Repository &nearr;</a>
         </div>
       </div>
@@ -77,7 +77,7 @@ permalink: /projects/
       <div class="sys-row__meta">
         <div class="sys-row__stack">Next.js 14 &middot; TypeScript &middot; PostgreSQL &middot; Manifest V3 &middot; Resend</div>
         <div class="sys-row__links">
-          <a href="https://github.com/bernam07/norma" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> github.com/bernam07/norma &nearr;</a>
+          <a href="https://github.com/bernam07/norma" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Repository &nearr;</a>
         </div>
       </div>
     </article>
@@ -94,7 +94,7 @@ permalink: /projects/
       <div class="sys-row__meta">
         <div class="sys-row__stack">Electron &middot; TypeScript &middot; Vite &middot; Web Audio API</div>
         <div class="sys-row__links">
-          <a href="https://github.com/bernam07/eclipse-player" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> github.com/bernam07/eclipse-player &nearr;</a>
+          <a href="https://github.com/bernam07/eclipse-player" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> Repository &nearr;</a>
         </div>
       </div>
     </article>

@@ -47,11 +47,6 @@ permalink: /roadmap/
           <span class="cert-item__date">Issued Apr 2023</span>
         </div>
         <div class="cert-item">
-          <span class="cert-item__issuer">MICROSOFT &amp; FREECODECAMP</span>
-          <strong>Foundational C# with Microsoft</strong>
-          <span class="cert-item__date">Verified Credential</span>
-        </div>
-        <div class="cert-item">
           <span class="cert-item__issuer">GITHUB</span>
           <strong>GitHub Foundations</strong>
           <span class="cert-item__date">Issued Jun 2025 &middot; Exp. Jun 2028</span>
